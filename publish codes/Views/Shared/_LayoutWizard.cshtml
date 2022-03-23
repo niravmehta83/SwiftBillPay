@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+@using System.Web.Optimization;
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a href="@Url.Action("Index","Home")" class="navbar-brand">Swift Bill Pay</a>
+            </div>
+            
+        </div>
+        <!-- /.container -->
+        
+    </nav>
+    <div class="container">
+      <div class="row">&nbsp</div>
+      <div class="row">
+          <div class="col-md-12">
+               @RenderBody()
+          </div>
+      </div>
+    </div>
+    @Scripts.Render("~/bundles/bootstrap/js/modern-business")
+    @Styles.Render("~/bundles/bootstrap/css/theme/modern-business")
+    <link rel="stylesheet" href="~/Content/css/font-awesome.min.css" type="text/css" />
+    @RenderSection("Scripts", required: false)
+
+
+    @section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#Captcha').val('');
+        });
+    </script>
+}
+
+    </body>
+
+</html>
+

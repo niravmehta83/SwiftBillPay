@@ -1,0 +1,48 @@
+﻿@using BingHousing_BO;
+@model ICollection<Plan>
+@if (Model.Count == 0)
+{
+    <div class="message-info">
+        <p>
+            Sorry there is no Subcription plans...</p>
+    </div>
+}
+else
+{
+    <div class="features_items">
+        <!--features_items-->
+        <div style="display: inline-block">
+            <ul class="products-list" style="list-style: none; display: inline-block;">
+                @foreach (Plan m in Model)
+                {
+                    <li data-index="@m.PlanId" align="center" style=" width:150px ; height: 300px; border:1px solid grey;margin:10px; float:left">
+                        <h2>
+                            <b>@m.PlanName </b>
+                        </h2>
+                        <ul class="product-description" style="text-align: justify; padding: 10px; list-style: none;">
+                            <li><span><b>Subscription Description: </b></span>@m.PlanDescription</li>
+                        </ul>
+                        <p class="product-price">
+                            <b>Price:</b>$ @m.PlanAmount</p>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a id="btnedit" href="@Url.Action("EditPlan", "Subscription", new { PlanId = m.PlanId })">
+                                <button>
+                                    Edit
+                                </button>
+                            </a>
+                            <a id="btndelete" href="@Url.Action("DeletePlan", "Subscription", new { PlanId = m.PlanId })">
+                                <button>
+                                    Delete</button></a>
+                        }
+                        else
+                        {
+                            <button>
+                                Buy Now!</button>
+                        }
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+}

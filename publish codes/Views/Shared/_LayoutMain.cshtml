@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+@using System.Web.Optimization;
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>@ViewBag.Title</title>
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="@Url.Action("Index","Home")" class="navbar-brand">Swift Bill Pay</a>
+                @*<a class="navbar-brand" href="index.html">SB Admin v2.0</a>*@
+            </div>
+            <!-- /.navbar-header -->
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                   <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Services <b class="caret"></b></a>
+                       <ul class="dropdown-menu">
+                           <li>
+                               <a href="#"><i class="fa fa-fw  fa-pie-chart"></i>&nbsp&nbsp Dashboard</a>
+                           </li>
+                           <li>
+                               <a href="@Url.Action("CartLogin", "Cart")"><i class="fa fa-fw  fa-cc-paypal"></i>&nbsp&nbsp Rent Payment</a>
+                           </li>
+                           <li>
+                               @if (Request.IsAuthenticated && User.Identity.Name.ToUpper() == "ADMIN")
+                               {
+                                   <a href="@Url.Action("EditSubscription", "Subscription")"><i class="fa fa-fw  fa-gift"></i>&nbsp&nbsp Subscriptions</a>
+                               }
+                               else
+                               {
+                                   <a href="@Url.Action("ShowSubscriptions", "Subscription")"><i class="fa fa-fw  fa-gift"></i>&nbsp&nbsp Subscriptions</a>
+                               }
+                           </li>
+                       </ul>
+
+                    </li> 
+                    @Html.Partial("_LoginPartial")               
+                </ul>
+            </div>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation" style="margin-top: 1px">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" type="button">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                            </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
+                        @if (Request.IsAuthenticated)
+                        {
+                            <li>
+                                <a href="#"><i class="fa fa-upload"></i> Upload File<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                   <li>@Html.ActionLink("Import Payee(s)", "ImportPayees", "User")</li>
+                                   <li>@Html.ActionLink("Import Customer(s)", "ImportBills", "User")</li>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-plus"></i> Add<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                   <li>@Html.ActionLink("Add Payee", "AddPayeeDetails", "User")</li>
+                                   <li>@Html.ActionLink("Add Customer", "AddCustomerDetails", "User")</li>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-search-plus"></i> View<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                   <li>@Html.ActionLink("View Customer", "Customers", "User")</li>
+                                   <li>@Html.ActionLink("View Payee", "Payees", "User")</li>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-send"></i> Email<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                   <li>@Html.ActionLink("Email Customer(s)", "Bills", "User")</li>
+                                   <li>@Html.ActionLink("Send Reminder Bill(s)", "Invoice", "User") </li>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+                            <li>
+                                <a href="@Url.Action("EditUserDetails","Account")"><i class="fa  fa-edit"></i> Edit User Details</a>                                
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Payments", "User")"><i class="fa  fa-cc-paypal"></i> Payments</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("PayPalSetup", "User")"><i class="fa  fa-wrench"></i> PayPal Setup</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-dashboard"></i> Reports<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>@Html.ActionLink("Payments", "PaymentReport", "User") </li>
+                                    <li>@Html.ActionLink("Emailed Bills", "EmailedReport", "User") </li>
+                                    <li>@Html.ActionLink("Reminder Emails", "RemainderEmailedReport", "User") </li>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-user"></i> Users<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>@Html.ActionLink("Active Users", "ViewUsers", "User") </li>
+                                    <li>@Html.ActionLink("Archived Users", "ViewArchivedUsers", "User") </li>
+                                    <li>@Html.ActionLink("Subscriptions", "ShowSubscriptions", "Subscription") </li>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-group"></i> Groups<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>@Html.ActionLink("Manage Group", "Manage", "Group") </li>
+                                    <li>@Html.ActionLink("Create Group", "Create", "Group") </li>
+                                    <li>@Html.ActionLink("Mange Members", "ManageMembers", "Group") </li>
+                                    <li>@Html.ActionLink("Send Email", "SelectGroups", "Group") </li>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+
+                        }
+                        else
+                        {
+
+                            <li>
+                                <p>Authorization failed. Please login to proceed</p>
+                                @Html.ActionLink("Signup", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
+                            </li>  
+                            <li>
+                                @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+                            </li>
+                           
+                        }
+                        
+                    </ul>
+                        
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        @Scripts.Render("~/bundles/bootstrap/js/sp-admin2")
+        @Styles.Render("~/bundles/bootstrap/css/theme/sp-admin2")
+        <link rel="stylesheet" href="~/Content/css/font-awesome.min.css" type="text/css" />
+        
+
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">@ViewBag.PageTitle</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    @Html.Partial("_ErrorPanel")
+                    @RenderBody()
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    @RenderSection("Scripts", required: false)   
+
+    <script type="text/javascript" src="~/Content/js/spin.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Content/css/customstyle.css" />
+
+  
+   
+</body>
+
+</html>

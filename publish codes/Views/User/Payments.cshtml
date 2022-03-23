@@ -1,0 +1,162 @@
+﻿@using BingHousing_BO
+@{
+    ViewBag.Title = "Payments- Swift Bill Pay";
+    ViewBag.PageTitle = "Payment";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+ @if (ViewBag.Results != null && ((List<Payments>)ViewBag.Results).Count > 0)
+ {
+     <div class="panel-body">
+        <div class="dataTable_wrapper">
+            @*<div class="col-md-12"><button type="button" id="btnselectedPrint">Print Checks</button></div>*@
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <thead>
+                    <tr>
+                        <th>Payee Id</th>
+                        <th>Invoice #</th>
+                        <th>Customer</th>
+                        <th>Paid Date</th>
+                        <th>Amount Paid</th>
+                        <th>Payment Mode</th>
+                        <th>Actions</th>
+                        <td>Print Check</td>
+                        <td style="width: 10%">
+                            Do not Print
+                            <br />
+                            <input class="allCheckBoxPrint" type="checkbox" />
+                        </td>
+                    </tr>
+                </thead>
+                 <tbody>
+                     @foreach (Payments L in (List<Payments>)ViewBag.Results)
+                    {
+                        <tr class="odd gradeX">
+                            <td>@L.PaymentId</td>
+                            <td>@L.InvoiceId</td>
+                            <td>@L.FirstName &nbsp @L.LastName</td>
+                            <td>@L.PaidDate</td>
+                            <td><i class="fa  fa-usd"></i>&nbsp @L.Amount</td>
+                            <td>@L.PaymentMode</td>
+                            <td>
+                                @if(L.PaymentMode != "PayPal")
+                                {
+                                    <a  id="btnedit" href="@Url.Action("CsvDownload", "User", new { PaymentId = L.PaymentId })"><i class="fa fa-edit"></i> Download</a>
+                                }
+                                else
+                                {
+                                    <h6>-</h6>
+                                }
+                            </td>
+                            <td>
+                                @if (L.PaymentMode != "PayPal")
+                                {
+                                    <a id="btnPrint" ><i class="fa fa-print"></i> Print Check</a>
+                                }
+                                else
+                                {
+                                    <h6>-</h6>
+                                }
+                            </td>
+                            <td>
+                                @if (L.PaymentMode != "PayPal")
+                                {
+                                    <input class="singleCheckBoxPrint" name="selectedRows" value="@L.PaymentId" type="checkbox" />
+                                }
+                                else
+                                {
+                                    <h6>-</h6>
+                                }
+                               
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+               
+                </table>
+            @*<div class="col-md-12"><button type="button" id="btnselectedPrint">Print Checks</button></div>*@
+        </div>
+   
+    </div>
+}
+else
+{
+    <h5>No Records</h5> 
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".allCheckBoxPrint").click(function () {
+            var isChecked = this.checked;
+            $('.allCheckBoxPrint').each(function () { this.checked = (isChecked ? true : false) });
+            $('.singleCheckBoxPrint').each(function () { this.checked = (isChecked ? true : false) });
+            $('.singleCheckBoxPrint').closest('tr').addClass(isChecked ? 'selected-row' : 'not-selected-row');
+            $('.singleCheckBoxPrint').closest('tr').removeClass(isChecked ? 'not-selected-row' : 'selected-row');
+        });
+
+        $('.singleCheckBoxPrint').click(function () {
+            var isChecked = this.checked;//this.checked;
+            $(this).closest('tr').addClass(isChecked ? 'selected-row' : 'not-selected-row');
+            $(this).closest('tr').removeClass(isChecked ? 'not-selected-row' : 'selected-row');
+            if (isChecked && $('.singleCheckBoxPrint').length == $('.selected-row').length)
+                $('.allCheckBoxPrint').each(function () { this.checked = true });
+            else
+                $('.allCheckBoxPrint').each(function () { this.checked = false });
+
+        });
+    });
+
+    $(document).ready(function(){
+        $("#btnselectedPrint").click(function () {
+            if ($(".singleCheckBoxPrint:checkbox:not(:checked)").length > 0) {
+            var PaymentId= $.map($(".singleCheckBoxPrint:checkbox:not(:checked)"),
+                    function (e) { return $(e).val(); }).join(",");
+
+                window.location.href = "/User/PrintSelectedCheck?PaymentIds="+PaymentId;
+            }
+            else
+            {
+                $.notify({ message: 'Please un select any One to print check.' }, { type: 'info' });
+                return false;
+            }
+        });
+
+    });
+
+</script>
+
+
+
+@section scripts{
+    <script>
+
+    function  IsAlreadyprinted(paymentId)
+        {
+            $.ajax({
+                url : "/PrintedChecks/printedChecksPaymentIds.txt",
+                dataType: "text",
+                cache:false,
+                success : function (data) {
+                    var ids=data.split(",");
+                    if(ids.indexOf(paymentId.toString()) === -1)
+                    {
+                        window.location.href='/User/PrintCheck?PaymentId='+paymentId;
+                    }
+                    else
+                    {
+                        if(confirm("Already Printed.Do you want to Print again??"))
+                        {
+                            window.location.href='/User/PrintCheck?PaymentId='+paymentId;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+            });
+        }
+    
+
+    </script>
+}
+                            

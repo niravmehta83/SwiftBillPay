@@ -1,0 +1,143 @@
+﻿@model  BingHousing.WebUI.MVC.Models.UserModel
+@{
+    ViewBag.Title = "User Details - Swift Bill Pay";
+    ViewBag.PageTitle = "Edit User Details";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+
+    @using (Html.BeginForm("EditUserDetails", "Account", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+            <div class="row row-space">
+                <div class="col-lg-4">
+                    <h6>* fields are Madentary.</h6>
+                </div>
+            </div>
+       
+       <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>First Name *</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", placeholder = "First Name", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.FirstName)
+                        @Html.HiddenFor(model => model.UserId)
+                    </div>
+                </div>
+        </div>
+        <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>Last Name *</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", placeholder = "Last Name", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.LastName)
+                    </div>
+                </div>
+        </div>
+        <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>Address Line 1 *</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "Address Line 1", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.Address)
+                    </div>
+                </div>
+        </div>
+        <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>Address Line 2</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.Address2, new { @class = "form-control", placeholder = "Address Line 2", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.Address2)
+                    </div>
+                </div>
+        </div>
+        <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>City *</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.City, new { @class = "form-control", placeholder = "City", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.City)
+                    </div>
+                </div>
+        </div>
+        <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>State *</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.State, new { @class = "form-control", placeholder = "State", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.State)
+                    </div>
+                </div>
+        </div>
+        <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>Zip code *</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.ZipCode, new { @class = "form-control", placeholder = "Zip Code", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.ZipCode)
+                    </div>
+                </div>
+        </div>            
+        <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>Country *</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.Country, new { @class = "form-control", placeholder = "Country", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.Country)
+                    </div>
+                </div>
+        </div>                     
+        <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>Phone Number *</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", placeholder = "Phone Number", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.PhoneNumber)
+                    </div>
+                </div>
+        </div>             
+        <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>Mobile Number</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control", placeholder = "Mobile Number", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.Mobile)
+                    </div>
+                </div>
+        </div>  
+        <div class="row row-space">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                 <div class="row row-space">
+                    <div class="col-lg-4"></div>
+                    <div class="col-lg-4">
+                         <input type="submit" class="btn btn-primary" value="Update">
+                    </div>
+                    <div class="col-lg-4"></div>
+                 </div> 
+            </div>
+        </div>   
+    }

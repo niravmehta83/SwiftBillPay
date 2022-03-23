@@ -1,0 +1,85 @@
+﻿@model BingHousingMVC.Models.CheckOutLoginModel
+@{
+    ViewBag.Title = "CheckOutLogin";
+}
+<div align="center">
+<h2>Previous Customers Just Login</h2>
+
+<table style="border: none !important">
+
+<tr>
+<td style="border: none !important">
+<div align="center" style="border: 1px solid black; background-color:#eeeeee;width:300px;">
+<h3> New Customer Register Here</h3>
+
+<a href="@Url.Action("CheckOutRegister","Cart")"><input type="button" value="SignUp" /></a>
+</div>
+
+</td>
+<td style="border: none !important">
+
+<div style="width:10px;"></div>
+</td>
+<td style="border: none !important">
+<div align="center" style="border: 1px solid black; background-color:#eeeeee;">
+<h3>Login</h3>
+<p>Returning customers can login using the form below</p>
+@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+   
+
+    <fieldset>
+        
+
+         <table style=" border:none !important;">
+            <tr>
+            <td class = "EditTable1">
+            <div class="editor-label">
+                @Html.LabelFor(m => m.Email)
+            </div></td>
+            
+            <td ><p style=" padding-bottom:5px;">:</p></td>
+
+            <td class = "EditTable1">
+            <div class="editor-field">
+                @Html.TextBoxFor(m =>  m.Email)<br />
+                @Html.ValidationMessageFor(m =>  m.Email)
+            </div></td></tr>
+            <tr><td class = "EditTable1">
+            <div class="editor-label">
+                @Html.LabelFor(m => m.Password)
+            </div></td>
+            
+            <td ><p style=" padding-bottom:5px;">:</p></td>
+
+            <td class = "EditTable1"><div class="editor-field">
+                @Html.PasswordFor(m => m.Password)<br />
+                @Html.ValidationMessageFor(m => m.Password)
+            </div></td></tr>
+
+            <tr>
+            <td></td>
+            <td></td>
+            <td class = "EditTable1" style="float:left;"><p>
+               <input type="submit" value="Log in" /> </p></td></tr>
+       
+            </table>
+
+  
+    <p>
+        @Html.ActionLink("Forget Password", "ForgetPassword","Cart") to reset your password.
+    </p>
+      
+    </fieldset>
+    
+}
+</div>
+
+</td>
+
+
+</tr>
+
+</table>
+</div>

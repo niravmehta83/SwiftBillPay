@@ -1,0 +1,92 @@
+﻿@using BingHousingMVC.Models;
+@{
+    ViewBag.Title = "Manage Members - Swift Bill Pay";
+    ViewBag.PageTitle = "Manage Members";
+    List<GroupModel> grps = ViewBag.Groups as List<GroupModel>;
+    string username = System.Web.HttpContext.Current.Session["SelectedUserName"] as string ?? User.Identity.Name;
+
+    bool flag = (bool)ViewBag.isSendmail;
+}
+<h3>
+    All available groups : <span class="badge">@(grps != null ? grps.Count : 0)</span>
+    <div style="float: right;">
+        @using (Html.BeginForm("Create", "Group", FormMethod.Get, new { id = "selectCustomer" }))
+        {
+            <button type="submit" class="btn-circle" data-toggle2="tooltip" title="Add new group">
+                Add Group</button>
+        }
+    </div>
+</h3>
+<div id="foo">
+    @if ((grps != null ? grps.Count : 0) > 0)
+    {
+        <div>
+            <table class="grid" cellpadding="0" cellspacing="0" style="margin: 10px 10px 10px 10px;">
+                <thead class="gridhead">
+                    <tr>
+                        <th>
+                            Group Name (member count)
+                        </th>
+                        <th>
+                            Group Description
+                        </th>
+                        <th>
+                            Operations
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (GroupModel group in grps)
+                    {
+                        <tr class="odd gradeX">
+                            <td>@group.GroupName <span class="badge pull-right">(@group.GroupMembers.Count)</span>
+                            </td>
+                            <td>@group.GroupDescription
+                            </td>
+                            <td>
+                             @if (!flag)
+                                {
+                                    if (group.GroupMembers.Count > 0)
+                                { 
+                                <a href="@Url.Action("SendBills", "Group", new { GroupId = group.GroupId })">
+                                    <button>
+                                        View Members</button></a>
+                                      }
+                                 }
+                                 else
+                                 {
+                                  <a href="@Url.Action("SendBills", "Group", new { GroupId = group.GroupId })">
+                                    <button>
+                                        Send Email</button></a>
+                                 }&nbsp
+                                @if (!flag)
+                                {                                                                       
+                                                                           
+                                    <a href="@Url.Action("AddMembers", "Group", new { GroupId = group.GroupId })">
+                                        <button>
+                                            Manage Members</button></a> }&nbsp
+                                @if (!flag)
+                                {
+                                    <a href="@Url.Action("AddNewCustomer", "Group", new { hdnGroupId = group.GroupId })">
+                                        <button>
+                                            Add New Customer</button></a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    }
+    else
+    {
+        <h5>
+            No Records</h5>
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('[data-toggle2="tooltip"]').tooltip();
+    });        
+</script>

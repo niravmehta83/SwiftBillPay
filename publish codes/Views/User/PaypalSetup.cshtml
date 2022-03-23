@@ -1,0 +1,135 @@
+﻿@model BingHousing.WebUI.MVC.Models.PayPalAccountModel
+@{
+    ViewBag.Title = "PayPal Setup - Swift Bill Pay";
+    ViewBag.PageTitle = "Payment";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+
+    List<SelectListItem> list = (List<SelectListItem>)ViewBag.payeelist;
+}
+  @if (list.Count > 0)
+    {
+        using (Html.BeginForm("PayPalSetup", "User", FormMethod.Post))
+        {
+
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(m => m.PayPalAccountId)
+
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>Payee</label>
+                    </div>
+                    <div class="col-lg-3">
+                        @Html.DropDownListFor(m => m.PayeeId, list, new { @id = "lstpayee", @class = "form-control", @onchange = "getpaypalDetails()" })<br />
+                    </div>
+                </div>
+            </div>
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>Client ID</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.ClientId, new { @class = "form-control", placeholder = "Client ID", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.ClientId)
+                    </div>
+                </div>
+            </div>
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>Client Secret ID</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.ClientSecretId, new { @class = "form-control", placeholder = "Client Secret ID", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.ClientSecretId)
+                    </div>
+                </div>
+            </div>
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>PayPal Surcharge</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.PayPalSurCharge, new { @class = "form-control", placeholder = "PayPal Surcharge", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.PayPalSurCharge)
+                    </div>
+                </div>
+            </div>
+            <div class="row row-space">
+                <div class="col-lg-3"></div>
+                <div class="col-lg-6">
+                    <div class="row row-space">
+                        <div class="col-lg-4"></div>
+                        <div class="col-lg-4">
+                            <input type="submit" class="btn btn-primary" value="Save">
+                        </div>
+                        <div class="col-lg-4"></div>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+    }
+    else
+    {
+        <div>
+            <h5>1. You need atleast one payee to import the customers. </h5>
+            <h5>2. To Add a Single Payee, click - <a href="@Url.Action("AddPayeeDetails","User")"><i class="fa fa-plus"></i> Add Payee</a></h5> <br />
+            <h5>3. To goto Import Payee page click - <a href="@Url.Action("ImportPayees","User")"><i class="fa fa-plus"></i> Import Payees</a></h5>
+        </div>
+    }
+
+            <script type="text/javascript" src="~/Content/js/spin.min.js"></script>
+            <link rel="stylesheet" type="text/css" href="~/Content/css/customstyle.css" />
+
+            @section Scripts{
+                <script type="text/javascript">
+
+                    var opts = {
+                        lines: 13, // The number of lines to draw
+                        length: 5, // The length of each line
+                        width: 3, // The line thickness
+                        radius: 40, // The radius of the inner circle
+                        corners: 1, // Corner roundness (0..1)
+                        rotate: 0, // The rotation offset
+                        direction: 1, // 1: clockwise, -1: counterclockwise
+                        color: '#fff', // #rgb or #rrggbb or array of colors
+                        speed: 1, // Rounds per second
+                        trail: 60, // Afterglow percentage
+                        shadow: true, // Whether to render a shadow
+                        hwaccel: false, // Whether to use hardware acceleration
+                        className: 'spinner', // The CSS class to assign to the spinner
+                        zIndex: 2e9, // The z-index (defaults to 2000000000)
+                        top: '400px', // Top position relative to parent in px
+                        left: '650px' // Left position relative to parent in px
+                    };
+
+                    function getpaypalDetails() {
+                        if ($("#lstpayee").val() != "") {
+                            var target = document.getElementById('wrapper');
+                            var spinner = new Spinner(opts).spin(target);
+                            $.post("/User/GetPaypalDetails",
+                               { PayeeId: $("#lstpayee").val() },
+                                   function (data) {
+                                       spinner.stop();
+                                       if (data != "") {
+                                           $("#ClientId").val(data.ClientId);
+                                           $("#ClientSecretId").val(data.ClientSecretId);
+                                           $("#PayPalAccountId").val(data.PayPalAccountId);
+                                       }
+                                       else {
+                                           alert("No details found, please enter new Paypal settings");
+                                           $("#ClientId").val("");
+                                           $("#ClientSecretId").val("");
+                                           $("#PayPalAccountId").val(0);
+                                       }
+                                   });
+                        }
+
+                    }
+                </script>
+            }

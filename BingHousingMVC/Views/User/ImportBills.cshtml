@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Import Customers";
+
+    List<SelectListItem> list = (List<SelectListItem>)ViewBag.payeelist;
+}
+<div align="center" style="height: 460px">
+Note:
+
+1. If you Want to Add a Single Customer Please use the Following Link <a href="@Url.Action("AddCustomerDetails", "User")"><button>Add Customer</button></a>
+
+or use Import File Option.
+    <fieldset>
+        <legend>Import Customers:</legend>
+        @if (list.Count > 0)
+        {
+            using (Html.BeginForm("ImportBills", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            
+            <table>
+                <tr>
+                    <td>@Html.Label("Select Payee :")
+                    </td>
+                    <td>@Html.DropDownList("PayeeId", list)
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div align="center" style="padding: 20px 0px 10px 0px; color: Gray">
+                            <input type="file" name="file" id="file" /><br />
+                            <br />
+                            <input type="submit" value="Upload" />
+                        </div>
+                    </td>
+                </tr>
+            </table>  
+            
+            <p>
+                Note:
+                <ul>
+                    <li>Please Select One of the Payee From the list and import the customer for the payee
+                    </li>
+                </ul>
+            </p> 
+            
+            
+            
+   
+    
+            }
+        }
+        else
+        {
+            <p>
+                Note: 1. you need atleast one payee to import the customers.If you Want to Add a
+                Single Payee Please use the Following Link <a href="@Url.Action("AddPayeeDetails", "User")">
+                    <button>
+                        Add Payee</button></a> or use <a href="@Url.Action("ImportPayees", "User")">
+                            <button>
+                                Import Payees</button></a> Option to Import multiple payees from
+                excel.
+            </p>
+        }
+    </fieldset>
+</div>

@@ -1,0 +1,240 @@
+﻿@model BingHousing.WebUI.MVC.Models.CheckModel
+@{
+    ViewBag.Title = "Online Check - Swift Bill Pay";
+    Layout = "~/Views/Shared/_LayoutWizard.cshtml";
+}
+<link rel="stylesheet" href="~/Content/css/AccountBox.css"/>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Online Check</h4>
+            </div>
+            <div class="panel-body">
+                    
+                    <div class="row row-space">
+                        <div class="col-lg-3">
+                            <i class="fa fa-shopping-cart"></i> Cart
+                            <svg width="100%" height="2px"><rect width="100%" height="2px" style="fill:#000000" /></svg>
+                        </div>
+                        <div class="col-lg-3">
+                            <i class="fa fa-eye"></i> Customer Details
+                            <svg width="100%" height="2px"><rect width="100%" height="2px" style="fill:#000000" /></svg>
+                        </div>
+                        <div class="col-lg-3">
+                            <i class="fa fa-cc-bank"></i> Online check
+                            <svg width="100%" height="2px"><rect width="100%" height="2px" style="fill:#000000" /></svg>
+                        </div>
+                        <div class="col-lg-3">
+                            <i class="fa fa-info"></i> Order Information
+                            <svg width="100%" height="2px"><rect width="100%" height="2px" style="fill:#ebe4e4" /></svg>
+                        </div>
+                    </div>
+                    <div class="row row-space">
+                        <div class="col-lg-2">
+                            &nbsp
+                        </div>
+                    </div>
+                <!--cart item list-->
+                @Html.Partial("_ErrorPanel")
+                <div class="row row-space">
+                    <div class="col-lg-2"></div>
+                        <div class="col-lg-8">
+                            <img src="~/Content/img/check.gif" alt="ChecK Model" />
+                        </div>
+                        <div class="col-lg-2"></div>
+                    </div>
+                <div class="row row-space">
+                    <div class="col-lg-12">
+                        
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="row row-space">
+                                <div class="col-lg-6">
+                                    <div class="row row-space">
+                                        <div class="col-lg-4">
+                                            Your Payment Will Be Made To *
+                                        </div>
+                                        <div class="col-lg-6">
+                                            @Html.TextBoxFor(m => m.Payee, new { @class = "form-control", placeholder = "Payee" })
+                                            @Html.HiddenFor(m => m.CheckId)
+                                            @Html.HiddenFor(m => m.UserId)
+                                        </div>
+                                    </div>
+                                    <div class="row row-space">
+                                        <div class="col-lg-4">
+                                            Name On Check *
+                                        </div>
+                                        <div class="col-lg-6">
+                                            @Html.TextBoxFor(m => m.NameOnCheck, new { @class = "form-control", placeholder = "Name on check" })
+                                        </div>
+                                    </div>
+                                    <div class="row row-space">
+                                        <div class="col-lg-4">
+                                            Address On Check *
+                                        </div>
+                                        <div class="col-lg-6">
+                                            @Html.TextBoxFor(m => m.AddressOnCheck, new { @class = "form-control", placeholder = "Address on check" })
+                                        </div>
+                                    </div>
+                                    <div class="row row-space">
+                                        <div class="col-lg-4">
+                                            City On Check *
+                                        </div>
+                                        <div class="col-lg-6">
+                                            @Html.TextBoxFor(m => m.CityOnCheck, new { @class = "form-control", placeholder = "City on check" })
+                                        </div>
+                                    </div>
+                                    <div class="row row-space">
+                                        <div class="col-lg-4">
+                                            State On Check *
+                                        </div>
+                                        <div class="col-lg-6">
+                                            @Html.TextBoxFor(m => m.StateOnCheck, new { @class = "form-control", placeholder = "State on check" })
+                                        </div>
+                                    </div>
+                                    <div class="row row-space">
+                                        <div class="col-lg-4">
+                                            Zip On Check *
+                                        </div>
+                                        <div class="col-lg-6">
+                                            @Html.TextBoxFor(m => m.ZipOnCheck, new { @class = "form-control", placeholder = "Zip on check" })
+                                        </div>
+                                    </div>
+                                    <div class="row row-space">
+                                        <div class="col-lg-4">
+                                            Date On Check *
+                                        </div>
+                                        <div class="col-lg-6">
+                                            @Html.TextBox("DateOnCheck", Model.DateOnCheck.ToShortDateString(), new { @class="form-control datefield", @readonly = "true"})
+                                            @*@Html.TextBox("DateOnCheck", Model.DateOnCheck.ToShortDateString(), new { @class = "form-control datefield" })*@
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="row row-space">
+                                        <div class="col-lg-4">
+                                            Check Number *
+                                        </div>
+                                        <div class="col-lg-6">
+                                            @Html.TextBoxFor(m => m.CheckNumber, new { @class = "form-control", placeholder = "Check Number" })
+                                        </div>
+                                    </div>
+                                    <div class="row row-space">
+                                        <div class="col-lg-4">
+                                            Routing Number *
+                                        </div>
+                                        <div class="col-lg-3">
+                                            @Html.AccountBoxFor(m => m.RoutingNumber, 9)
+                                            @*@Html.TextBoxFor(m => m.RoutingNumber, new { @class = "form-control", placeholder = "Routing Number" })*@
+                                        </div>
+                                    </div>
+                                    <div class="row row-space">
+                                        <div class="col-lg-4">
+                                            Comments
+                                            (no longer than 50 charecters.)
+                                        </div>
+                                        <div class="col-lg-6">
+                                            @Html.TextAreaFor(m => m.Comment, new { @class = "form-control", rows = 5, id = "Comments" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+
+                                    <div class="row row-space">
+                                        <div class="col-lg-4">
+                                            Amount on Check *
+                                        </div>
+                                        <div class="col-lg-6">
+                                            @Html.TextBoxFor(m => m.AmountOnCheck, new { @class = "form-control", placeholder = "Amount on check" })
+                                        </div>
+                                    </div>
+                                    <div class="row row-space">
+                                        <div class="col-lg-4">
+                                            Bank Name *
+                                        </div>
+                                        <div class="col-lg-6">
+                                            @Html.TextBoxFor(m => m.BankName, new { @class = "form-control", placeholder = "Bank Name" })
+                                        </div>
+                                    </div>
+                                    <div class="row row-space">
+                                        <div class="col-lg-4">
+                                            Bank Address *
+                                        </div>
+                                        <div class="col-lg-6">
+                                            @Html.TextBoxFor(m => m.BankAddress, new { @class = "form-control", placeholder = "Bank Address" })
+                                        </div>
+                                    </div>
+                                    <div class="row row-space">
+                                        <div class="col-lg-4">
+                                            Bank City *
+                                        </div>
+                                        <div class="col-lg-6">
+                                            @Html.TextBoxFor(m => m.BankCity, new { @class = "form-control", placeholder = "Bank City" })
+                                        </div>
+                                    </div>
+                                    <div class="row row-space">
+                                        <div class="col-lg-4">
+                                            Bank State *
+                                        </div>
+                                        <div class="col-lg-6">
+                                            @Html.TextBoxFor(m => m.BankState, new { @class = "form-control", placeholder = "Bank State" })
+                                        </div>
+                                    </div>
+                                    <div class="row row-space">
+                                        <div class="col-lg-4">
+                                            Bank Zip Code *
+                                        </div>
+                                        <div class="col-lg-6">
+                                            @Html.TextBoxFor(m => m.BankZip, new { @class = "form-control", rows = 5, id = "Bank Zip" })
+                                        </div>
+                                    </div>
+                                    <div class="row row-space">
+                                        <div class="col-lg-4">
+                                            Account Number
+                                        </div>
+                                        <div class="col-lg-6">
+                                            @Html.TextBoxFor(m => m.AccountNumber, new { @class = "form-control", rows = 5, id = "Account Number" })
+                                        </div>
+                                    </div>
+                                    <div class="row row-space">
+                                        <div class="col-lg-4">
+                                            Check Memo
+                                            (no longer than 50 charecters.)
+                                        </div>
+                                        <div class="col-lg-6">
+                                            @Html.TextAreaFor(m => m.CheckMemo, new { @class = "form-control", rows = 5, id = "Check Memo" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-10"></div>
+                                <div class="col-lg-2">
+                                    <input type="submit" class="btn btn-primary" value="Continue" />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                  
+                <!-- /Cart items-->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+    </div>
+</div>
+
+
+
+@section Scripts{
+    <script type="text/javascript" src="~/Content/js/AccountBox.js"></script>
+    <script>
+        
+        $(function () {            
+            $(".datefield").datepicker();
+        });
+    </script>
+}

@@ -1,0 +1,35 @@
+﻿@model BingHousing.WebUI.MVC.Models.CartLoginModel
+@{
+    ViewBag.Title = "Cart Login - Swift Bill Pay";
+    Layout = "~/Views/Shared/_LayoutWizard.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4><i class="fa fa-sign-in"></i> Locate your order</h4>
+        </div>
+        <div class="panel-body">
+            @Html.Partial("_ErrorPanel")
+            @using (Html.BeginForm())
+            { 
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    @Html.TextBoxFor(m => m.ProjectNumber, new { @class = "form-control", placeholder = "Invoice Number", autocomplete = "off" })
+                </div>
+                <div class="form-group">
+                    @Html.TextBoxFor(m => m.CustomerEmail, new { @class = "form-control", placeholder = "Customer Email", type = "email" })
+                 </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary btn-group btn-group-justified" value="Continue">
+                </div>
+             }
+
+                </div>
+            </div>
+    </div>
+    <div class="col-md-4"></div>
+</div>

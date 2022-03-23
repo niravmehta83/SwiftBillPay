@@ -1,0 +1,2 @@
+http://www.adeveloperdiary.com/java/spring-boot/create-restful-webservices-using-spring-boot/
+http://localhost:7071/class/proj/addEmployee?name=raja&sname=dhaks&id=3

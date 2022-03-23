@@ -1,0 +1,72 @@
+﻿@if (Request.IsAuthenticated)
+{
+    List<SelectListItem> _Users = null;
+    string selectedName = System.Web.HttpContext.Current.Session["SelectedUserName"] as string ?? User.Identity.Name;
+    if (System.Web.HttpContext.Current.Cache["Users"] != null)
+    {
+        _Users = (List<SelectListItem>)System.Web.HttpContext.Current.Cache["Users"];
+    }
+
+
+    <li class="dropdown">
+        @if (User.Identity.Name == selectedName)
+        {
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hello, @User.Identity.Name!<b class="caret"></b> </a>
+        }
+        else
+        {
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">@User.Identity.Name logged in as @selectedName!<b class="caret"></b> </a>
+        }
+           
+        <ul class="dropdown-menu">
+            <li>
+                <a href="#">User Profile</a>
+            </li>
+            <li>
+                <a href="#">Change Password</a>
+            </li>
+            <li>
+                @Html.ActionLink("Log off", "LogOff", "Account", routeValues: null, htmlAttributes: new { id = "dduser" })
+            </li>
+        </ul>
+    </li>
+
+    if (User.IsInRole("Admin"))
+    {
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Switch User <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                @foreach (var item in _Users.Where(a => a.Value.ToLower() != selectedName.ToLower()))
+                {
+                    <li>                       
+                        @using (Html.BeginForm("UserSelection", "User", new { SelectedUserName = item.Value }, FormMethod.Post, new { id = item.Value }))
+                        {
+                            @Html.AntiForgeryToken()
+                        }
+                        <a href="#" onclick="submitForm(@item.Value.ToString());">@item.Value</a>
+                    </li>
+                }
+            </ul>
+        </li>
+
+    }
+
+
+}
+else
+{
+    <li>
+        @Html.ActionLink("Signup", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
+    </li>
+    <li>
+        @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+    </li>
+}
+
+<script type="text/javascript">
+    function submitForm(formname){
+        if (formname != undefined) {
+            formname.submit();
+        }
+    }
+</script>

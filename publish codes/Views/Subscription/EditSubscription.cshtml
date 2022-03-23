@@ -1,0 +1,22 @@
+﻿@using BingHousing_BO;
+@{
+    ViewBag.Title = "Edit Subcription - Swift Bill Pay";
+    ViewBag.PageTitle = "Edit Subcription";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    List<Plan> list = (List<Plan>)ViewBag.PlanList;
+}
+
+@if(true)
+{
+    <div>
+        @{Html.RenderPartial("~/Views/Subscription/_Subscriptions.cshtml", list);}
+    </div>
+    <div>
+        @if (User.IsInRole("Admin"))
+        {
+            <a href="@Url.Action("AddSubscriptionPlan", "Subscription")" style="margin-left:10px;">
+                <input type="button" value="Add a plan" class="btn btn-primary" />
+            </a>
+        }
+    </div>
+}    

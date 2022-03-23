@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = "Payees";
+}
+
+@using BingHousing_BO
+@{
+    ViewBag.Title = "Bills";
+    
+}
+
+
+<div align="center" id="foo">
+<h2>
+    Payees</h2>
+    @if (ViewBag.Results != null)
+    {
+        <table class="grid" cellpadding="0" cellspacing="0" style="margin: 10px 10px 10px 10px;">
+            <thead class="gridhead">
+                <tr>
+                    <td>
+                        <div align="center">
+                            Payee Id
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            Payee Name
+                        </div>
+                    </td>
+                   
+                    <td>
+                        <div align="center">
+                            Payee Email
+                        </div>
+                    </td>
+                 
+                    <td>
+                        <div align="center">
+                            Operations
+                        </div>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Payee L in (List<Payee>)ViewBag.Results)
+                {
+                    <tr>
+                        <td>
+                            <div align="center">
+                                @L.PayeeId
+                            </div>
+                        </td>
+                        <td>
+                            <div align="center">
+                                @L.Payee1
+                            </div>
+                        </td>
+                        <td>
+                            <div align="center">
+                                @L.PayeeEmail
+                            </div>
+                        </td>
+                       
+                     
+                        <td>
+                            <div align="center">
+                                <a id="btnedit" href="@Url.Action("EditPayeeDetails", "User", new { PayeeId = L.PayeeId })">
+                                    <button>
+                                        Edit</button></a> <a id="btndelete" href="@Url.Action("DeletePayeeDetails", "User", new { PayeeId = L.PayeeId })">
+                                            <button>
+                                                Delete</button></a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+      
+
+    }
+    else
+    {
+        <h3>
+            No Records</h3> 
+    }
+   
+</div>

@@ -1,0 +1,45 @@
+﻿@model BingHousing.WebUI.MVC.Models.GroupModel
+@using System.Web.Optimization;
+@{
+    ViewBag.Title = "Create Group - Swift Bill Pay";
+    ViewBag.PageTitle = "Create Group";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+@using (Html.BeginForm("Create", "Group", FormMethod.Post, new { id = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row row-space">
+        <div class="form-group">
+            <div class="col-lg-3">
+                <label>Group Name *</label>
+            </div>
+            <div class="col-lg-6">
+                @Html.TextBoxFor(m => m.GroupName, new { @class = "form-control", placeholder = "Group Name", autocomplete = "off" })
+            </div>
+        </div>
+    </div>
+    <div class="row row-space">
+        <div class="form-group">
+            <div class="col-lg-3">
+                <label>Group Description </label>
+            </div>
+            <div class="col-lg-6">
+                @Html.TextBoxFor(m => m.GroupDescription, new { @class = "form-control", placeholder = "Group Description", autocomplete = "off" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-space">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <div class="row row-space">
+                <div class="col-lg-4"></div>
+                <div class="col-lg-4">
+                    <input type="submit" class="btn btn-primary" value="Save">
+                </div>
+                <div class="col-lg-4"></div>
+            </div>
+        </div>
+    </div>
+}

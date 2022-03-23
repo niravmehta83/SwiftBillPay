@@ -1,0 +1,362 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BHDbaseModelStoreContainer" CdmEntityContainer="BHDbaseEntities">
+    <EntitySetMapping Name="CheckDetails">
+      <EntityTypeMapping TypeName="BHDbaseModel.CheckDetail">
+        <MappingFragment StoreEntitySet="CheckDetail">
+          <ScalarProperty Name="CheckId" ColumnName="CheckId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Payee" ColumnName="Payee" />
+          <ScalarProperty Name="NameOnCheck" ColumnName="NameOnCheck" />
+          <ScalarProperty Name="AddressOnCheck" ColumnName="AddressOnCheck" />
+          <ScalarProperty Name="CityOnCheck" ColumnName="CityOnCheck" />
+          <ScalarProperty Name="StateOnCheck" ColumnName="StateOnCheck" />
+          <ScalarProperty Name="ZipOnCheck" ColumnName="ZipOnCheck" />
+          <ScalarProperty Name="DateOnCheck" ColumnName="DateOnCheck" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="BankName" ColumnName="BankName" />
+          <ScalarProperty Name="BankAddress" ColumnName="BankAddress" />
+          <ScalarProperty Name="BankCity" ColumnName="BankCity" />
+          <ScalarProperty Name="BankState" ColumnName="BankState" />
+          <ScalarProperty Name="BankZip" ColumnName="BankZip" />
+          <ScalarProperty Name="CheckNumber" ColumnName="CheckNumber" />
+          <ScalarProperty Name="RountingNumber" ColumnName="RountingNumber" />
+          <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
+          <ScalarProperty Name="CheckMemo" ColumnName="CheckMemo" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="BHDbaseModel.Customer">
+        <MappingFragment StoreEntitySet="Customer">
+          <ScalarProperty Name="LateChargesThereAfterdayAmount" ColumnName="LateChargesThereAfterdayAmount" />
+          <ScalarProperty Name="LateChargesThereAfterday" ColumnName="LateChargesThereAfterday" />
+          <ScalarProperty Name="LateChargesStartdayAmount" ColumnName="LateChargesStartdayAmount" />
+          <ScalarProperty Name="LateChargesStartday" ColumnName="LateChargesStartday" />
+          <ScalarProperty Name="LateCharges" ColumnName="LateCharges" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="PayeeId" ColumnName="PayeeId" />
+          <ScalarProperty Name="CustomerFirstName" ColumnName="CustomerFirstName" />
+          <ScalarProperty Name="CustomerLastName" ColumnName="CustomerLastName" />
+          <ScalarProperty Name="CustomerAddress" ColumnName="CustomerAddress" />
+          <ScalarProperty Name="CustomerAddress2" ColumnName="CustomerAddress2" />
+          <ScalarProperty Name="CustomerCity" ColumnName="CustomerCity" />
+          <ScalarProperty Name="CustomerState" ColumnName="CustomerState" />
+          <ScalarProperty Name="CustomerZipCode" ColumnName="CustomerZipCode" />
+          <ScalarProperty Name="CustomerCountry" ColumnName="CustomerCountry" />
+          <ScalarProperty Name="CustomerEmail" ColumnName="CustomerEmail" />
+          <ScalarProperty Name="AmountDue" ColumnName="AmountDue" />
+          <ScalarProperty Name="BillDescription" ColumnName="BillDescription" />
+          <ScalarProperty Name="NextBillDate" ColumnName="NextBillDate" />
+          <ScalarProperty Name="Intervals" ColumnName="Intervals" />
+          <ScalarProperty Name="IntervalTypeId" ColumnName="IntervalTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerProfiles">
+      <EntityTypeMapping TypeName="BHDbaseModel.CustomerProfile">
+        <MappingFragment StoreEntitySet="CustomerProfile">
+          <ScalarProperty Name="CustomerProfileId" ColumnName="CustomerProfileId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Address2" ColumnName="Address2" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Company" ColumnName="Company" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="JOML" ColumnName="JOML" />
+          <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IntervalTypes">
+      <EntityTypeMapping TypeName="BHDbaseModel.IntervalType">
+        <MappingFragment StoreEntitySet="IntervalType">
+          <ScalarProperty Name="IntervalTypeId" ColumnName="IntervalTypeId" />
+          <ScalarProperty Name="IntervalTypeDescription" ColumnName="IntervalTypeDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Invoices">
+      <EntityTypeMapping TypeName="BHDbaseModel.Invoice">
+        <MappingFragment StoreEntitySet="Invoice">
+          <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="InvoiceNumber" ColumnName="InvoiceNumber" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="TotalAmountDue" ColumnName="TotalAmountDue" />
+          <ScalarProperty Name="EmailSentDate" ColumnName="EmailSentDate" />
+          <ScalarProperty Name="IsPaid" ColumnName="IsPaid" />
+          <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Payees">
+      <EntityTypeMapping TypeName="BHDbaseModel.Payee">
+        <MappingFragment StoreEntitySet="Payee">
+          <ScalarProperty Name="PayeeId" ColumnName="PayeeId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Payee1" ColumnName="Payee" />
+          <ScalarProperty Name="PayeeAddress" ColumnName="PayeeAddress" />
+          <ScalarProperty Name="PayeeAddress2" ColumnName="PayeeAddress2" />
+          <ScalarProperty Name="PayeeCity" ColumnName="PayeeCity" />
+          <ScalarProperty Name="PayeeState" ColumnName="PayeeState" />
+          <ScalarProperty Name="PayeeZipCode" ColumnName="PayeeZipCode" />
+          <ScalarProperty Name="PayeeCountry" ColumnName="PayeeCountry" />
+          <ScalarProperty Name="PayeeEmail" ColumnName="PayeeEmail" />
+          <ScalarProperty Name="PayeeComments" ColumnName="PayeeComments" />
+          <ScalarProperty Name="PayeeContactPerson" ColumnName="PayeeContactPerson" />
+          <ScalarProperty Name="PayeeWebsite" ColumnName="PayeeWebsite" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PaymentDetails">
+      <EntityTypeMapping TypeName="BHDbaseModel.PaymentDetail">
+        <MappingFragment StoreEntitySet="PaymentDetail">
+          <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
+          <ScalarProperty Name="PaymentModeId" ColumnName="PaymentModeId" />
+          <ScalarProperty Name="PayPalId" ColumnName="PayPalId" />
+          <ScalarProperty Name="CheckId" ColumnName="CheckId" />
+          <ScalarProperty Name="Insertedby" ColumnName="Insertedby" />
+          <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PaymentModes">
+      <EntityTypeMapping TypeName="BHDbaseModel.PaymentMode">
+        <MappingFragment StoreEntitySet="PaymentModes">
+          <ScalarProperty Name="PaymentModeId" ColumnName="PaymentModeId" />
+          <ScalarProperty Name="PaymentMode1" ColumnName="PaymentMode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PayPalAccountDetails">
+      <EntityTypeMapping TypeName="BHDbaseModel.PayPalAccountDetail">
+        <MappingFragment StoreEntitySet="PayPalAccountDetail">
+          <ScalarProperty Name="PayPalAccountId" ColumnName="PayPalAccountId" />
+          <ScalarProperty Name="PayeeId" ColumnName="PayeeId" />
+          <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+          <ScalarProperty Name="ClientSecret" ColumnName="ClientSecret" />
+          <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PayPalDetails">
+      <EntityTypeMapping TypeName="BHDbaseModel.PayPalDetail">
+        <MappingFragment StoreEntitySet="PayPalDetail">
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="PayPalId" ColumnName="PayPalId" />
+          <ScalarProperty Name="PaymentResourceId" ColumnName="PaymentResourceId" />
+          <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserDetails">
+      <EntityTypeMapping TypeName="BHDbaseModel.UserDetail">
+        <MappingFragment StoreEntitySet="UserDetails">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Address2" ColumnName="Address2" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserProfiles">
+      <EntityTypeMapping TypeName="BHDbaseModel.UserProfile">
+        <MappingFragment StoreEntitySet="UserProfile">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserSecurities">
+      <EntityTypeMapping TypeName="BHDbaseModel.UserSecurity">
+        <MappingFragment StoreEntitySet="UserSecurity">
+          <ScalarProperty Name="SecurityId" ColumnName="SecurityId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Password2" ColumnName="Password2" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Islocked" ColumnName="Islocked" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="webpages_Membership">
+      <EntityTypeMapping TypeName="BHDbaseModel.webpages_Membership">
+        <MappingFragment StoreEntitySet="webpages_Membership">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="ConfirmationToken" ColumnName="ConfirmationToken" />
+          <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+          <ScalarProperty Name="LastPasswordFailureDate" ColumnName="LastPasswordFailureDate" />
+          <ScalarProperty Name="PasswordFailuresSinceLastSuccess" ColumnName="PasswordFailuresSinceLastSuccess" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="PasswordChangedDate" ColumnName="PasswordChangedDate" />
+          <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+          <ScalarProperty Name="PasswordVerificationToken" ColumnName="PasswordVerificationToken" />
+          <ScalarProperty Name="PasswordVerificationTokenExpirationDate" ColumnName="PasswordVerificationTokenExpirationDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="webpages_OAuthMembership">
+      <EntityTypeMapping TypeName="BHDbaseModel.webpages_OAuthMembership">
+        <MappingFragment StoreEntitySet="webpages_OAuthMembership">
+          <ScalarProperty Name="Provider" ColumnName="Provider" />
+          <ScalarProperty Name="ProviderUserId" ColumnName="ProviderUserId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="webpages_Roles">
+      <EntityTypeMapping TypeName="BHDbaseModel.webpages_Roles">
+        <MappingFragment StoreEntitySet="webpages_Roles">
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="webpages_UsersInRoles" TypeName="BHDbaseModel.webpages_UsersInRoles" StoreEntitySet="webpages_UsersInRoles">
+      <EndProperty Name="webpages_Roles">
+        <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+      </EndProperty>
+      <EndProperty Name="UserProfile">
+        <ScalarProperty Name="UserId" ColumnName="UserId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <FunctionImportMapping FunctionImportName="GetCustomerDetails" FunctionName="BHDbaseModel.Store.sp_getAllCustomerDetails">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BHDbaseModel.CustomerDetail">
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="PayeeId" ColumnName="PayeeId" />
+          <ScalarProperty Name="CustomerFirstName" ColumnName="CustomerFirstName" />
+          <ScalarProperty Name="CustomerLastName" ColumnName="CustomerLastName" />
+          <ScalarProperty Name="CustomerAddress" ColumnName="CustomerAddress" />
+          <ScalarProperty Name="CustomerAddress2" ColumnName="CustomerAddress2" />
+          <ScalarProperty Name="CustomerCity" ColumnName="CustomerCity" />
+          <ScalarProperty Name="CustomerState" ColumnName="CustomerState" />
+          <ScalarProperty Name="CustomerZipCode" ColumnName="CustomerZipCode" />
+          <ScalarProperty Name="CustomerCountry" ColumnName="CustomerCountry" />
+          <ScalarProperty Name="CustomerEmail" ColumnName="CustomerEmail" />
+          <ScalarProperty Name="AmountDue" ColumnName="AmountDue" />
+          <ScalarProperty Name="BillDescription" ColumnName="BillDescription" />
+          <ScalarProperty Name="NextBillDate" ColumnName="NextBillDate" />
+          <ScalarProperty Name="Intervals" ColumnName="Intervals" />
+          <ScalarProperty Name="IntervalTypeId" ColumnName="IntervalTypeId" />
+          <ScalarProperty Name="Payee" ColumnName="Payee" />
+          <ScalarProperty Name="PayeeEmail" ColumnName="PayeeEmail" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="LateCharges" ColumnName="LateCharges" />
+          <ScalarProperty Name="LateChargesStartday" ColumnName="LateChargesStartday" />
+          <ScalarProperty Name="LateChargesStartdayAmount" ColumnName="LateChargesStartdayAmount" />
+          <ScalarProperty Name="LateChargesThereAfterday" ColumnName="LateChargesThereAfterday" />
+          <ScalarProperty Name="LateChargesThereAfterdayAmount" ColumnName="LateChargesThereAfterdayAmount" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetAllPayments" FunctionName="BHDbaseModel.Store.sp_getAllPayments">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BHDbaseModel.Payments">
+          <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
+          <ScalarProperty Name="PaidDate" ColumnName="PaidDate" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetInvoiceDetails" FunctionName="BHDbaseModel.Store.sp_getInvoiceDetails">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BHDbaseModel.InvoiceDetail">
+          <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+          <ScalarProperty Name="InvoiceNumber" ColumnName="InvoiceNumber" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="IsLateCharges" ColumnName="IsLateCharges" />
+          <ScalarProperty Name="LateCharges" ColumnName="LateCharges" />
+          <ScalarProperty Name="LateChargesStartday" ColumnName="LateChargesStartday" />
+          <ScalarProperty Name="LateChargesStartdayAmount" ColumnName="LateChargesStartdayAmount" />
+          <ScalarProperty Name="LateChargesThereAfterday" ColumnName="LateChargesThereAfterday" />
+          <ScalarProperty Name="LateChargesThereAfterdayAmount" ColumnName="LateChargesThereAfterdayAmount" />
+          <ScalarProperty Name="CustomerFirstName" ColumnName="CustomerFirstName" />
+          <ScalarProperty Name="CustomerLastName" ColumnName="CustomerLastName" />
+          <ScalarProperty Name="AmountDue" ColumnName="AmountDue" />
+          <ScalarProperty Name="BillDescription" ColumnName="BillDescription" />
+          <ScalarProperty Name="CustomerEmail" ColumnName="CustomerEmail" />
+          <ScalarProperty Name="EmailSentDate" ColumnName="EmailSentDate" />
+          <ScalarProperty Name="IsPaid" ColumnName="IsPaid" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="TotalAmountDue" ColumnName="TotalAmountDue" />
+          <ScalarProperty Name="Payee" ColumnName="Payee" />
+          <ScalarProperty Name="PayeeEmail" ColumnName="PayeeEmail" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetAllEmailedReport" FunctionName="BHDbaseModel.Store.sp_getAllEmailedReport">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BHDbaseModel.EmailedReport">
+          <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="InvoiceNumber" ColumnName="InvoiceNumber" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="TotalAmountDue" ColumnName="TotalAmountDue" />
+          <ScalarProperty Name="EmailSentDate" ColumnName="EmailSentDate" />
+          <ScalarProperty Name="IsPaid" ColumnName="IsPaid" />
+          <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
+          <ScalarProperty Name="CustomerFirstName" ColumnName="CustomerFirstName" />
+          <ScalarProperty Name="CustomerLastName" ColumnName="CustomerLastName" />
+          <ScalarProperty Name="BillDescription" ColumnName="BillDescription" />
+          <ScalarProperty Name="CustomerEmail" ColumnName="CustomerEmail" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="RemainderEmails">
+      <EntityTypeMapping TypeName="BHDbaseModel.RemainderEmail">
+        <MappingFragment StoreEntitySet="RemainderEmail">
+          <ScalarProperty Name="SentDate" ColumnName="SentDate" />
+          <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+          <ScalarProperty Name="RemainderEmailId" ColumnName="RemainderEmailId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetAllRemainderEmailReport" FunctionName="BHDbaseModel.Store.sp_getAllRemainderEmailReport">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BHDbaseModel.EmailedReport">
+          <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="InvoiceNumber" ColumnName="InvoiceNumber" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="TotalAmountDue" ColumnName="TotalAmountDue" />
+          <ScalarProperty Name="EmailSentDate" ColumnName="EmailSentDate" />
+          <ScalarProperty Name="IsPaid" ColumnName="IsPaid" />
+          <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
+          <ScalarProperty Name="CustomerFirstName" ColumnName="CustomerFirstName" />
+          <ScalarProperty Name="CustomerLastName" ColumnName="CustomerLastName" />
+          <ScalarProperty Name="BillDescription" ColumnName="BillDescription" />
+          <ScalarProperty Name="CustomerEmail" ColumnName="CustomerEmail" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

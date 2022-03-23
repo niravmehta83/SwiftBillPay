@@ -1,0 +1,11 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+    string er = ViewBag.Error as string;
+}
+
+<hgroup class="title">
+    <h1 class="error">@er</h1>
+    <h2 class="error">An error occurred while processing your request.</h2><a href="@Url.Action("Index","Home")" >Go to Home page</a>
+</hgroup>

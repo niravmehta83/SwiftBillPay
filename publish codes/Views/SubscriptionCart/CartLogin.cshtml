@@ -1,0 +1,57 @@
+﻿@model BingHousing.WebUI.MVC.Models.LoginModel
+@{
+    ViewBag.Title = "Cart Login - Swift Bill Pay";
+    Layout = "~/Views/Shared/_LayoutWizard.cshtml";
+}
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4><i class="fa fa-sign-in"></i> Log in</h4>
+            </div>
+            <div class="panel-body">
+                @Html.Partial("_ErrorPanel")
+                @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "User Name", autocomplete = "off" })
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.Password, new { @class = "form-control", placeholder = "First Password", type = "password" })
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.Password2, new { @class = "form-control", placeholder = "Second Password", type = "password" })
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.Captcha, new { @class = "form-control", placeholder = "Text from image", type = "text", autocomplete = "off" })
+                    </div>
+                    <div class="form-group">
+                        @{Html.RenderAction("_Captcha","Account");}
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.RememberMe)Remember Me
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        
+                        @Html.ActionLink("Signup", "CartRegister","SubscriptionCart", null, new { @class = "btn-link" }), if you don't have an account.
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary btn-group btn-group-justified" value="Continue Checkout">
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+
+

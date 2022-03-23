@@ -1,0 +1,144 @@
+﻿@model BingHousing.WebUI.MVC.Models.ReportDurationModel
+@using BingHousing_BO;
+@{
+    ViewBag.Title = "Sent Email Report - Swift Bill Pay";
+    ViewBag.PageTitle = "Sent Email Report";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    List<EmailSummaryReport> list = (List<EmailSummaryReport>)ViewBag.Results;
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="row row-space">
+        <div class="form-group">
+            <div class="col-lg-1">
+                <label>Month</label>
+            </div>
+            <div class="col-lg-2">
+                @Html.DropDownListFor(m => m.Month, (List<SelectListItem>)ViewBag.monthlist, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Month)
+            </div>
+            @if (((List<SelectListItem>)ViewBag.yearlist).Count > 0)
+            {
+                <div class="col-lg-1">
+                    <label>Year</label>
+                </div>
+                <div class="col-lg-2">
+                    @Html.DropDownListFor(m => m.Year, (List<SelectListItem>)ViewBag.yearlist, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Year)
+                </div>
+            }
+            <div class="col-lg-4">
+                <input type="submit" class="btn btn-primary" value="Search"> &nbsp;&nbsp;
+                @*<a href="@Url.Action("PaymentReport", "User")"><input type="button" class="btn btn-success" value="Show All"></a>*@
+            </div>
+        </div>
+    </div>
+}
+@if (list != null && list.Count > 0)
+{
+    foreach (EmailSummaryReport l in list)
+    {
+        <div style="text-decoration: underline;">
+            <h5>
+                @l.Date.ToShortDateString() &nbsp;&nbsp;&nbsp;&nbsp;
+                <b>@l.TotalAmount</b><input type="button" class="btn btn-primary" id="btnoc+@l.Date.Day" value="Click to Open" onclick="Show(@l.Date.Day,this)">
+            </h5>
+        </div>
+        <div id="@l.Date.Day" style="display: none; border:1 solid gray;">
+            <div id="divprint+@l.Date.Day" class="panel-body">
+                <div class="dataTable_wrapper">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr>
+                                <th>Name </th>
+                                <th>Email </th>
+                                <th>Description</th>
+                                <th>Bill ID</th>
+                                <th>Late Charges</th>
+                                <th>Sent Date</th>
+                                <th>Total Due</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (EmailedReport L in l.list)
+                            {
+                                <tr class="odd gradeX">
+                                    <td>@(L.CustomerFirstName + " " + L.CustomerLastName)</td>
+                                    <td>@L.CustomerEmail</td>
+                                    <td>@L.BillDescription</td>
+                                    <td>@L.InvoiceId</td>
+                                    <td>
+                                        @if (L.LateCharges)
+                                        {
+                                            <p>Yes</p>
+                                        }
+                                        else
+                                        {
+                                            <p>No</p>
+                                        }
+                                </td>
+                                <td>@L.EmailSentDate</td>
+                                <td>$ @L.TotalAmountDue</td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-2">
+                        <label>Total :</label>
+                    </div>
+                    <div class="col-lg-2">
+                        <label><b>$ @l.TotalAmount</b></label>
+                    </div>
+                </div>
+                <button onclick="CallPrint('divprint+@l.Date.Day')">
+                    Print this page
+                </button>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <h5>No Records</h5>
+}
+@section Scripts{
+    <script type="text/javascript">
+        function myFunction() {
+            window.print();
+        }
+        function CallPrint(strid) {
+            var prtContent = document.getElementById(strid);
+            var WinPrint = window.open('', '', 'letf=0,top=0,width=1000,height=1000,toolbar=0,scrollbars=0,status=0');
+            WinPrint.document.write(prtContent.innerHTML);
+            WinPrint.document.close();
+            WinPrint.focus();
+            WinPrint.print();
+            WinPrint.close();
+            //prtContent.innerHTML = strOldOne;
+        }
+        function Show(id, e) {
+            if ($(e).val() == 'Click to Open') {
+                $('#' + id).show(2000);
+                $(e).val('Close');
+
+            }
+            else {
+                $('#' + id).hide(2000);
+                $(e).val('Click to Open');
+
+            }
+        }
+
+    </script>
+}
+

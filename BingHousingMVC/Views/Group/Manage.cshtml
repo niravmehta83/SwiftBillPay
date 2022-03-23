@@ -1,0 +1,78 @@
+﻿@using BingHousingMVC.Models;
+@{
+    ViewBag.Title = "Manage Group - Swift Bill Pay";
+    ViewBag.PageTitle = "Manage Group";
+    List<GroupModel> grps = ViewBag.Groups as List<GroupModel>;
+    string username = System.Web.HttpContext.Current.Session["SelectedUserName"] as string ?? User.Identity.Name;
+}
+<h3>
+    All available groups : <span class="badge">@(grps != null ? grps.Count : 0)</span>
+    <div style="float: right;">
+        @using (Html.BeginForm("Create", "Group", FormMethod.Get, new { id = "selectCustomer" }))
+        {
+            <button type="submit" class="btn-circle" data-toggle2="tooltip" title="Add new group">
+                Add Group</button>
+        }
+    </div>
+</h3>
+<div  id="foo">
+    @if ((grps != null ? grps.Count : 0) > 0)
+    {
+        <div>
+            <table class="grid" cellpadding="0" cellspacing="0" style="margin: 10px 10px 10px 10px;">
+                <thead class="gridhead">
+                    <tr>
+                        <th>
+                            Group Name (member count)
+                        </th>
+                        <th>
+                            Group Description
+                        </th>
+                        <th>
+                            Created On
+                        </th>
+                        <th>
+                            Last Updated On
+                        </th>
+                        <th>
+                            Operations
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (GroupModel group in (List<GroupModel>)ViewBag.Groups)
+                    {
+                        <tr class="odd gradeX">
+                            <td>@group.GroupName <span class="badge">(@group.GroupMembers.Count)</span>
+                            </td>
+                            <td>@group.GroupDescription
+                            </td>
+                            <td>@group.CreatedOn.ToShortDateString() @group.CreatedOn.ToShortTimeString()
+                            </td>
+                            <td>@group.LastModified.ToShortDateString() @group.LastModified.ToShortTimeString()
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Edit", "Group", new { GroupId = group.GroupId })">
+                                    <button>Edit</button></a>&nbsp 
+                                    
+                                    <a href="@Url.Action("DeleteGroup", "Group", new { GroupId = group.GroupId })">
+                                            <button>Delete</button></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    }
+    else
+    {
+        <h5>
+            No Records</h5>
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('[data-toggle2="tooltip"]').tooltip();
+    });        
+</script>

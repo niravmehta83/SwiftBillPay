@@ -1,0 +1,17 @@
+﻿@if (!ViewData.ModelState.IsValid)
+{
+    var modelStateErrors = ViewData.ModelState.Keys.SelectMany(key => ViewData.ModelState[key].Errors);
+    if (modelStateErrors != null && modelStateErrors.Count() > 0)
+    {
+        <div class="alert alert-danger">
+            <ul >
+                @foreach (System.Web.Mvc.ModelError item in modelStateErrors)
+                {
+                    <li>@item.ErrorMessage</li>
+                }
+            </ul>
+            
+        </div>
+    }
+}
+ 

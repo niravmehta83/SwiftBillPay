@@ -1,0 +1,49 @@
+﻿@model BingHousing.WebUI.MVC.Models.RegisterModel
+@{
+    ViewBag.Title = "Register - Swift Bill Pay";
+    Layout = "~/Views/Shared/_LayoutWizard.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4"><div class="panel panel-default">
+    <div class="panel-heading">
+        <h4><i class="fa fa-register"></i> Registration Form</h4>
+    </div>
+    <div class="panel-body">
+        @Html.Partial("_ErrorPanel")
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "User ID", autofocus = "true" })
+            </div>
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Password, new { @class = "form-control", placeholder = "First Password", type = "password" })
+            </div>
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm First Password", type = "password" })
+            </div>
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Password2, new { @class = "form-control", placeholder = "Second Password", type = "password" })
+            </div>
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.ConfirmPassword2, new { @class = "form-control", placeholder = "Confirm Second Password", type = "password" })
+            </div>
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "E-mail", type = "email" })
+            </div>
+
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary btn-group btn-group-justified" value="Next Step">
+            </div>
+        }
+
+    </div>
+</div></div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+
+

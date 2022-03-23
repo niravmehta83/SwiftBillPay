@@ -1,0 +1,381 @@
+﻿@using BingHousing_BO
+@using BingHousing.WebUI.MVC.Models;
+@{
+    ViewBag.Title = "PaymentSuccess";
+
+    PaymentMailModel tmodel = (PaymentMailModel)ViewBag.Model;
+
+    string[] array = tmodel.Name.Split(' ').ToArray();
+
+    string[] arryAdd = tmodel.Address2.Split('$').ToArray();
+       
+}
+<div align="center">
+    <h2>
+        Invoice Number# : @tmodel.ProjectNumber</h2>
+    @if (ViewBag.Results != null)
+    {
+        <table>
+            <tr>
+                <td>
+                    <table class="grid" cellpadding="0" cellspacing="0" width="800px" style="margin: 10px 10px 10px 10px;">
+                        <thead class="gridhead">
+                            <tr>
+                                <td style="width: 50%">
+                                    <b>Products</b>
+                                </td>
+                                <td style="width: 10%">
+                                    <b>Quantity</b>
+                                </td>
+                                <td style="width: 10%">
+                                    <b>Unit Price</b>
+                                </td>
+                                <td style="width: 10%">
+                                    <b>Late Charges</b>
+                                </td>
+                                <td style="width: 10%">
+                                    <b>Total</b>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (InvoiceDetail r in ViewBag.Results)
+                            {
+                                <tr>
+                                   
+                                    <td>
+                                        <div>
+                                            <b>Customer Id :</b>@r.InvoiceNumber<br />
+                                            <b>Name :</b>@r.CustomerFirstName @r.CustomerLastName<br />
+                                            <b>Description :</b>@r.BillDescription<br />
+                                            <b>Invoice # :</b>@r.InvoiceId<br />
+                                            <b>Billing Date :</b> @r.EmailSentDate.DayOfWeek @r.EmailSentDate.ToString("dd MMM yyyy")<br />
+                                            <b>Data Sent :</b> @r.EmailSentDate.DayOfWeek @r.EmailSentDate.ToString("dd MMM yyyy")<br />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="center">
+                                           @r.Quantity
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="center">
+                                            <label  id="lblup+@r.InvoiceId" >
+                                                <b>US$</b> @r.AmountDue
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="center">
+                                            <label  id="lbllc+@r.InvoiceId" >
+                                                <b>US$</b> @r.LateCharges
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="center">
+                                            <label  id="lbltp+@r.InvoiceId" >
+                                                <b>US$</b> @(r.TotalAmountDue+r.LateCharges)
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="float: right; padding-right: 20px;">
+                        <table style="border: none !important">
+                            <tr>
+                                <td class="not-selected-row" style="border: none !important">
+                                    <h3>
+                                        <b>Product Cost :</b></h3>
+                                </td>
+                                <td style="border: none !important">
+                                    <h4>
+                                        <b>US$@ViewBag.checkoutAmount</b></h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="not-selected-row" style="border: none !important">
+                                    <h3>
+                                        <b>Total Cost :</b></h3>
+                                </td>
+                                <td style="border: none !important">
+                                    <h4>
+                                        <b>US$@ViewBag.checkoutAmount</b></h4>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </table>
+      
+    
+    }
+    <fieldset>
+        <legend>Customer Information</legend>
+        <table style="border: none !important;">
+            <tr>
+                <td class="EditTable1">
+                    <div class="editor-label">
+                        <b>@Html.Label("FirstName :")</b>
+                    </div>
+                </td>
+               
+                <td class="EditTable1">
+                    <div class="editor-field">
+                        @array[0]
+                    </div>
+                </td>
+            
+                <td class="EditTable1">
+                    <div class="editor-label">
+                        <b>@Html.Label("LastName :")</b>
+                    </div>
+                </td>
+         
+                <td class="EditTable1">
+                    <div class="editor-field">
+                        @array[1]
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="EditTable1">
+                    <div class="editor-label">
+                        <b>@Html.Label("Address :")</b>
+                    </div>
+                </td>
+               
+                <td class="EditTable1">
+                    <div class="editor-field">
+                        @tmodel.Address1
+                    </div>
+                </td>
+            
+                <td class="EditTable1">
+                    <div class="editor-label">
+                        <b>@Html.Label("City :")</b>
+                    </div>
+                </td>
+               
+                <td class="EditTable1">
+                    <div class="editor-field">
+                        @arryAdd[0]
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="EditTable1">
+                    <div class="editor-label">
+                        <b>@Html.Label("State :")</b>
+                    </div>
+                </td>
+             
+                <td class="EditTable1">
+                    <div class="editor-field">
+                       @arryAdd[1]
+                    </div>
+                </td>
+            
+                <td class="EditTable1">
+                    <div class="editor-label">
+                        <b>@Html.Label("Post Code :")</b>
+                    </div>
+                </td>
+              
+                <td class="EditTable1">
+                    <div class="editor-field">
+                        @arryAdd[2]
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="EditTable1">
+                    <div class="editor-label">
+                        <b>@Html.Label("Country :")</b>
+                    </div>
+                </td>
+               
+                <td class="EditTable1">
+                    <div class="editor-field">
+                        @tmodel.Country
+                    </div>
+                </td>
+           
+                <td class="EditTable1">
+                    <div class="editor-label">
+                        <b>@Html.Label("Phone Number :")</b>
+                    </div>
+                </td>
+               
+                <td class="EditTable1">
+                    <div class="editor-field">
+                        @tmodel.Phone
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="EditTable1">
+                    <div class="editor-label">
+                        <b>@Html.Label("Email :")</b>
+                    </div>
+                </td>
+               
+                <td class="EditTable1">
+                    <div class="editor-field">
+                        @tmodel.From
+                    </div>
+                </td>
+                
+                    <td class="EditTable1">
+                    <div class="editor-label">
+                      
+                    </div>
+                </td>
+              
+                <td class="EditTable1">
+                   
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    <fieldset>
+        <legend>Payment Information</legend>
+        <table style="border: none !important;">
+            <tr>
+                <td class="EditTable1">
+                    <div class="editor-label">
+                        @Html.Label("Payment type :")
+                    </div>
+                </td>
+              
+                <td class="EditTable1">
+                    <div class="editor-field">
+                        @tmodel.PaymentType
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+  @*  <fieldset>
+        <legend>Shipping Information</legend>
+        <table style="border: none !important;">
+            <tr>
+                <td class="EditTable1">
+                    <div class="editor-label">
+                        <b>@Html.Label("Shipping Method :")</b>
+                    </div>
+                </td>
+               
+                <td class="EditTable1">
+                    <div class="editor-field">
+                        Normal Post
+                    </div>
+                </td>
+                 
+                    <td class="EditTable1">
+                    <div class="editor-label">
+                      
+                    </div>
+                </td>
+              
+                <td class="EditTable1">
+                   
+                </td>
+            </tr>
+            <tr>
+                <td class="EditTable1">
+                    <div class="editor-label">
+                        <b>@Html.Label("Ship to Name :")</b>
+                    </div>
+                </td>
+               
+                <td class="EditTable1">
+                    <div class="editor-field">
+                        @tmodel.Name
+                    </div>
+                </td>
+                 
+           
+                <td class="EditTable1">
+                    <div class="editor-label">
+                        <b>@Html.Label("Ship To Address :")</b>
+                    </div>
+                </td>
+              
+                <td class="EditTable1">
+                    <div class="editor-field">
+                        @tmodel.Address1
+                    </div>
+                </td>
+                 </tr>
+            <tr>
+        
+                <td class="EditTable1">
+                    <div class="editor-label">
+                        <b>@Html.Label("Ship City :")</b>
+                    </div>
+                </td>
+                
+                <td class="EditTable1">
+                    <div class="editor-field">
+                        @arryAdd[0]
+                    </div>
+                </td>
+          
+                <td class="EditTable1">
+                    <div class="editor-label">
+                        <b>@Html.Label("Ship State :")</b>
+                    </div>
+                </td>
+               
+                <td class="EditTable1">
+                    <div class="editor-field">
+                         @arryAdd[1]
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                
+           
+                <td class="EditTable1">
+                    <div class="editor-label">
+                        <b>@Html.Label("Ship Country :")</b>
+                    </div>
+                </td>
+              
+                <td class="EditTable1">
+                    <div class="editor-field">
+                        @tmodel.Country
+                    </div>
+                </td>
+              
+                <td class="EditTable1">
+                    <div class="editor-label">
+                        <b>@Html.Label("Ship Post Code :")</b>
+                    </div>
+                </td>
+                
+                <td class="EditTable1">
+                    <div class="editor-field">
+                        @arryAdd[2]
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </fieldset>*@
+    <button onclick="myFunction()">Print this page</button>
+</div>
+@section Scripts{
+<script type="text/javascript">
+    function myFunction() {
+        window.print();
+    }
+</script>
+}

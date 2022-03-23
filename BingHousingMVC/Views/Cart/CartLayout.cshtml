@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" />
+    
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="page">
+        <div id="header">
+            <table width="100%" cellpadding="0" cellspacing="0"  style="margin-top: 0; margin-bottom: 0; padding:0; border:none !Important; height:30px;">
+                <tr style="margin-top: 0 !Important; margin-bottom: 0 !Important; border:none !Important;padding:0;">
+                    <td width="80%" style="margin-top: 0 !Important; margin-bottom: 0 !Important; border:none !Important;padding:0;">
+                        <div id="title">
+                            @Html.Partial("PayeeName")
+                        </div>
+                    </td>
+                   <td width="80%" style="margin-top: 0 !Important; margin-bottom: 0 !Important; border:none !Important;padding:0;">
+                        <div >
+                            @Html.Partial("Cart_LoginPartial")
+                        </div>
+                    </td>
+                </tr>
+              
+            </table>
+        </div>
+        <div id="main">
+            @RenderBody()
+        </div>
+        <div id="footer">
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")@Scripts.Render("~/bundles/jqueryui")
+    @RenderSection("scripts", required: false)
+
+   
+</body>
+</html>

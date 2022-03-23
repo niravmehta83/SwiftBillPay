@@ -1,0 +1,582 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BHDbaseModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="BHDbaseModelStoreContainer">
+    <EntitySet Name="CheckDetail" EntityType="BHDbaseModel.Store.CheckDetail" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Customer" EntityType="BHDbaseModel.Store.Customer" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CustomerProfile" EntityType="BHDbaseModel.Store.CustomerProfile" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="IntervalType" EntityType="BHDbaseModel.Store.IntervalType" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Invoice" EntityType="BHDbaseModel.Store.Invoice" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Payee" EntityType="BHDbaseModel.Store.Payee" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PaymentDetail" EntityType="BHDbaseModel.Store.PaymentDetail" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PaymentModes" EntityType="BHDbaseModel.Store.PaymentModes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PayPalAccountDetail" EntityType="BHDbaseModel.Store.PayPalAccountDetail" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PayPalDetail" EntityType="BHDbaseModel.Store.PayPalDetail" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RemainderEmail" EntityType="BHDbaseModel.Store.RemainderEmail" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserDetails" EntityType="BHDbaseModel.Store.UserDetails" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserProfile" EntityType="BHDbaseModel.Store.UserProfile" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserSecurity" EntityType="BHDbaseModel.Store.UserSecurity" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="webpages_Membership" EntityType="BHDbaseModel.Store.webpages_Membership" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="webpages_OAuthMembership" EntityType="BHDbaseModel.Store.webpages_OAuthMembership" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="webpages_Roles" EntityType="BHDbaseModel.Store.webpages_Roles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="webpages_UsersInRoles" EntityType="BHDbaseModel.Store.webpages_UsersInRoles" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK__CheckDeta__UserI__571DF1D5" Association="BHDbaseModel.Store.FK__CheckDeta__UserI__571DF1D5">
+      <End Role="UserProfile" EntitySet="UserProfile" />
+      <End Role="CheckDetail" EntitySet="CheckDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Invoice__UserId__3A81B327" Association="BHDbaseModel.Store.FK__Invoice__UserId__3A81B327">
+      <End Role="UserProfile" EntitySet="UserProfile" />
+      <End Role="Invoice" EntitySet="Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PayPalDet__UserI__46E78A0C" Association="BHDbaseModel.Store.FK__PayPalDet__UserI__46E78A0C">
+      <End Role="UserProfile" EntitySet="UserProfile" />
+      <End Role="PayPalDetail" EntitySet="PayPalDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserDetai__UserI__36B12243" Association="BHDbaseModel.Store.FK__UserDetai__UserI__36B12243">
+      <End Role="UserProfile" EntitySet="UserProfile" />
+      <End Role="UserDetails" EntitySet="UserDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserSecur__UserI__1B0907CE" Association="BHDbaseModel.Store.FK__UserSecur__UserI__1B0907CE">
+      <End Role="UserProfile" EntitySet="UserProfile" />
+      <End Role="UserSecurity" EntitySet="UserSecurity" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerDetails_IntervalType" Association="BHDbaseModel.Store.FK_CustomerDetails_IntervalType">
+      <End Role="IntervalType" EntitySet="IntervalType" />
+      <End Role="Customer" EntitySet="Customer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerDetails_Payee" Association="BHDbaseModel.Store.FK_CustomerDetails_Payee">
+      <End Role="Payee" EntitySet="Payee" />
+      <End Role="Customer" EntitySet="Customer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerProfile_UserProfile" Association="BHDbaseModel.Store.FK_CustomerProfile_UserProfile">
+      <End Role="UserProfile" EntitySet="UserProfile" />
+      <End Role="CustomerProfile" EntitySet="CustomerProfile" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Invoice_CustomerDetails" Association="BHDbaseModel.Store.FK_Invoice_CustomerDetails">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="Invoice" EntitySet="Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Invoice_PaymentDetail" Association="BHDbaseModel.Store.FK_Invoice_PaymentDetail">
+      <End Role="PaymentDetail" EntitySet="PaymentDetail" />
+      <End Role="Invoice" EntitySet="Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Payee_UserProfile" Association="BHDbaseModel.Store.FK_Payee_UserProfile">
+      <End Role="UserProfile" EntitySet="UserProfile" />
+      <End Role="Payee" EntitySet="Payee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PaymentDetail_CheckDetail" Association="BHDbaseModel.Store.FK_PaymentDetail_CheckDetail">
+      <End Role="CheckDetail" EntitySet="CheckDetail" />
+      <End Role="PaymentDetail" EntitySet="PaymentDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PaymentDetail_PaymentModes" Association="BHDbaseModel.Store.FK_PaymentDetail_PaymentModes">
+      <End Role="PaymentModes" EntitySet="PaymentModes" />
+      <End Role="PaymentDetail" EntitySet="PaymentDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PaymentDetail_PayPalDetail" Association="BHDbaseModel.Store.FK_PaymentDetail_PayPalDetail">
+      <End Role="PayPalDetail" EntitySet="PayPalDetail" />
+      <End Role="PaymentDetail" EntitySet="PaymentDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PaymentDetail_UserProfile" Association="BHDbaseModel.Store.FK_PaymentDetail_UserProfile">
+      <End Role="UserProfile" EntitySet="UserProfile" />
+      <End Role="PaymentDetail" EntitySet="PaymentDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PayPalAccountDetail_Payee" Association="BHDbaseModel.Store.FK_PayPalAccountDetail_Payee">
+      <End Role="Payee" EntitySet="Payee" />
+      <End Role="PayPalAccountDetail" EntitySet="PayPalAccountDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RemainderEmail_Invoice" Association="BHDbaseModel.Store.FK_RemainderEmail_Invoice">
+      <End Role="Invoice" EntitySet="Invoice" />
+      <End Role="RemainderEmail" EntitySet="RemainderEmail" />
+    </AssociationSet>
+    <AssociationSet Name="fk_RoleId" Association="BHDbaseModel.Store.fk_RoleId">
+      <End Role="webpages_Roles" EntitySet="webpages_Roles" />
+      <End Role="webpages_UsersInRoles" EntitySet="webpages_UsersInRoles" />
+    </AssociationSet>
+    <AssociationSet Name="fk_UserId" Association="BHDbaseModel.Store.fk_UserId">
+      <End Role="UserProfile" EntitySet="UserProfile" />
+      <End Role="webpages_UsersInRoles" EntitySet="webpages_UsersInRoles" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="CheckDetail">
+    <Key>
+      <PropertyRef Name="CheckId" />
+    </Key>
+    <Property Name="CheckId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="Payee" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="NameOnCheck" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="AddressOnCheck" Type="varchar" Nullable="false" MaxLength="250" />
+    <Property Name="CityOnCheck" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="StateOnCheck" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="ZipOnCheck" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="DateOnCheck" Type="datetime2" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Nullable="false" Precision="10" Scale="2" />
+    <Property Name="BankName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="BankAddress" Type="varchar" Nullable="false" MaxLength="250" />
+    <Property Name="BankCity" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="BankState" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="BankZip" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="CheckNumber" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="RountingNumber" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="AccountNumber" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="CheckMemo" Type="varchar" MaxLength="500" />
+    <Property Name="Comments" Type="varchar" MaxLength="500" />
+    <Property Name="InsertedOn" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CustomerId" />
+    </Key>
+    <Property Name="CustomerId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="PayeeId" Type="int" Nullable="false" />
+    <Property Name="CustomerFirstName" Type="varchar" MaxLength="100" />
+    <Property Name="CustomerLastName" Type="varchar" MaxLength="100" />
+    <Property Name="CustomerAddress" Type="varchar" MaxLength="250" />
+    <Property Name="CustomerAddress2" Type="varchar" MaxLength="250" />
+    <Property Name="CustomerCity" Type="varchar" MaxLength="100" />
+    <Property Name="CustomerState" Type="varchar" MaxLength="100" />
+    <Property Name="CustomerZipCode" Type="varchar" MaxLength="25" />
+    <Property Name="CustomerCountry" Type="varchar" MaxLength="100" />
+    <Property Name="CustomerEmail" Type="varchar" MaxLength="100" />
+    <Property Name="AmountDue" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="BillDescription" Type="varchar" MaxLength="500" />
+    <Property Name="NextBillDate" Type="date" Nullable="false" />
+    <Property Name="Intervals" Type="int" Nullable="false" />
+    <Property Name="IntervalTypeId" Type="int" Nullable="false" />
+    <Property Name="LateCharges" Type="bit" Nullable="false" />
+    <Property Name="LateChargesStartday" Type="int" Nullable="false" />
+    <Property Name="LateChargesStartdayAmount" Type="decimal" Nullable="false" Precision="10" Scale="2" />
+    <Property Name="LateChargesThereAfterday" Type="int" Nullable="false" />
+    <Property Name="LateChargesThereAfterdayAmount" Type="decimal" Nullable="false" Precision="10" Scale="2" />
+  </EntityType>
+  <EntityType Name="CustomerProfile">
+    <Key>
+      <PropertyRef Name="CustomerProfileId" />
+    </Key>
+    <Property Name="CustomerProfileId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" Nullable="false" MaxLength="200" />
+    <Property Name="LastName" Type="nvarchar" Nullable="false" MaxLength="200" />
+    <Property Name="Address" Type="nvarchar" Nullable="false" MaxLength="200" />
+    <Property Name="Address2" Type="nvarchar" MaxLength="200" />
+    <Property Name="City" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="State" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="ZipCode" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="Country" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="Company" Type="nvarchar" MaxLength="100" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="JOML" Type="bit" Nullable="false" />
+    <Property Name="PaymentMode" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="Comments" Type="nvarchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="IntervalType">
+    <Key>
+      <PropertyRef Name="IntervalTypeId" />
+    </Key>
+    <Property Name="IntervalTypeId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="IntervalTypeDescription" Type="varchar" Nullable="false" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Invoice">
+    <Key>
+      <PropertyRef Name="InvoiceId" />
+    </Key>
+    <Property Name="InvoiceId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="CustomerId" Type="int" Nullable="false" />
+    <Property Name="InvoiceNumber" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="Quantity" Type="int" Nullable="false" />
+    <Property Name="TotalAmountDue" Type="decimal" Nullable="false" Precision="10" Scale="2" />
+    <Property Name="EmailSentDate" Type="date" Nullable="false" />
+    <Property Name="IsPaid" Type="bit" Nullable="false" />
+    <Property Name="PaymentId" Type="int" />
+  </EntityType>
+  <EntityType Name="Payee">
+    <Key>
+      <PropertyRef Name="PayeeId" />
+    </Key>
+    <Property Name="PayeeId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="Payee" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="PayeeAddress" Type="varchar" MaxLength="250" />
+    <Property Name="PayeeAddress2" Type="varchar" MaxLength="250" />
+    <Property Name="PayeeCity" Type="varchar" MaxLength="100" />
+    <Property Name="PayeeState" Type="varchar" MaxLength="100" />
+    <Property Name="PayeeZipCode" Type="varchar" MaxLength="25" />
+    <Property Name="PayeeCountry" Type="varchar" MaxLength="100" />
+    <Property Name="PayeeEmail" Type="varchar" MaxLength="100" />
+    <Property Name="PayeeComments" Type="varchar" MaxLength="250" />
+    <Property Name="PayeeContactPerson" Type="varchar" MaxLength="100" />
+    <Property Name="PayeeWebsite" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="PaymentDetail">
+    <Key>
+      <PropertyRef Name="PaymentId" />
+    </Key>
+    <Property Name="PaymentId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="PaymentModeId" Type="int" Nullable="false" />
+    <Property Name="PayPalId" Type="int" />
+    <Property Name="CheckId" Type="int" />
+    <Property Name="Insertedby" Type="int" Nullable="false" />
+    <Property Name="InsertedOn" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PaymentModes">
+    <Key>
+      <PropertyRef Name="PaymentModeId" />
+    </Key>
+    <Property Name="PaymentModeId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="PaymentMode" Type="nvarchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="PayPalAccountDetail">
+    <Key>
+      <PropertyRef Name="PayPalAccountId" />
+    </Key>
+    <Property Name="PayPalAccountId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="PayeeId" Type="int" Nullable="false" />
+    <Property Name="ClientID" Type="varchar" MaxLength="100" />
+    <Property Name="ClientSecret" Type="varchar" MaxLength="100" />
+    <Property Name="InsertedOn" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PayPalDetail">
+    <Key>
+      <PropertyRef Name="PayPalId" />
+    </Key>
+    <Property Name="PayPalId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="PaymentResourceId" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="TransactionID" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="Amount" Type="decimal" Nullable="false" Precision="10" Scale="2" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="InsertedOn" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RemainderEmail">
+    <Key>
+      <PropertyRef Name="RemainderEmailId" />
+    </Key>
+    <Property Name="RemainderEmailId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="InvoiceId" Type="int" Nullable="false" />
+    <Property Name="SentDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserDetails">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="LastName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="Address" Type="varchar" Nullable="false" MaxLength="250" />
+    <Property Name="Address2" Type="varchar" MaxLength="250" />
+    <Property Name="City" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="State" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="ZipCode" Type="varchar" Nullable="false" MaxLength="25" />
+    <Property Name="Country" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="PhoneNumber" Type="varchar" Nullable="false" MaxLength="25" />
+    <Property Name="Mobile" Type="varchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="UserProfile">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="UserSecurity">
+    <Key>
+      <PropertyRef Name="SecurityId" />
+    </Key>
+    <Property Name="SecurityId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="Password2" Type="nvarchar" Nullable="false" MaxLength="200" />
+    <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="200" />
+    <Property Name="Islocked" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="webpages_Membership">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="ConfirmationToken" Type="nvarchar" MaxLength="128" />
+    <Property Name="IsConfirmed" Type="bit" />
+    <Property Name="LastPasswordFailureDate" Type="datetime" />
+    <Property Name="PasswordFailuresSinceLastSuccess" Type="int" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="PasswordChangedDate" Type="datetime" />
+    <Property Name="PasswordSalt" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="PasswordVerificationToken" Type="nvarchar" MaxLength="128" />
+    <Property Name="PasswordVerificationTokenExpirationDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="webpages_OAuthMembership">
+    <Key>
+      <PropertyRef Name="Provider" />
+      <PropertyRef Name="ProviderUserId" />
+    </Key>
+    <Property Name="Provider" Type="nvarchar" Nullable="false" MaxLength="30" />
+    <Property Name="ProviderUserId" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="webpages_Roles">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="nvarchar" Nullable="false" MaxLength="256" />
+  </EntityType>
+  <EntityType Name="webpages_UsersInRoles">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="RoleId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__CheckDeta__UserI__571DF1D5">
+    <End Role="UserProfile" Type="BHDbaseModel.Store.UserProfile" Multiplicity="1" />
+    <End Role="CheckDetail" Type="BHDbaseModel.Store.CheckDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="CheckDetail">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Invoice__UserId__3A81B327">
+    <End Role="UserProfile" Type="BHDbaseModel.Store.UserProfile" Multiplicity="1" />
+    <End Role="Invoice" Type="BHDbaseModel.Store.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Invoice">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PayPalDet__UserI__46E78A0C">
+    <End Role="UserProfile" Type="BHDbaseModel.Store.UserProfile" Multiplicity="1" />
+    <End Role="PayPalDetail" Type="BHDbaseModel.Store.PayPalDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="PayPalDetail">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UserDetai__UserI__36B12243">
+    <End Role="UserProfile" Type="BHDbaseModel.Store.UserProfile" Multiplicity="1" />
+    <End Role="UserDetails" Type="BHDbaseModel.Store.UserDetails" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserDetails">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UserSecur__UserI__1B0907CE">
+    <End Role="UserProfile" Type="BHDbaseModel.Store.UserProfile" Multiplicity="1" />
+    <End Role="UserSecurity" Type="BHDbaseModel.Store.UserSecurity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserSecurity">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerDetails_IntervalType">
+    <End Role="IntervalType" Type="BHDbaseModel.Store.IntervalType" Multiplicity="1" />
+    <End Role="Customer" Type="BHDbaseModel.Store.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="IntervalType">
+        <PropertyRef Name="IntervalTypeId" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="IntervalTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerDetails_Payee">
+    <End Role="Payee" Type="BHDbaseModel.Store.Payee" Multiplicity="1" />
+    <End Role="Customer" Type="BHDbaseModel.Store.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Payee">
+        <PropertyRef Name="PayeeId" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="PayeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerProfile_UserProfile">
+    <End Role="UserProfile" Type="BHDbaseModel.Store.UserProfile" Multiplicity="1" />
+    <End Role="CustomerProfile" Type="BHDbaseModel.Store.CustomerProfile" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="CustomerProfile">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Invoice_CustomerDetails">
+    <End Role="Customer" Type="BHDbaseModel.Store.Customer" Multiplicity="1" />
+    <End Role="Invoice" Type="BHDbaseModel.Store.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CustomerId" />
+      </Principal>
+      <Dependent Role="Invoice">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Invoice_PaymentDetail">
+    <End Role="PaymentDetail" Type="BHDbaseModel.Store.PaymentDetail" Multiplicity="0..1" />
+    <End Role="Invoice" Type="BHDbaseModel.Store.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PaymentDetail">
+        <PropertyRef Name="PaymentId" />
+      </Principal>
+      <Dependent Role="Invoice">
+        <PropertyRef Name="PaymentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Payee_UserProfile">
+    <End Role="UserProfile" Type="BHDbaseModel.Store.UserProfile" Multiplicity="1" />
+    <End Role="Payee" Type="BHDbaseModel.Store.Payee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Payee">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PaymentDetail_CheckDetail">
+    <End Role="CheckDetail" Type="BHDbaseModel.Store.CheckDetail" Multiplicity="0..1" />
+    <End Role="PaymentDetail" Type="BHDbaseModel.Store.PaymentDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CheckDetail">
+        <PropertyRef Name="CheckId" />
+      </Principal>
+      <Dependent Role="PaymentDetail">
+        <PropertyRef Name="CheckId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PaymentDetail_PaymentModes">
+    <End Role="PaymentModes" Type="BHDbaseModel.Store.PaymentModes" Multiplicity="1" />
+    <End Role="PaymentDetail" Type="BHDbaseModel.Store.PaymentDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PaymentModes">
+        <PropertyRef Name="PaymentModeId" />
+      </Principal>
+      <Dependent Role="PaymentDetail">
+        <PropertyRef Name="PaymentModeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PaymentDetail_PayPalDetail">
+    <End Role="PayPalDetail" Type="BHDbaseModel.Store.PayPalDetail" Multiplicity="0..1" />
+    <End Role="PaymentDetail" Type="BHDbaseModel.Store.PaymentDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PayPalDetail">
+        <PropertyRef Name="PayPalId" />
+      </Principal>
+      <Dependent Role="PaymentDetail">
+        <PropertyRef Name="PayPalId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PaymentDetail_UserProfile">
+    <End Role="UserProfile" Type="BHDbaseModel.Store.UserProfile" Multiplicity="1" />
+    <End Role="PaymentDetail" Type="BHDbaseModel.Store.PaymentDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="PaymentDetail">
+        <PropertyRef Name="Insertedby" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PayPalAccountDetail_Payee">
+    <End Role="Payee" Type="BHDbaseModel.Store.Payee" Multiplicity="1" />
+    <End Role="PayPalAccountDetail" Type="BHDbaseModel.Store.PayPalAccountDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Payee">
+        <PropertyRef Name="PayeeId" />
+      </Principal>
+      <Dependent Role="PayPalAccountDetail">
+        <PropertyRef Name="PayeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RemainderEmail_Invoice">
+    <End Role="Invoice" Type="BHDbaseModel.Store.Invoice" Multiplicity="1" />
+    <End Role="RemainderEmail" Type="BHDbaseModel.Store.RemainderEmail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Invoice">
+        <PropertyRef Name="InvoiceId" />
+      </Principal>
+      <Dependent Role="RemainderEmail">
+        <PropertyRef Name="InvoiceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_RoleId">
+    <End Role="webpages_Roles" Type="BHDbaseModel.Store.webpages_Roles" Multiplicity="1" />
+    <End Role="webpages_UsersInRoles" Type="BHDbaseModel.Store.webpages_UsersInRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="webpages_Roles">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="webpages_UsersInRoles">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_UserId">
+    <End Role="UserProfile" Type="BHDbaseModel.Store.UserProfile" Multiplicity="1" />
+    <End Role="webpages_UsersInRoles" Type="BHDbaseModel.Store.webpages_UsersInRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="webpages_UsersInRoles">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="sp_getAllCustomerDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Id" Type="int" Mode="In" />
+    <Parameter Name="IsCustomer" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="sp_getAllEmailedReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Id" Type="int" Mode="In" />
+    <Parameter Name="From" Type="datetime" Mode="In" />
+    <Parameter Name="To" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="sp_getAllPayments" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_getAllRemainderEmailReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Id" Type="int" Mode="In" />
+    <Parameter Name="From" Type="datetime" Mode="In" />
+    <Parameter Name="To" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="sp_getInvoiceDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="InvoiceNumber" Type="varchar" Mode="In" />
+    <Parameter Name="IsPaid" Type="int" Mode="In" />
+    <Parameter Name="PaymentId" Type="int" Mode="In" />
+    <Parameter Name="InvoiceId" Type="int" Mode="In" />
+    <Parameter Name="UserId" Type="int" Mode="In" />
+  </Function>
+</Schema>

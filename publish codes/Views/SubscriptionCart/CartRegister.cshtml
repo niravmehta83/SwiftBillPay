@@ -1,0 +1,175 @@
+﻿@using BingHousing_BO
+@model BingHousing.WebUI.MVC.Models.RegisterModel
+@{
+    ViewBag.Title = "Subscription Cart - Swift Bill Pay";
+    Layout = "~/Views/Shared/_LayoutWizard.cshtml";
+
+    Plan selectedPlan = ViewBag.SelectedPlan as Plan;    
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Subcription Cart
+            </div>
+            <div class="panel-body">
+
+            <!--Cart items-->
+            @if (selectedPlan != null)
+            {
+                <div class="row row-space">
+                    <div class="col-lg-3">
+                        <i class="fa fa-shopping-cart"></i> Cart
+                        <svg width="100%" height="2px"><rect width="100%" height="2px" style="fill:#000000" /></svg>
+                    </div>
+                    <div class="col-lg-3">
+                        <i class="fa fa-eye"></i> Review
+                        <svg width="100%" height="2px"><rect width="100%" height="2px" style="fill:#ebe4e4" /></svg>
+                    </div>
+                    <div class="col-lg-3">
+                        <i class="fa fa-cc-paypal"></i> Make Payment
+                        <svg width="100%" height="2px"><rect width="100%" height="2px" style="fill:#ebe4e4" /></svg>
+                    </div>
+                    <div class="col-lg-3">
+                        <i class="fa fa-info"></i> Order Information
+                        <svg width="100%" height="2px"><rect width="100%" height="2px" style="fill:#ebe4e4" /></svg>
+                    </div>
+                </div>
+                <div class="row row-space">
+                    <div class="col-lg-2">
+                        &nbsp
+                    </div>
+                </div>
+                <!--cart item list-->
+                <div class="dataTable_wrapper">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr>
+                                <th>Item Description</th>
+                                <th>Price</th>
+                                <th>Operation(s) </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="odd gradeX">
+                                <td>
+                                    <h3>@selectedPlan.PlanName</h3>
+                                    <p>@selectedPlan.PlanDescription</p>
+                                </td>
+                                <td><h4>@selectedPlan.PlanAmount</h4></td>
+                                <td>
+                                    <a href="@Url.Action("Cart", "SubscriptionCart", new { id = 0  })"><i class="fa fa-trash"></i> Delete</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4>New User Registeration</h4><h5>(All fields are required)</h5>
+                            </div>
+                            <div class="panel-body">
+                                <!--User information table-->
+                                @Html.Partial("_ErrorPanel")
+                                @using (Html.BeginForm("CartRegister"))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <div class="row row-space">
+                                        <div class="col-lg-6">
+                                            <div class="row row-space">
+                                                <div class="col-lg-4">
+                                                    User Name
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "User ID", autofocus = "true" })
+                                                </div>
+                                            </div>
+                                            <div class="row row-space">
+                                                <div class="col-lg-4">
+                                                    First Password
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    @Html.TextBoxFor(m => m.Password, new { @class = "form-control", placeholder = "First Password", type = "password" })
+                                                </div>
+                                            </div>
+                                            <div class="row row-space">
+                                                <div class="col-lg-4">
+                                                    Confirm First Password
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    @Html.TextBoxFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm First Password", type = "password" })
+                                                </div>
+                                            </div>
+                                            <div class="row row-space">
+                                                <div class="col-lg-4">
+                                                    Second Password
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    @Html.TextBoxFor(m => m.Password2, new { @class = "form-control", placeholder = "Second Password", type = "password" })
+                                                </div>
+                                            </div>
+                                            <div class="row row-space">
+                                                <div class="col-lg-4">
+                                                    Confirm Second Password
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    @Html.TextBoxFor(m => m.ConfirmPassword2, new { @class = "form-control", placeholder = "Confirm Second Password", type = "password" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="row row-space">
+                                                <div class="col-lg-4">
+                                                    Email
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "E-mail", type = "email" })
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row row-space">
+                                        <div class="col-lg-9"></div>
+                                        <div class="col-lg-3">
+                                            <input type="submit" class="btn btn-success" value="Continue Registration >>">
+                                        </div>
+                                    </div>
+                                    <h5>You're identified as new user, please take few seconds to register yourself.</h5>
+                                }
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row">
+                    <div class="col-lg-4"></div>
+                    <div class="col-lg-4">
+                        <div class="well">
+                            <h4>No items found in cart!!</h4>
+                            <a href="@Url.Action("ShowSubscriptions","Subscription")">
+                                <input type="button" value="Browse Subscription" class="btn btn-primary" />
+                            </a>
+                            <a href="@Url.Action("Index","Home")">
+                                <input type="button" value="Go back to home" class="btn btn-primary" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4"></div>
+
+                </div>
+             }
+         <!-- /Cart items-->
+        </div>
+                <!-- /.col-lg-12 -->
+        </div>
+<!-- /.row -->
+    </div>
+</div>

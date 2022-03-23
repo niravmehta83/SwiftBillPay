@@ -1,0 +1,150 @@
+﻿@using BingHousingMVC.Models;
+@{
+    ViewBag.Title = "Manage Group - Swift Bill Pay";
+    ViewBag.PageTitle = "Manage Group";
+    List<GroupModel> grps = ViewBag.Groups as List<GroupModel>;
+    string username = System.Web.HttpContext.Current.Session["SelectedUserName"] as string ?? User.Identity.Name;
+}
+<h3>
+    All available groups : <span class="badge">@(grps != null ? grps.Count : 0)</span>
+    <div style="float: right;">
+        @using (Html.BeginForm("Create", "Group", FormMethod.Get, new { id = "selectCustomer" }))
+        {
+            <button type="submit" class="btn-circle" data-toggle2="tooltip" title="Add new group">
+                Add Group</button>
+        }
+    </div>
+</h3>
+<div  id="foo">
+    @if ((grps != null ? grps.Count : 0) > 0)
+    {
+        <div>
+            <table class="grid" cellpadding="0" cellspacing="0" style="margin: 10px 10px 10px 10px;">
+                <thead class="gridhead">
+                    <tr>
+                        <th>
+                            Group Name (member count)
+                        </th>
+                        <th>
+                            Group Description
+                        </th>
+                        <th>
+                            Created On
+                        </th>
+                        <th>
+                            Last Updated On
+                        </th>
+                        <th>
+                            Operations
+                        </th>
+                        @*<th>Do Not update<br />
+                            <input class="allCheckBox" type="checkbox" />
+                        </th>*@
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (GroupModel group in grps)
+                    {
+                        <tr class="odd gradeX">
+                            <td><span id="divGN_@group.GroupId">@group.GroupName</span> <span class="badge pull-right">(@group.GroupMembers.Count)</span>
+                            </td>
+                            <td>@group.GroupDescription
+                            </td>
+                            <td>@group.CreatedOn.ToShortDateString() @group.CreatedOn.ToShortTimeString()
+                            </td>
+                            <td>@group.LastModified.ToShortDateString() @group.LastModified.ToShortTimeString()
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Edit", "Group", new { GroupId = group.GroupId })">
+                                    <button>Edit</button></a>&nbsp 
+                                    
+                                    <a href="@Url.Action("DeleteGroup", "Group", new { GroupId = group.GroupId })">
+                                            <button>Delete</button></a>
+                            </td>
+                            @*<td>
+                                <input class="singleCheckBox" name="selectedRows" value="@group.GroupId" type="checkbox" />
+                            </td>*@
+                        </tr>
+                    }
+                </tbody>
+
+                @*<tfoot>
+                    <tr>
+                        <td colspan="6">
+                            <a href="">
+                                <button id="btnBulkGroupDescUpdate">Update Description</button>
+                            </a>
+                        </td>
+                    </tr>
+                </tfoot>*@
+            </table>
+        </div>
+    }
+    else
+    {
+        <h5>
+            No Records</h5>
+    }
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#dialog").dialog({
+            autoOpen: false,
+            width: 470,
+            height: 250,
+            show: {
+                effect: "blind",
+                duration: 1000
+            },
+            hide: {
+                effect: "explode",
+                duration: 1000
+            }
+        });
+        $(".allCheckBox").click(function () {
+            var isChecked = this.checked;
+            $('.allCheckBox').each(function () { this.checked = (isChecked ? true : false) });
+            $('.singleCheckBox').each(function () { this.checked = (isChecked ? true : false) });
+            $('.singleCheckBox').closest('tr').addClass(isChecked ? 'selected-row' : 'not-selected-row');
+            $('.singleCheckBox').closest('tr').removeClass(isChecked ? 'not-selected-row' : 'selected-row');
+        });
+
+        $('.singleCheckBox').click(function () {
+            var isChecked = this.checked;//this.checked;
+            $(this).closest('tr').addClass(isChecked ? 'selected-row' : 'not-selected-row');
+            $(this).closest('tr').removeClass(isChecked ? 'not-selected-row' : 'selected-row');
+            if (isChecked && $('.singleCheckBox').length == $('.selected-row').length)
+                $('.allCheckBox').each(function () { this.checked = true });
+            else
+                $('.allCheckBox').each(function () { this.checked = false });
+
+        });
+        $('[data-toggle2="tooltip"]').tooltip();
+    });
+
+    $(document).ready(function () {
+        var opts = {
+            lines: 13, // The number of lines to draw
+            length: 5, // The length of each line
+            width: 3, // The line thickness
+            radius: 40, // The radius of the inner circle
+            corners: 1, // Corner roundness (0..1)
+            rotate: 0, // The rotation offset
+            direction: 1, // 1: clockwise, -1: counterclockwise
+            color: '#fff', // #rgb or #rrggbb or array of colors
+            speed: 1, // Rounds per second
+            trail: 60, // Afterglow percentage
+            shadow: true, // Whether to render a shadow
+            hwaccel: false, // Whether to use hardware acceleration
+            className: 'spinner', // The CSS class to assign to the spinner
+            zIndex: 2e9, // The z-index (defaults to 2000000000)
+            top: '400px', // Top position relative to parent in px
+            left: '650px' // Left position relative to parent in px
+        };
+        $('#btncancel').click(function (event) {
+            $("#dialog").dialog("close");
+            $('#GroupDesc').val("");
+        });
+    });
+</script>

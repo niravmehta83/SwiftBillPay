@@ -1,0 +1,170 @@
+﻿@using BingHousing_BO
+@{
+    ViewBag.Title = "Customers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div align="center" id="foo" ng-controller="ViewCustomerController">
+<h2>Customers</h2>
+    @if (ViewBag.Results != null)
+    {
+        <lable>Search by Customer FirstName:</lable> <input type="text" ng-model="searchKeyword" /> <label>
+           
+        </label>
+        <table class="grid" cellpadding="0" cellspacing="0" style="margin: 10px 10px 10px 10px;" width="1020px">
+            <thead class="gridhead">
+                <tr>
+                    <td>
+                        <div align="center">
+                            Customer Id
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            Customer Name
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            Customer Email<br />
+                            CC / BCC Email
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            Amount Due
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            Bill Description
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center" style="width:75px">
+                            Bill Date
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            Payee
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            Payee Email
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            Operations
+                        </div>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>             
+                <tr ng-repeat="L in Results| filter: { CustomerFirstName: searchKeyword}" id="{{L.CustomerId}}">
+                    <td>
+                        <div align="center">
+                            {{L.CustomerFirstName.charAt(0).toUpperCase()}}{{L.UserId}}{{L.CustomerId}}
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            {{L.CustomerFirstName}} {{L.CustomerLastName}}
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            {{L.CustomerEmail}}
+                        </div>
+                        <div align="center" ng-if="L.CCEmail">
+                            cc: {{L.CCEmail}}<br />
+                        </div>
+                        <div align="center" ng-if="L.BCCEmail">
+                            bcc:  {{L.BCCEmail}}
+                        </div>
+                    </td>
+                    
+                    <td>
+                        <div align="center">
+                            {{L.AmountDue}}
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            {{L.BillDescription}}
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            <lable ng-bind="L.NextBillDate| jsonDate : 'MM-dd-yyyy'" />
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            {{L.Payee}}
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            {{L.PayeeEmail}}
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            @*<a id="btnedit" href="@Url.Action("EditCustomerDetails", "User", new { CustomerId = {{L.CustomerId}} })">*@
+                            <a id="btnedit" href="/User/EditCustomerDetails?CustomerId={{L.CustomerId}}">
+                                <button>
+                                    Edit
+                                </button>
+                            </a> 
+                            @*<a id="btndelete" href="@Url.Action("DeleteCustomerDetails", "User", new { CustomerId = L.CustomerId })">*@
+                            <a id="btndelete" href="/User/DeleteCustomerDetails?CustomerId={{L.CustomerId}}">
+                                <button>
+                                    Delete
+                                </button>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+         
+            </tbody>
+        </table>
+       
+   
+
+    }
+    else
+    {
+        <h3>
+            No Records</h3> 
+    }
+    <div align="center" id="dialog" title="Email Note Box" style="display: none;">
+        <table style="border:none">
+            <tr style="border:none">
+                <td style="border:none">
+                    @Html.Label("Email Note:")<br/>
+                    @Html.Label("(copy or paste the note)")
+                </td>
+                <td>
+                    @Html.TextArea("EmailNote")
+                </td>
+            </tr>
+        </table>
+         <div  align="center"  style="margin-top:10px;"><input type="button" value="Send" id="btnnotebox" /><input type="button" value="Cancel" id="btncancel" /></div>
+    </div>
+</div>
+@section scripts{
+    <script>
+              
+            function ViewCustomerController($scope,$filter) {
+         
+                //$scope.CustomerFirstName='';
+                $scope.Results = @Html.Raw(Json.Encode(ViewBag.Results)) ;
+
+            };
+   
+    </script>
+}

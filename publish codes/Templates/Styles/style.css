@@ -1,0 +1,105 @@
+.button
+{
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top,  #ffffff 0%, #ececec 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #ffffff 0%,#ececec 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #ffffff 0%,#ececec 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #ffffff 0%,#ececec 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #ffffff 0%,#ececec 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ececec',GradientType=0 ); /* IE6-9 */
+    box-shadow: 0px 0px 2px #e5e5e5;
+    padding: 5px;
+    border-radius: 5px;
+    list-style: none;
+    display: inline-table; /* width: 99%; #0d8ee2*/
+    width: 895px;
+    position: inherit;
+}
+
+.button table
+{
+    border: none !important;
+    color:#3d6096 /*#2cafe3 #57b5e9 #567e00 */ ;
+    font-size: small;
+    border-style: none;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    text-align:left;
+    
+}
+
+
+.quest
+{
+    border-radius: 5px;
+    border: 1px solid #eeeeee;
+    width: 100%;
+    padding: 3px 3px 3px 3px;
+}
+
+.simage
+{
+    float: right;
+    position: initial;
+    right: 50px;
+}
+
+.himage
+{
+    float: right;
+    position: initial;
+    right: 50px;
+    display: none;
+}
+
+.questbody
+{
+    display: none;
+    padding: 0px 0px 0px 3px;
+    text-align: justify;
+    width: 890px;
+}
+#preview
+{
+    position: absolute;
+    background-color:#fefefe;
+    box-shadow: 0px 0px 5px gray;
+    padding: 5px 15px 5px 15px;
+    border-radius: 15px;
+    display: none;
+    color: purple;
+    width: 500px;
+    background-image: -moz-linear-gradient(top, purple,purple);
+}
+
+div.callout {
+	
+	float: left;
+}
+
+div.callout {
+	position: relative;
+	padding: 10px;
+	margin: 25px;
+	/*text-shadow: 0 0 1px #000;*/
+	
+	/*box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;*/
+}
+
+.callout::before {
+	content: "";
+	width: 0px;
+	height: 0px;
+	border: 0.8em solid transparent;
+	position: absolute;
+}
+
+.callout.right::before {
+	left: -20px;
+	top: 15px;
+	border-right: 10px solid gray;
+	
+}
+

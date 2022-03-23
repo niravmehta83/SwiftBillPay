@@ -1,0 +1,320 @@
+﻿@{
+    ViewBag.Title = "PaymentsReport";
+}
+<div ng-controller="PaymentsReportController" align="center">
+    <h2>
+        Payments Report
+    </h2>
+    <lable>Search by Payee:</lable>
+    <select ng-model="x" ng-options="b.Payee for b in Results | unique:'Payee'">
+        <option value="">Select Payee</option>
+    </select><input type="button" ng-click="Payeesadd()" value="Add" />
+    <label>
+        Date: <select ng-model="dat">
+            <option value="">All</option>
+            <option ng-repeat="m in dates|orderBy :orderByFunction">{{m}}</option>
+        </select>
+    </label>
+    <label>
+        Month:<select ng-model="mon">
+            <option value="">All</option>
+            <option value="0">Jan</option>
+            <option value="1">Feb</option>
+            <option value="2">Mar</option>
+            <option value="3">Apr</option>
+            <option value="4">May</option>
+            <option value="5">Jun</option>
+            <option value="6">Jul</option>
+            <option value="7">Aug</option>
+            <option value="8">Sep</option>
+            <option value="9">Oct</option>
+            <option value="10">Nov</option>
+            <option value="11">Dec</option>
+        </select>
+    </label>
+    <label>
+        Year: <select ng-model="yr">
+            <option value="">All</option>
+            <option ng-repeat="year in years">{{year}}</option>
+        </select>
+    </label> <br />
+    <label>
+        From date: <input type="text" id="fromDate" ng-model="fromDate" maxlength="10" placeholder="MM-DD-YYYY" />
+    </label>
+    <label>
+        To date: <input type="text" id="toDate" ng-model="toDate" maxlength="10" placeholder="MM-DD-YYYY" />
+    </label>
+    <label>
+        Sort by:
+        <select ng-model="order">
+            <option value="FirstName" selected="selected">Customer Name</option>
+            <option value="Payee">Payee</option>
+            <option value="PaidDate">Paid Date</option>
+        </select>
+        <select ng-model="orderby">
+            <option value="false">Ascending</option>
+            <option value="true" selected="selected">Descending</option>
+        </select>
+    </label>
+    <br />    
+    <lable>Search by FirstName:</lable> <input type="text" ng-model="firstName" />
+    <lable>Search by LastName:</lable> <input type="text" ng-model="lastName" />&nbsp;<input type="button" ng-click="reset()" value="Search" /><br />
+    <table style="border: none !important;" cellpadding="0" cellspacing="0">
+        <tr style="border: none !important;">
+            <td style="border: none !important;" ng-repeat="a in Ids">
+                <div style="float: left;">
+                    <lable ng-bind="a.Payee" />
+                </div>
+                <input style="float: right" type="button" value="x" ng-click="removeId($index)" />
+            </td>
+        </tr>
+    </table>
+
+    <div>
+        <div align="right" style="width: 1000px;">
+            <button onclick="CallPrint('divprint')">
+                Print this page
+            </button>
+        </div>
+        <div id="divprint">
+            @*<h2 id="divHeading" class="hide">
+                    Payments Report
+                </h2>*@
+
+            <table id="divHeading" class="hide" style="border: none !important;" cellpadding="0" cellspacing="0">
+                <tr style="border: none !important;" ng-if="payeesHeading">
+                    <td><h2>{{payeesHeading}}</h2></td>
+                </tr>
+                <tr style="border: none !important;" ng-if="!payeesHeading">
+                    <td><h3>Payments report for all Payees</h3></td>
+                </tr>
+            </table>
+            <table width="98%">
+                <tr>
+                    <td>
+                        <table class="grid" cellpadding="0" cellspacing="0" width="98%">
+                            <thead class="gridhead">
+                                <tr>
+                                    <td style="width: 3%">
+                                        <b>S#.</b>
+                                    </td>
+                                    <td style="width: 7%">
+                                        <b>Payment Id</b>
+                                    </td>
+                                    <td style="width: 6%">
+                                        <b>Invoice #</b>
+                                    </td>
+                                    <td style="width: 10%">
+                                        <b>Customer</b>
+                                    </td>
+                                    <td style="width: 10%">
+                                        <b>Bill desc</b>
+                                    </td>
+                                    <td style="width: 10%">
+                                        <b>Payee</b>
+                                    </td>
+                                    <td style="width: 10%">
+                                        <b>Amount Paid</b>
+                                    </td>
+                                    <td style="width: 10%">
+                                        <b>Payment Mode</b>
+                                    </td>
+                                    <td style="width: 10%">
+                                        <b>Paid Date</b>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="r in (list=(Results|mulf:Ids|filter: { FirstName: firstName}|filter: { LastName: lastName}|filter : selectedYearFilter|filter : selectedMonthFilter|filter : selectedDayFilter|filter : dateRangeFilter|orderBy:order:orderby))">
+                                    <td ng-init="Total.Records = $index+1"><label>{{$index+1}}</label></td>
+                                    <td>
+                                        <lable ng-bind="r.PaymentId">
+                                    </td>
+                                    <td>
+                                        <lable ng-bind="r.InvoiceId">
+                                    </td>
+                                    <td>
+                                        <lable ng-bind="r.FirstName"></lable>&nbsp;<lable ng-bind="r.LastName"></lable>
+                                    </td>
+                                    <td><lable ng-bind="r.BillDescription"></td>
+                                    <td>
+                                        <lable ng-bind="r.Payee" />
+                                    </td>
+                                    <td ng-init="Total.Amount = Total.Amount+r.Amount">
+                                        <b>US$</b>
+                                        <lable ng-bind="r.Amount" />
+                                    </td>
+                                    <td>
+                                        <lable ng-bind="r.PaymentMode" />
+                                    </td>
+                                    <td>
+                                        <lable ng-bind="r.PaidDate| jsonDate : 'MM-dd-yyyy HH:mm'" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot class="gridhead" ng-if="list.length>0">
+                                <tr>
+                                    <td style="width: 3%">
+                                        <b>Total:</b>
+                                    </td>
+                                    <td colspan="4" ng-if="Results.length > 0"><b>{{list.length}}</b></td>
+                                    <td style="width: 10%">
+                                        <b>Total Amount Paid:</b>
+                                    </td>
+                                    <td style="width: 10%" colspan="3" ng-if="Results.length > 0">
+                                        <b>US$ {{calculateTotal(list)}}</b>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div align="right"
+             style="width: 1000px;">
+            <button onclick="CallPrint('divprint')">
+                Print this page
+            </button>
+        </div>
+    </div>
+
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function(){
+            $("#toDate").datepicker();
+            $("#fromDate").datepicker();});
+        function myFunction() {
+            window.print();
+        }
+        function CallPrint(strid) {
+            //alert('print');
+            $("#divHeading").removeClass("hide");
+            var prtContent = document.getElementById(strid);
+            var WinPrint = window.open('', '', 'letf=0,top=0,width=1000,height=1000,toolbar=0,scrollbars=0,status=0');
+            WinPrint.document.write(prtContent.innerHTML);
+            WinPrint.document.close();
+            WinPrint.focus();
+            WinPrint.print();
+            WinPrint.close();
+            $("#divHeading").addClass("hide");
+            //prtContent.innerHTML = strOldOne;
+        }
+        function PaymentsReportController($scope,$filter) {
+            $scope.Ids = [];
+            $scope.years=[];
+            $scope.months=[];
+            $scope.dates=[];
+            $scope.Total={Records:0,
+                Amount:0,CalAmount:0};
+            $scope.mon=new Date().getMonth();
+            $scope.yr = new Date().getFullYear();
+            $scope.order='PaidDate';
+            $scope.orderby='true';
+            $scope.Results = @Html.Raw(Json.Encode(ViewBag.Results)) ;
+            $scope.payeesHeading="";
+
+
+            $scope.calculateTotal = function(filteredArray){
+                var total = 0;
+                angular.forEach(filteredArray, function(item){
+                    total += item.Amount;
+                });
+                return total;
+            };
+
+
+            angular.forEach($scope.Results, function(value, key) {
+
+                var dat = new Date(parseInt(value.PaidDate.substr(6))).getFullYear();
+                if (this.indexOf(dat) ==  -1)
+                    this.push(dat);
+            }, $scope.years);
+
+
+            angular.forEach($scope.Results, function(value, key) {
+
+                var dat = new Date(parseInt(value.PaidDate.substr(6))).getDate();
+                if (this.indexOf(dat) ==  -1)
+                    this.push(dat);
+            }, $scope.dates);
+
+            console.log($scope.dates);
+            $scope.dates.sort();
+            $scope.Payeesadd = function () {
+                
+                if ($scope.x != undefined && $scope.Ids.indexOf($scope.x) == -1) {
+                    $scope.Ids.push($scope.x);
+                }
+                var payeesHeading="";
+                if($scope.Ids.length >0)
+                {
+                    payeesHeading="Payments report for ";
+                    
+                    for (var i=0;i<$scope.Ids.length;i++)
+                    {
+                        if(i===0)
+                        {
+                            payeesHeading =payeesHeading+" --- "+$scope.Ids[i].Payee +" ---";
+                        }
+                        else
+                        {
+                            payeesHeading = payeesHeading+ " to --- "+$scope.Ids[i].Payee+" ---";
+                        }
+                    }
+                    $scope.payeesHeading=payeesHeading;
+                }
+
+            };
+
+            $scope.removeId = function (index) {
+
+                $scope.Ids.splice(index, 1);
+
+            };
+
+            $scope.selectedYearFilter = function(element) {
+                if(!$scope.yr) return true;
+                return new Date(parseInt(element.PaidDate.substr(6))).getFullYear() == $scope.yr;
+            };
+            $scope.selectedMonthFilter = function(element) {
+                if(!$scope.mon) return true;
+                return new Date(parseInt(element.PaidDate.substr(6))).getMonth() == $scope.mon;
+            };
+            $scope.selectedDayFilter = function(element) {
+                if(!$scope.dat) return true;
+                return new Date(parseInt(element.PaidDate.substr(6))).getDate() == $scope.dat;
+            };
+            $scope.dateRangeFilter = function(element) {
+
+                if(!$scope.fromDate || !$scope.toDate ) return true;
+                //var frd=$scope.getdatestring($scope.fromDate);
+                //var tod=$scope.getdatestring($scope.toDate);
+                var eod= new Date(parseInt(element.PaidDate.substr(6)));
+                var fd =  new Date($scope.fromDate);
+                var td = new Date($scope.toDate);
+                var ed = new Date(eod.getFullYear(),eod.getMonth(),eod.getDate());
+
+                console.log(fd);
+                console.log(td);
+                console.log(ed);
+                return  ed >= fd && ed <= td;
+            };
+            $scope.orderByFunction = function(num){
+                return parseInt(num);
+            };
+            $scope.getdatestring=function(str){
+                return str.split('-');
+
+            };
+            $scope.reset=function(){
+                $scope.dat='';
+                $scope.mon='';
+                $scope.yr='';
+
+            };
+        };
+        
+    </script>
+}

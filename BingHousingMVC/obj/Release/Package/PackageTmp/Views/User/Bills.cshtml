@@ -1,0 +1,469 @@
+﻿@using BingHousing_BO
+@{
+    ViewBag.Title = "Bills";
+    
+}
+
+
+<div align="center" id="foo">
+<h2>
+    Bills</h2>
+    @if (ViewBag.Results != null)
+    {
+        <table class="grid" cellpadding="0" cellspacing="0">
+            <thead class="gridhead">
+                <tr>
+                    <td style="width:2%;">
+                        <div align="center">
+                            Customer Id
+                        </div>
+                    </td>
+                    <td style="width:3%;">
+                        <div align="center">
+                            Customer Name
+                        </div>
+                    </td>
+                    <td style="width:13%;">
+                        <div align="center">
+                            Customer Email <br />
+                            CC / BCC Email
+                        </div>
+                    </td>
+                    <td style="width:2%;">
+                        <div align="center">
+                            Amount Due
+                        </div>
+                    </td>
+                    <td style="width:20%;">
+                        <div align="center">
+                            Bill Description
+                        </div>
+                    </td>
+                    <td style="width:8%;">
+                        <div align="center">
+                            Bill Date
+                        </div>
+                    </td>
+                    <td style="width:7%;">
+                        <div align="center">
+                            Payee
+                        </div>
+                    </td>
+                    <td style="width:3%;">
+                        <div align="center">
+                            Payee Email
+                        </div>
+                    </td>
+                    <td style="width:3%;">
+                        <div align="center">
+                            Do Not Email<br />
+                            <input class="allCheckBox" type="checkbox" />
+                        </div>
+                    </td>
+                    <td style="width:3%;">
+                        <div align="center">
+                            Operations
+                        </div>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (CustomerDetail L in (List<CustomerDetail>)ViewBag.Results)
+                {
+                    <tr>
+                        <td>
+                            <div align="center">
+                                @(L.CustomerFirstName.Trim().ToCharArray()[0].ToString().ToUpper() + L.UserId.ToString() + L.CustomerId.ToString())
+                            </div>
+                        </td>
+                        <td>
+                            <div align="center" id="divfn_@L.CustomerId">
+                                @L.CustomerFirstName @L.CustomerLastName
+                                <input type="hidden" value="@L.CCEmail" id="hdncc_@L.CustomerId" />
+                                <input type="hidden" value="@L.BCCEmail" id="hdnbcc_@L.CustomerId" />
+                            </div>
+                        </td>
+                        
+                        <td>
+                            <div align="center">
+                                @L.CustomerEmail
+                            </div>
+                            @if (!string.IsNullOrEmpty(@L.CCEmail))
+                            {
+                                <div align="center">
+                                    cc: @L.CCEmail<br />
+                                </div>
+                            }
+                            @if (!string.IsNullOrEmpty(@L.BCCEmail))
+                            {
+                                <div align="center">
+                                    bcc: @L.BCCEmail<br />
+                                </div>
+                            }
+                        </td>
+                        <td>
+                            <div align="center">
+                                @L.AmountDue
+                            </div>
+                        </td>
+                        <td>
+                            <div align="center">
+                                @L.BillDescription
+                            </div>
+                        </td>
+                        <td>
+                            <div align="center">
+                                @L.NextBillDate.Date.ToShortDateString()
+                            </div>
+                        </td>
+                        <td>
+                            <div align="center">
+                                @L.Payee
+                            </div>
+                        </td>
+                        <td>
+                            <div align="center">
+                                @L.PayeeEmail
+                            </div>
+                        </td>
+                        <td>
+                            <div align="center">
+                            @if (L.NextBillDate.Date <= DateTime.Now.Date)
+                            {
+                                <input class="singleCheckBox" name="selectedRows" value= "@L.CustomerId" type="checkbox" />
+                            }
+                            </div>
+                        </td>
+                        <td>
+                            <div align="center">
+                                <a id="btnedit" href="@Url.Action("EditCustomerDetails", "User", new { CustomerId = L.CustomerId })">
+                                    <button>
+                                        Edit</button></a> <a id="btndelete" href="@Url.Action("DeleteCustomerDetails", "User", new { CustomerId = L.CustomerId })">
+                                            <button>
+                                                Delete</button></a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot class="gridhead">
+                <tr>
+                    <td>
+                        <div align="center">
+                            Customer Id
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            Customer Name
+                        </div>
+                    </td>
+                    
+                    <td>
+                        <div align="center">
+                            Customer Email
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            Amount Due
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            Bill Description
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            Bill Date
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            Payee
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            Payee Email
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            Do Not Email<br />
+                            <input class="allCheckBox" type="checkbox" />
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            Operations
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+        <input type="button" id="btnsendmail" value="Send Email" />      
+          <script type="text/javascript">
+              $(document).ready(function () {
+                  $(".allCheckBox").click(function () {
+                      var isChecked = this.checked;
+                      $('.allCheckBox').each(function () { this.checked = (isChecked ? true : false) });
+                      $('.singleCheckBox').each(function () { this.checked = (isChecked ? true : false) });
+                      $('.singleCheckBox').closest('tr').addClass(isChecked ? 'selected-row' : 'not-selected-row');
+                      $('.singleCheckBox').closest('tr').removeClass(isChecked ? 'not-selected-row' : 'selected-row');
+                  });
+
+                  $('.singleCheckBox').click(function () {
+                      var isChecked = this.checked;//this.checked;
+                      $(this).closest('tr').addClass(isChecked ? 'selected-row' : 'not-selected-row');
+                      $(this).closest('tr').removeClass(isChecked ? 'not-selected-row' : 'selected-row');
+                      if (isChecked && $('.singleCheckBox').length == $('.selected-row').length)
+                          $('.allCheckBox').each(function () { this.checked = true });
+                      else
+                          $('.allCheckBox').each(function () { this.checked = false });
+
+                  });
+              });
+
+        </script>
+    }
+    else
+    {
+        <h3>
+            No Records</h3> 
+    }
+    <form method="post" enctype="multipart/form-data">
+        <div align="center" id="dialog" title="Email Note Box" style="display: none;">
+            <table style="border:none">
+                <tr>
+                    <td>@Html.Label("You are sending mail to:")<br /></td>
+                    <td><div id="divSendMail"></div></td>
+                </tr>
+                <tr>
+                    <td>@Html.Label("cc :")</td>
+                    <td><div id="divcc"></div></td>
+                </tr>
+                <tr>
+                    <td>@Html.Label("bcc:")</td>
+                    <td><div id="divbcc"></div></td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.Label("Attachment:")<br/>
+                    </td>
+                    <td><input type="file" name="file" id="file" /><input type="button" value="Remove file" id="btnRemove" /></td>
+                </tr>
+                <tr style="border:none">
+                    <td style="border:none">
+                        @Html.Label("Email Note:")<br/>
+                        @Html.Label("(copy or paste the note)")
+                    </td>
+                    <td>
+                        @Html.TextArea("EmailNote")
+                        @Html.Hidden("CustomertSelected")
+                    </td>
+                </tr>
+            </table>
+            <div align="center" style="margin-top:10px;"><input type="button" value="Send" id="btnnotebox" /><input type="button" value="Cancel" id="btncancel" /></div>
+        </div>
+    </form>
+    
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/Scripts/spin.min.js")
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+
+            var opts = {
+                lines: 13, // The number of lines to draw
+                length: 5, // The length of each line
+                width: 3, // The line thickness
+                radius: 40, // The radius of the inner circle
+                corners: 1, // Corner roundness (0..1)
+                rotate: 0, // The rotation offset
+                direction: 1, // 1: clockwise, -1: counterclockwise
+                color: '#fff', // #rgb or #rrggbb or array of colors
+                speed: 1, // Rounds per second
+                trail: 60, // Afterglow percentage
+                shadow: true, // Whether to render a shadow
+                hwaccel: false, // Whether to use hardware acceleration
+                className: 'spinner', // The CSS class to assign to the spinner
+                zIndex: 2e9, // The z-index (defaults to 2000000000)
+                top: '400px', // Top position relative to parent in px
+                left: '650px' // Left position relative to parent in px
+            };
+
+            $("#btnRemove").click(function () {
+                $('#file').val("");
+            });
+
+
+            $('#btnnotebox').click(function (event) {
+               
+                $("#dialog").dialog("close");
+                if ($(".singleCheckBox:checkbox:not(:checked)").length > 0) {
+
+                    if (confirm('Are you sure ?')) {
+                        $('body').append('<div id="foon" style="background-color: rgba(0, 0, 0, 0.6); width:100%; height:100%; position:fixed; top:0px; left:0px; z-index:' + (opts.zIndex - 1) + '"/>');
+
+                        var target = document.getElementById('foo');
+                        var spinner = new Spinner(opts).spin(target);
+                        var customerselected = $.map($(".singleCheckBox:checkbox:not(:checked)"),
+                      function (e) { return $(e).val(); });
+                        $('#CustomertSelected').val(customerselected);
+                        var param = new FormData();
+                        var file = $("#file").get(0).files[0];
+                        if (file != undefined) {
+                            param.append(file.name, file);
+                        }
+                        param.append("CustomerSelected", $('#CustomertSelected').val());
+                        param.append("EmailNote", $('#EmailNote').val());
+                        $.ajax({
+                            type: 'Post',
+                            contentType: false, // Not to set any content header  
+                            processData: false, // Not to process data 
+                            url: '@Url.Action("EMailCustomer", "User")',
+                            data: param,//{ CustomerSelected: $('#CustomertSelected').val(), EmailNote: $('#EmailNote').val(), File: $("#file").get(0).files[0].val() },
+                            datatype: 'Json',
+                            success: function (data) {
+                                spinner.stop();
+                                $('#foon').remove();
+                                $('.singleCheckBox').each(function () { this.checked = false });
+                                var isChecked = $('.singleCheckBox').is(':checked');
+                                $('.singleCheckBox').closest('tr').removeClass(isChecked ? 'not-selected-row' : 'selected-row');
+                                $('#EmailNote').val("");
+                                $('#file').val("");
+                                $.notify({ message: 'Mail Sent Successfully' }, { type: 'success' });
+                                //alert('Mail Sent Successfully');
+                                location.reload();
+                            },
+                            Error: function () { $.notify({ message: 'Some Error Occured Please Try again later' }, { type: 'danger' }); }
+
+                        });
+                    }
+                    return false;
+                }
+                else {
+                    $.notify({ message: 'Please un select any One customer to send an email..' }, { type: 'info' });
+                    return false;
+                }
+
+
+            });
+
+
+
+        });
+
+       
+
+    </script>
+}
+
+   
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#btnsendmail').click(function (event) {
+                $('#file').val("");
+                customConfirm();
+
+
+            });
+            $('#btncancel').click(function (event) {
+                $('#file').val("");
+                $("#dialog").dialog("close");
+
+
+            });
+        });
+
+        function customConfirm() {
+            $("#dialog").dialog({
+                autoOpen: false,
+                width: 600,
+                height: 380,
+                show: {
+                    effect: "blind",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 1000
+                }
+            });
+            var customerselected = $.map($(".singleCheckBox:checkbox:not(:checked)"),
+            function (e) {
+                return $(e).val();
+            });
+            var ccEmails = "";
+            var bccEmails = "";
+            if (customerselected.length == 0)
+            {
+                customerselected = "Please un select any One customer to send an email.";
+            }
+            else if (customerselected.length <= 6) {
+                customerselected = $.map($(".singleCheckBox:checkbox:not(:checked)"),
+                    function (e, k) {
+                        var value = "<span>" + parseInt(k + 1) + ". " + $("#divfn_" + $(e).val()).text() + "</span><br/>";
+                        var ccval =$("#hdncc_"+$(e).val()).val();
+                        var bccval = $("#hdnbcc_" + $(e).val()).val();
+
+                        if (ccval) {
+                            if (ccEmails === "") {
+                                ccEmails = ccEmails + ccval ;
+                            }
+                            else
+                            {
+                                ccEmails = ccEmails + " , " + ccval;
+                            }
+                        }
+                        if (bccval) {
+                            if (bccEmails === "") {
+                                bccEmails = bccEmails + bccval;
+                            }
+                            else {
+                                bccEmails =  bccEmails +" , " + bccval;
+                            }
+                        }
+                        return value;
+                    });
+            }
+            else {
+                customerselected = $.map($(".singleCheckBox:checkbox:not(:checked)"),
+                    function (e, k) {
+                        var value = "<span>" + parseInt(k + 1) + ". " + $("#divfn_" + $(e).val()).text() + "</span>";
+                        var ccval = $("#hdncc_" + $(e).val()).val();
+                        var bccval = $("#hdnbcc_" + $(e).val()).val();
+                        if (ccval) {
+                            if (ccEmails === "") {
+                                ccEmails = ccEmails + ccval;
+                            }
+                            else {
+                                ccEmails = ccEmails+" , "  + ccval;
+                            }
+                        }
+                        if (bccval) {
+                            if (bccEmails === "") {
+                                bccEmails = bccEmails + bccval;
+                            }
+                            else {
+                                bccEmails = bccEmails +" , "  + bccval;
+                            }
+                        }
+                        return value;
+                    });
+            }
+            $("#divSendMail").html(customerselected);
+            $("#divcc").html(ccEmails);
+            $("#divbcc").html(bccEmails);
+            $("#dialog").dialog("open");
+
+        };                
+   
+    </script>
+

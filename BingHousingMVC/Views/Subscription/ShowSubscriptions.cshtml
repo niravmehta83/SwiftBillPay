@@ -1,0 +1,18 @@
+﻿@using BingHousing_BO;
+@{
+    ViewBag.Title = "Subscriptions";
+    List<Plan> list = (List<Plan>)ViewBag.PlanList;
+}
+<h2>
+    Subscriptions</h2>
+<div>
+    @{Html.RenderPartial("~/Views/Subscription/_Subscriptions.cshtml", list);}
+</div>
+<div>
+    @if (User.IsInRole("Admin"))
+    {
+        <a href="@Url.Action("AddSubscriptionPlan", "Subscription")">
+            <button>
+                Add a Plan</button></a> 
+    }
+</div>

@@ -1,0 +1,341 @@
+﻿@model BingHousingMVC.Models.ReportDurationModel
+@using BingHousing_BO;
+@{    
+    List<EmailedReport> list = (List<EmailedReport>)ViewBag.Results;
+}
+
+<div align="center" id="foo">
+    <h2>
+        Customer Emailed Bills Report
+    </h2>
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div id="divEmailReports">
+        @Html.Partial("_EmailedReports")
+
+    </div>
+</div>
+<table>
+    <tr>
+        <td>
+            @Html.LabelFor(m => m.Payee)
+        </td>
+        <td>
+            @Html.DropDownListFor(m => m.Payee, (List<SelectListItem>)ViewBag.PayeeList)<br />
+            @Html.ValidationMessageFor(m => m.Payee)
+        </td>
+        <td><input type="button" id="btnAddPayee" value="Add Payee" /></td>
+        <td>
+            @Html.LabelFor(m => m.Month)
+        </td>
+        <td>
+            @Html.DropDownListFor(m => m.Month, (List<SelectListItem>)ViewBag.monthlist)<br />
+            @Html.ValidationMessageFor(m => m.Month)
+        </td>
+        <td>
+            @Html.LabelFor(m => m.Year)
+        </td>
+        <td>
+            @Html.DropDownListFor(m => m.Year, (List<SelectListItem>)ViewBag.yearlist)<br />
+            @Html.ValidationMessageFor(m => m.Year)
+        </td>
+        <td>
+            <input type="submit" id="btnSearch" value="Search" />
+        </td>
+
+    </tr>
+</table>
+<div id="divSelectedPayees" style="height:30px !important;"></div>
+
+<div style="min-height:200px !important;">
+    
+@if (list.Count > 0)
+{
+    var dates = list.Where(p => p.EmailSentDate.Month == Model.Month && p.EmailSentDate.Date.Year == Model.Year).Select(x => x.EmailSentDate.Date).Distinct().ToList();
+    foreach (var l in dates)
+    {
+        var reportList = list.Where(p => p.EmailSentDate.Month == l.Date.Month && p.EmailSentDate.Date.Year == l.Date.Year && p.EmailSentDate.Date.Day == l.Date.Day).ToList();
+
+        <div>
+            <div align="center" style="text-decoration: underline;">
+                <h3>
+                    @l.Date.ToShortDateString() &nbsp &nbsp &nbsp Customer Emailed Bills &nbsp &nbsp &nbsp
+                Total:&nbsp &nbsp &nbsp<b>@reportList.Sum(x => x.TotalAmountDue)</b><input type="button" id="btnoc+@l.Date.Day" value="Click to Open" onclick="Show(@l.Date.Day,this)" />
+            </h3>
+        </div>
+        <div id="@l.Date.Day" style="display: none; border:1px solid gray;width:100%;">
+            <div align="right" style="margin: 10px 10px 10px 10px;width: 100%;">
+                <button onclick="CallPrint('divprint+@l.Date.Day')">Print this page</button>
+            </div>
+
+            <div id="divprint+@l.Date.Day" style="width:100%">
+                <h2 id="divHeading+@l.Date.Day">
+                    Customer Emailed Bills
+                </h2>
+                <table style="width:100%">
+                    <tr>
+                        <td>
+                            <table class="grid" cellpadding="0" cellspacing="0" style="margin: 10px 10px 10px 10px;
+                                width: 100%;">
+                                <thead class="gridhead">
+                                    <tr>
+                                        <td style="width:5%">
+                                            <div align="center">
+                                                s#
+                                            </div>
+                                        </td>
+                                        <td style="width:14%">
+                                            <div align="center">
+                                               Customer
+                                            </div>
+                                        </td>
+                                        <td style="width:14%">
+                                            <div align="center">
+                                                Payee
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div align="center">
+                                                Email
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div align="center">
+                                                Description
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div align="center">
+                                                Bill ID
+                                            </div>
+                                        </td>
+                                        <td style="width:5%">
+                                            <div align="center">
+                                                Late Charges
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div align="center">
+                                                Email Sent Date
+                                            </div>
+                                        </td>
+                                        <td style="width:7%">
+                                            <div align="center">
+                                                Total
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (EmailedReport L in reportList)
+                                    {
+                                        <tr>
+                                            <td><div align="center">{{$index+1}}</div></td>
+                                            <td>
+                                                <div align="center">
+                                                    @(L.CustomerFirstName + " " + L.CustomerLastName)
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div align="center">
+                                                    @L.Payee
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div align="center">
+                                                    @L.CustomerEmail
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div align="center">
+                                                    @L.BillDescription
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div align="center">
+                                                    @L.InvoiceId
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div align="center">
+                                                    @if (L.LateCharges)
+                                                    {
+                                                        <p>Yes</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>No</p>
+                                                    }
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div align="center">
+                                                    @L.EmailSentDate
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div align="center">
+                                                    $ @L.TotalAmountDue
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="float: right; padding-right: 20px;">
+                                <table style="border: none !important">
+                                    <tr>
+                                        <td class="not-selected-row" style="border: none !important">
+                                            <h3>
+                                                <b>Total :</b>
+                                            </h3>
+                                        </td>
+                                        <td style="border: none !important">
+                                            <h4>
+                                                <b>$ @reportList.Sum(x => x.TotalAmountDue)</b>
+                                            </h4>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    }
+
+}
+else
+{
+    <h3>
+        No Records
+    </h3>
+}
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        var PayeeIds=[];
+        function myFunction() {
+            window.print();
+        };
+        function CallPrint(strid) {
+            var prtContent = document.getElementById(strid);
+            var WinPrint = window.open('', '', 'letf=0,top=0,width=1000,height=1000,toolbar=0,scrollbars=0,status=0');
+            WinPrint.document.write(prtContent.innerHTML);
+            WinPrint.document.close();
+            WinPrint.focus();
+            WinPrint.print();
+            WinPrint.close();
+            prtContent.innerHTML = strOldOne;
+        };
+        function Show(id, e) {
+            if ($(e).val() == 'Click to Open') {
+                $('#' + id).show(2000);
+                $(e).val('Close');
+
+            }
+            else {
+                $('#' + id).hide(2000);
+                $(e).val('Click to Open');
+
+            }
+        };
+        function SearchReport(param) {
+
+            $.ajax({
+                type: 'Post',
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                url: '@Url.Action("EmailedReport", "User")',
+                data: param,
+                datatype: 'Json',
+                success: function (data) {
+                    $("#divEmailReports").html(data);
+                },
+                Error: function () { $.notify({ message: 'Some Error Occured Please Try again later' }, { type: 'danger' }); }
+
+            });
+        };
+
+        function AddPayees(payeeIds)
+        {
+            var list = @Html.Raw(Json.Encode(ViewBag.PayeeList));
+            var Html = '<table style="border: none !important;" cellpadding="0" cellspacing="0"><tr style="border: none !important;">';
+            for (var i = 0; i < payeeIds.length; i++) {
+                for (var j = 0; j < list.length; j++) {
+                    if (list[j].Value === payeeIds[i]) {
+                        Html = Html + '<td style="border: none !important;"><div style="float: left;"><label>' + list[j].Text + '</label></div>' +
+                            '<input class="removeId" style="float: right" type="button" value="x" onclick="removeId('+list[j].Value+');" id="btn_'+list[j].Value+'"/></td>';
+                    }
+                }
+            }
+
+            Html=Html+'</tr></table>';
+            $("#divSelectedPayees").html(Html);
+        };
+        function createParam(type)
+        {
+            var param = new FormData();
+            var token = $('input[name="__RequestVerificationToken"]').val();
+            param.append("__RequestVerificationToken", token);
+            param.append("Month", $('#Month').val());
+            param.append("Year", $('#Year').val());
+            var payee=$('#Payee').val();
+            param.append("Payee", payee);
+            if(payee !== "0" && PayeeIds.indexOf(payee) === -1 )
+            {
+                PayeeIds[PayeeIds.length] = payee;
+            }
+            param.append("PayeeIds", PayeeIds.join(","));
+
+            if(type === "search")
+            {
+                PayeeIds=[];
+            }
+            return param;
+        };
+
+        function Search(type)
+        {
+            var param = createParam(type);
+            SearchReport(param);
+        };
+        function removeId(id)
+        {
+            var index=PayeeIds.indexOf(id.toString());
+            PayeeIds.splice(index, 1)
+            var param = new FormData();
+            var token = $('input[name="__RequestVerificationToken"]').val();
+            param.append("__RequestVerificationToken", token);
+            param.append("Month", $('#Month').val());
+            param.append("Year", $('#Year').val());
+            var payee=$('#Payee').val();
+            param.append("Payee", payee);
+            param.append("PayeeIds", PayeeIds.join(","));
+            SearchReport(param);
+            AddPayees(PayeeIds);
+        };
+
+
+        $(document).ready(function(){
+
+            $("#btnAddPayee").click(function () {
+                Search("addpayee");
+                AddPayees(PayeeIds);
+            });
+
+            $("#btnSearch").click(function () {
+                Search("search");
+            });
+        });
+    </script>
+}

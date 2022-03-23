@@ -1,0 +1,313 @@
+﻿@model BingHousing.WebUI.MVC.Models.CustomerModel
+@using System.Web.Optimization;
+@{
+    ViewBag.Title = "Add Customer - Swift Bill Pay";
+    ViewBag.PageTitle = "Add Customer";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    List<SelectListItem> list = (List<SelectListItem>)ViewBag.payeelist;
+    int groupId = 0;
+    Int32.TryParse(ViewBag.GroupId,out groupId);
+
+}
+
+@if (list.Count > 0)
+{
+    using (Html.BeginForm("AddNewCustomer", "Group", FormMethod.Post, new { id = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("hdnGroupId", groupId)
+        <div class="row row-space">
+            <div class="form-group">
+                <div class="col-lg-3">
+                    <label>Type *</label>
+                </div>
+                <div class="col-lg-6">
+                    @Html.RadioButtonFor(m => m.Type, "Customer")@Html.Label(" Customer")
+                    @Html.RadioButtonFor(m => m.Type, "Company")@Html.Label(" Company")
+                </div>
+            </div>
+        </div>
+        <div id="divform" >
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        @*<label>First Name *</label>*@
+                        <div class="editor-label" id="divfn">
+                            @Html.Label("Customer First Name" + "*")
+                        </div>
+                        <div class="editor-label" id="divcn">
+                            @Html.Label("Company Name" + "*")
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.CustomerFirstName, new { @class = "form-control", placeholder = "Name", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m=>m.CustomerFirstName)
+                    </div>
+                </div>
+            </div>
+            <div class="row row-space" id="divlnl">
+                <div class="form-group">
+                    <div class="col-lg-3">
+
+                        <div class="editor-label">
+                            @Html.Label("Customer Last Name" + "*")
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.CustomerLastName, new { @class = "form-control", placeholder = "Last Name", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.CustomerLastName)
+                    </div>
+                </div>
+            </div>
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>Address Line 1 *</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.CustomerAddress, new { @class = "form-control", placeholder = "Address Line 1", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.CustomerAddress)
+                    </div>
+                </div>
+            </div>
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>Address Line 2</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.CustomerAddress2, new { @class = "form-control", placeholder = "Address Line 2", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.CustomerAddress2)
+                    </div>
+                </div>
+            </div>
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>City *</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.CustomerCity, new { @class = "form-control", placeholder = "City", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.CustomerCity)
+                    </div>
+                </div>
+            </div>
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>State *</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.CustomerState, new { @class = "form-control", placeholder = "State", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.CustomerState)
+                    </div>
+                </div>
+            </div>
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>Zip Code *</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.CustomerZipCode, new { @class = "form-control", placeholder = "Zip Code", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.CustomerZipCode)
+                    </div>
+                </div>
+            </div>
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>Country</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.CustomerCountry, new { @class = "form-control", placeholder = "Country", autocomplete = "off" })
+
+                    </div>
+                </div>
+            </div>
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>Email *</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.CustomerEmail, new { @class = "form-control", placeholder = "Customer Email", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.CustomerEmail)
+                    </div>
+                </div>
+            </div>
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>Amount Due *</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.AmountDue, new { @class = "form-control", placeholder = "Amount Due", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.AmountDue)
+                    </div>
+                </div>
+            </div>
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>Bill Description *</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.BillDescription, new { @class = "form-control", placeholder = "Bill Description", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.BillDescription)
+                    </div>
+                </div>
+            </div>
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>Bill Date *</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.NextBillDate, new { @class = "form-control", placeholder = "mm/dd/yyyy", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.NextBillDate)
+                    </div>
+                </div>
+            </div>
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>Interval Type *</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.DropDownListFor(model => model.IntervalType, (List<SelectListItem>)ViewBag.IntervalType, new { @class = "form-control" })<br />
+                        @Html.ValidationMessageFor(m => m.IntervalType)
+                    </div>
+                </div>
+            </div>
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>Intervals *</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.Intervals, new { @class = "form-control", placeholder = "Intervals", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.Intervals)
+                    </div>
+                </div>
+            </div>
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>Payee *</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.DropDownListFor(model => model.PayeeId, (List<SelectListItem>)ViewBag.payeelist, new { @class = "form-control" })<br />
+                        @Html.ValidationMessageFor(m => m.PayeeId)
+                    </div>
+                </div>
+            </div>
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>Late Charge *</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.CheckBoxFor(model => model.LateCharges)<br />
+                        @Html.ValidationMessageFor(m => m.LateCharges)
+                    </div>
+                </div>
+            </div>
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>Late Charges Start Day *</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.LateChargesStartday, new { @class = "form-control", placeholder = "dd/mm/yyyy", autocomplete = "off" })
+                    </div>
+                </div>
+            </div>
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>Late Charges Amount *</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.LateChargesStartdayAmount, new { @class = "form-control", placeholder = "", autocomplete = "off" })
+                    </div>
+                </div>
+            </div>
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>Late Charges There After Day *</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.LateChargesThereAfterday, new { @class = "form-control", placeholder = "", autocomplete = "off" })
+                    </div>
+                </div>
+            </div>
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <label>Late Charges There After Amount *</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(m => m.LateChargesThereAfterdayAmount, new { @class = "form-control", placeholder = "Late charge there after amount", autocomplete = "off" })
+                    </div>
+                </div>
+            </div>
+            <div class="row row-space">
+                <div class="col-lg-3"></div>
+                <div class="col-lg-6">
+                    <div class="row row-space">
+                        <div class="col-lg-4"></div>
+                        <div class="col-lg-4">
+                            <input type="submit" class="btn btn-primary" value="Add">
+                        </div>
+                        <div class="col-lg-4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div>
+        <h5>1. You need atleast one payee to import the customers. </h5>
+        <h5>2. To Add a Single Payee, click - <a href="@Url.Action("AddPayeeDetails","User")"><i class="fa fa-plus"></i> Add Payee</a></h5> <br />
+        <h5>3. To goto Import Payee page click - <a href="@Url.Action("ImportPayees","User")"><i class="fa fa-plus"></i> Import Payees</a></h5>
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var countChecked = function () {
+            var n = $("input:checked").val();
+
+            if (n == 'Company') {
+                $('#divform').show();
+                $('#divcn').show();
+                $('#txtCN').show();
+                $('#divfn').hide();
+                $('#txtFN').hide();
+                $('#divlnl').hide();
+                $('#divlntb').hide();
+                $('#divlns').hide();
+            }
+            else if (n == 'Customer') {
+                $('#divform').show();
+                $('#divcn').hide();
+                $('#txtCN').hide();
+                $('#divfn').show();
+                $('#txtFN').show();
+                $('#divlnl').show();
+                $('#divlntb').show();
+                $('#divlns').show();
+            }
+            else {
+
+                $('#divform').hide();
+            }
+        };
+        countChecked();
+        $("input[type=radio]").on("click", countChecked);
+    });
+</script>

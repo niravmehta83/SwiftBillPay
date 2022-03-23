@@ -1,0 +1,543 @@
+﻿@using BingHousing_BO;
+@*@{
+        ViewBag.Title = ViewBag.Title; //"Send Reminder Bills";
+
+       //string selectedName=ViewBag.UserName.ToString();
+    }*@
+<div align="center" id="foo">
+    <h2>@ViewBag.Title</h2> <input type="button" id="btnsendmailtop" class="pull-right btnsendmail" value="Send Reminder Bill" />
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+        @Html.AntiForgeryToken()
+       
+        <table>
+            <tr>
+                <td>
+                    @*@Html.Label("Search By Invoice Number")*@
+                    @Html.DropDownList("Type", new List<SelectListItem>()
+                        {
+                        new SelectListItem(){ Value="FirstName", Text="Search By FirstName/Lastname"},
+                        new SelectListItem(){ Value="Id", Text="Search By Invoice #"}
+                        //new SelectListItem(){ Value="Number", Text="Search By Customer ID"}
+                        })
+                </td>
+                <td>
+                    @Html.TextBox("InvoiceNumber")
+                    @Html.Hidden("isSendmail", ViewBag.Title == "Invoices" ? false : true)
+                </td>
+                <td>
+                    <input type="submit" value="Search" />
+                </td>
+                <td>
+                    <a href="@Url.Action("Invoice", "User", new { isSendmail = ViewBag.Title == "Invoices"?false:true }, null)">
+                        <input type="button" value="Show All" style="height: 33px; font-size: 1.2em;" />
+                    </a>
+                </td>
+            </tr>
+        </table>
+
+    }
+   
+    @if (ViewBag.Results != null)
+    {
+        <table class="grid" cellpadding="0" cellspacing="0" style="margin:5px;">
+            <thead class="gridhead">
+                <tr>
+                    <td style="width: 7%">
+                        <div align="center">
+                            Invoice #
+                        </div>
+                    </td>
+                    <td style="width: 8%">
+                        <div align="center">
+                            Customer Id
+                        </div>
+                    </td>
+                    <td style="width: 10%">
+                        <div align="center">
+                            Customer Name
+                        </div>
+                    </td>                    
+                    <td style="width: 10%">
+                        <div align="center">
+                            Customer Email<br />
+                            CC/BCC Email
+                        </div>
+                    </td>
+                    <td style="width: 7%">
+                        <div align="center">
+                            Amount Due
+                        </div>
+                    </td>
+                    <td>Late Charge</td>
+                    <td style="width: 7%">
+                        <div align="center">
+                            Bill Description
+                        </div>
+                    </td>
+                    <td style="width: 10%">
+                        <div align="center">
+                            Payee
+                        </div>
+                    </td>
+                    <td style="width: 10%">
+                        <div align="center">
+                            Payee Email
+                        </div>
+                    </td>
+                    <td style="width: 10%">
+                        <div align="center">
+                            Mail Sent Date
+                        </div>
+                    </td>
+                    <td style="width: 8%">
+                        <div align="center">
+                            Do Not Email<br />
+                            <input class="allCheckBox" type="checkbox" />
+                        </div>
+                    </td>
+
+                    @if (ViewBag.Title == "Invoices")
+                    {
+                        <td style="width: 30%">
+                            <div align="center">
+                                Add Paper Check Entry
+                            </div>
+                        </td>
+                        <td style="width: 5%">
+                            <div align="center">
+                                Delete
+                            </div>
+                        </td>
+                       
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (InvoiceDetail L in (List<InvoiceDetail>)ViewBag.Results)
+                {
+                    <tr>
+                        <td style="width: 8%">
+                            <div align="center">
+                                @L.InvoiceId
+                            </div>
+                        </td>
+                        <td style="width: 8%">
+                            <div align="center">
+                                @L.InvoiceNumber
+                            </div>
+                        </td>
+                        <td style="width: 10%">
+                            <div align="center" id="divfn_@L.InvoiceId">
+                                @L.CustomerFirstName @L.CustomerLastName
+                                <input type="hidden" value="@L.CCEmail" id="hdncc_@L.InvoiceId" />
+                                <input type="hidden" value="@L.BCCEmail" id="hdnbcc_@L.InvoiceId" />
+                            </div>
+                        </td>                       
+                        <td style="width: 10%">
+                            <div align="center">
+                                @L.CustomerEmail<br />
+                                @if (!string.IsNullOrEmpty(@L.CCEmail))
+                                {
+                                    <div align="center">
+                                        cc: @L.CCEmail<br />
+                                    </div>
+                                }
+                                @if (!string.IsNullOrEmpty(@L.BCCEmail))
+                                {
+                                    <div align="center">
+                                        bcc: @L.BCCEmail<br />
+                                    </div>
+                                }
+                            </div>
+                        </td>
+                        <td style="width: 10%">
+                            <div align="center">
+                                @L.AmountDue
+                            </div>
+                        </td>
+                        <td style="width: 10%">
+                            <div align="center">
+                                @L.LateCharges
+                            </div>
+                        </td>
+                        <td style="width: 20%">
+                            <div align="center">
+                                @L.BillDescription
+                            </div>
+                        </td>
+                        <td style="width: 10%">
+                            <div align="center">
+                                @L.Payee
+                            </div>
+                        </td>
+                        <td style="width: 10%">
+                            <div align="center">
+                                @L.PayeeEmail
+                            </div>
+                        </td>
+                        <td style="width: 10%">
+                            <div align="center">
+                                @L.EmailSentDate
+                            </div>
+                        </td>
+                        <td style="width: 10%">
+                            <div align="center">
+                                @if (!L.IsPaid)
+                                {
+                                    <input class="singleCheckBox" name="selectedRows" value="@L.InvoiceId" type="checkbox" />
+                                }
+                            </div>
+                        </td>
+                        @if (ViewBag.Title == "Invoices")
+                        {
+                            
+                            <td style="width: 30%">
+                                <div align="center">
+                                    <a href="@Url.Action("PaperCheck", "Cart", new { InvoiceNumber = L.InvoiceNumber,InvoiceId=L.InvoiceId })">
+                                        <button>
+                                            Add Paper Check
+                                        </button>
+                                    </a>
+                                </div>
+                            </td>
+                            <td style="width: 10%">
+                                <div align="center">
+                                    <a id="btndelete" href="@Url.Action("DeleteInvoice", "User", new { InvoiceId = L.InvoiceId })">
+                                        <button>
+                                            X
+                                        </button>
+                                    </a>
+                                </div>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+            <tfoot class="gridhead">
+                <tr>
+                    <td>
+                        <div align="center">
+                            Invoice #
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            Customer Id
+                        </div>
+                    </td>
+                    <td style="width:2%">
+                        <div align="center">
+                            Customer Name
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            Customer Email
+                        </div>
+                    </td>
+                    <td style="width:2%">
+                        <div align="center">
+                            Amount Due
+                        </div>
+                    </td>
+                    <td style="width:2%">
+                        <div align="center">
+                            Late Charge
+                        </div>
+                    </td>
+                    <td style="width:25%">
+                        <div align="center">
+                            Bill Description
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            Payee
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            Payee Email
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            Mail Sent Date
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            Do Not Email<br />
+                            <input class="allCheckBox" type="checkbox" />
+                        </div>
+                    </td>
+                    @if (ViewBag.Title == "Invoices")
+                    {
+                        <td style="width: 30%">
+                            <div align="center">
+                                Add Paper Check Entry
+                            </div>
+                        </td>
+                        <td style="width: 10%">
+                            <div align="center">
+                                Operations
+                            </div>
+                        </td>
+                    }
+                </tr>
+            </tfoot>
+        </table>
+        <input type="button" id="btnsendmailbottom" class="btnsendmail" value="Send Reminder Bill" />
+        <script type="text/javascript">         
+            $(document).ready(function () {
+                $(".allCheckBox").click(function () {
+                    var isChecked = this.checked;
+                    $('.allCheckBox').each(function () { this.checked = (isChecked ? true : false) });
+                    $('.singleCheckBox').each(function () { this.checked = (isChecked ? true : false) });
+                    $('.singleCheckBox').closest('tr').addClass(isChecked ? 'selected-row' : 'not-selected-row');
+                    $('.singleCheckBox').closest('tr').removeClass(isChecked ? 'not-selected-row' : 'selected-row');
+                });
+
+                $('.singleCheckBox').click(function () {
+                    var isChecked = this.checked;//this.checked;
+                    $(this).closest('tr').addClass(isChecked ? 'selected-row' : 'not-selected-row');
+                    $(this).closest('tr').removeClass(isChecked ? 'not-selected-row' : 'selected-row');
+                    if (isChecked && $('.singleCheckBox').length == $('.selected-row').length)
+                        $('.allCheckBox').each(function () { this.checked = true });
+                    else
+                        $('.allCheckBox').each(function () { this.checked = false });
+
+                });
+            });
+        </script>       
+    }
+    else
+    {
+        <h3>
+            No Records
+        </h3>
+    }
+    <form method="post" enctype="multipart/form-data">
+        <div align="center" id="dialog" title="Email Note Box" style="display: none;">
+            
+            <table style="border: none">
+                <tr>
+                    <td>@Html.Label("You are sending mail to:")<br /></td>
+                    <td><div id="divSendMail"></div></td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.Label("Attachment:")<br/>
+                    </td>
+                    <td><input type="file" name="file" id="file" /><input type="button" value="Remove file" id="btnRemove" /></td>
+                </tr>
+                <tr>
+                    <td>@Html.Label("cc :")</td>
+                    <td><div id="divcc"></div></td>
+                </tr>
+                <tr>
+                    <td>@Html.Label("bcc:")</td>
+                    <td><div id="divbcc"></div></td>
+                </tr>
+                <tr style="border: none">
+                    <td style="border: none">
+                        @Html.Label("Email Note:")<br />
+                        @Html.Label("(copy or paste the note)")
+                    </td>
+                    <td>
+                        @Html.TextArea("EmailNote", "Remainder Email")
+                        @Html.Hidden("InvoiceSelected")
+                    </td>
+                </tr>
+            </table>
+            <div align="center" style="margin-top: 10px;">
+                <input type="button" value="Send" id="btnnotebox" /><input type="button" value="Cancel"
+                                                                           id="btncancel" />
+            </div>
+        </div>
+        </form>
+</div>
+@section Scripts{
+    @Scripts.Render("~/Scripts/spin.min.js")
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var opts = {
+                lines: 13, // The number of lines to draw
+                length: 5, // The length of each line
+                width: 3, // The line thickness
+                radius: 40, // The radius of the inner circle
+                corners: 1, // Corner roundness (0..1)
+                rotate: 0, // The rotation offset
+                direction: 1, // 1: clockwise, -1: counterclockwise
+                color: '#fff', // #rgb or #rrggbb or array of colors
+                speed: 1, // Rounds per second
+                trail: 60, // Afterglow percentage
+                shadow: true, // Whether to render a shadow
+                hwaccel: false, // Whether to use hardware acceleration
+                className: 'spinner', // The CSS class to assign to the spinner
+                zIndex: 2e9, // The z-index (defaults to 2000000000)
+                top: '400px', // Top position relative to parent in px
+                left: '650px' // Left position relative to parent in px
+            };
+
+            $("#btnRemove").click(function () {
+                $('#file').val("");
+            });
+
+
+            $('#btnnotebox').click(function (event) {
+                $("#dialog").dialog("close");
+                if ($(".singleCheckBox:checkbox:not(:checked)").length > 0) {
+
+                    if (confirm('Are you sure ?')) {
+                        $('body').append('<div id="foon" style="background-color: rgba(0, 0, 0, 0.6); width:100%; height:100%; position:fixed; top:0px; left:0px; z-index:' + (opts.zIndex - 1) + '"/>');
+
+                        var target = document.getElementById('foo');
+                        var spinner = new Spinner(opts).spin(target);
+                        var customerselected = $.map($(".singleCheckBox:checkbox:not(:checked)"),
+                      function (e) { return $(e).val(); });
+                        $('#InvoiceSelected').val(customerselected);
+                        var param = new FormData();
+                        var file = $("#file").get(0).files[0];
+                        if (file !== undefined) {
+                            param.append(file.name, file);
+                        }
+                        param.append("InvoiceSelected", $('#InvoiceSelected').val());
+                        param.append("EmailNote", $('#EmailNote').val());
+                        //alert($('#InvoiceSelected').val());
+                        $.ajax({
+                            type: 'Post',
+                            contentType: false, // Not to set any content header  
+                            processData: false, // Not to process data 
+                            url: '@Url.Action("RemainderEmail", "User")',
+                            data: param,
+                            datatype: 'Json',
+                            success: function (data) {
+                                spinner.stop();
+                                $('#foon').remove();
+
+                                $('.singleCheckBox').each(function () { this.checked = false });
+                                var isChecked = $('.singleCheckBox').is(':checked');
+                                $('.singleCheckBox').closest('tr').removeClass(isChecked ? 'not-selected-row' : 'selected-row');
+                                $('#EmailNote').val("");
+                                //alert('Mail Sent Successfully');
+                                $.notify({ message: 'Mail Sent Successfully' }, { type: 'success' });
+
+                            },
+                            Error: function () { $.notify({ message: 'Some Error Occured Please Try again later' }, { type: 'error' }); }
+
+                        });
+                    }
+                    return false;
+                }
+                else {
+                    $.notify({ message: 'Please un select any One customer to send an email..' }, { type: 'warning' });
+                    //alert('Please un select any One customer to send an email..');
+                    return false;
+                }
+            });
+        });
+    </script>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('.btnsendmail').click(function (event) {
+            $('#file').val("");
+            customConfirm();
+        });
+        $('#btncancel').click(function (event) {
+            $('#file').val("");
+            $("#dialog").dialog("close");
+
+        });
+    });
+
+    function customConfirm() {
+        $("#dialog").dialog({
+            autoOpen: false,
+            width: 600,
+            height: 450,
+            show: {
+                effect: "blind",
+                duration: 1000
+            },
+            hide: {
+                effect: "explode",
+                duration: 1000
+            }
+        });
+
+        var customerselected = $.map($(".singleCheckBox:checkbox:not(:checked)"),
+        function (e) {
+            return $(e).val();
+        });
+        var ccEmails = "";
+        var bccEmails = "";
+        if (customerselected.length == 0) {
+            customerselected = "Please un select any One customer to send an email.";
+        }
+        else if (customerselected.length <= 6) {
+            customerselected = $.map($(".singleCheckBox:checkbox:not(:checked)"),
+                function (e, k) {
+                    var value = "<span>" + parseInt(k + 1) + ". " + $("#divfn_" + $(e).val()).text() + "</span><br/>";
+                    var ccval = $("#hdncc_" + $(e).val()).val();
+                    var bccval = $("#hdnbcc_" + $(e).val()).val();
+
+                    if (ccval) {
+                        if (ccEmails === "") {
+                            ccEmails = ccEmails + ccval;
+                        }
+                        else {
+                            ccEmails = ccEmails + " , " + ccval;
+                        }
+                    }
+                    if (bccval) {
+                        if (bccEmails === "") {
+                            bccEmails = bccEmails + bccval;
+                        }
+                        else {
+                            bccEmails = bccEmails + " , " + bccval;
+                        }
+                    }
+                    return value;
+                });
+        }
+        else {
+            customerselected = $.map($(".singleCheckBox:checkbox:not(:checked)"),
+                function (e, k) {
+                    var value = "<span>" + parseInt(k + 1) + ". " + $("#divfn_" + $(e).val()).text() + "</span>";
+                    var ccval = $("#hdncc_" + $(e).val()).val();
+                    var bccval = $("#hdnbcc_" + $(e).val()).val();
+
+                    if (ccval) {
+                        if (ccEmails === "") {
+                            ccEmails = ccEmails + ccval;
+                        }
+                        else {
+                            ccEmails = ccEmails + " , " + ccval;
+                        }
+                    }
+                    if (bccval) {
+                        if (bccEmails === "") {
+                            bccEmails = bccEmails + bccval;
+                        }
+                        else {
+                            bccEmails = bccEmails + " , " + bccval;
+                        }
+                    }
+                    return value;
+                });
+        }
+        $("#divSendMail").html(customerselected);
+        $("#divcc").html(ccEmails);
+        $("#divbcc").html(bccEmails);
+        $("#dialog").dialog("open");
+
+    }
+
+</script>

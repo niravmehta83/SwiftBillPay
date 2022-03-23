@@ -1,0 +1,344 @@
+﻿@model BingHousingMVC.Models.ReportDurationModel
+@using BingHousing_BO;
+@{
+    ViewBag.Title = "Payments Report";
+    List<PaymentSummaryReport> list = (List<PaymentSummaryReport>)ViewBag.Results;
+}
+<div  align="center" id="foo">
+    <h2>
+        Payment Report</h2>
+         @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <table>
+                <tr>
+                    <td>
+                        @Html.LabelFor(m => m.Month)
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(m => m.Month,(List<SelectListItem>) ViewBag.monthlist)<br />
+                        @Html.ValidationMessageFor(m => m.Month)
+                    </td>
+                    <td>
+                        @Html.LabelFor(m => m.Year)
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(m => m.Year, (List<SelectListItem>)ViewBag.yearlist)<br />
+                        @Html.ValidationMessageFor(m => m.Year)
+                    </td>
+                    <td>
+                        <input type="submit" value="Search" />
+                    </td>
+                   @* <td>
+                        <a href="@Url.Action("PaymentReport", "User")">
+                            <input type="button" value="Show All" style="height: 33px; font-size: 1.2em;" /></a>
+                    </td>*@
+                </tr>
+            </table>
+            }
+    @if (list.Count > 0)
+    {
+        
+        <div >
+        
+        </div>
+        
+        foreach(PaymentSummaryReport l in list)
+        {
+        <div>
+        <div align="center" style="text-decoration: underline;">
+            <h3>@l.Date.ToShortDateString() &nbsp &nbsp &nbsp Payments &nbsp &nbsp &nbsp
+                Total:&nbsp &nbsp &nbsp<b>@l.TotalAmount</b><input type="button" id="btnoc+@l.Date.Day" value="Click to Open"  onclick="Show(@l.Date.Day,this)" /></h3>
+        </div>
+        <div id="@l.Date.Day" style="display: none; border:1 solid gray;">
+       <div align="right" style="margin: 10px 10px 10px 10px;
+                                width: 800px;"> <button  onclick="CallPrint('divprint+@l.Date.Day')">
+                Print this page</button></div>
+         <div id="divprint+@l.Date.Day">
+                <table>
+                    <tr>
+                        <td>
+                            <table class="grid" cellpadding="0" cellspacing="0" style="margin: 10px 10px 10px 10px;
+                                width: 800px;">
+                                <thead class="gridhead">
+                                    <tr>
+                                        <td>
+                                            <div align="center">
+                                                Payment Id
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div align="center">
+                                                Invoice #
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div align="center">
+                                                Customer Name
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div align="center">
+                                                Payee
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div align="center">
+                                                Amount Paid
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div align="center">
+                                                Payment Mode
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div align="center">
+                                                Paid Date
+                                            </div>
+                                        </td>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (Payments L in l.list)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div align="center">
+                                                    @L.PaymentId
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div align="center">
+                                                    @L.InvoiceId
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div align="center">
+                                                    @(L.FirstName + " " + L.LastName)
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div align="center">
+                                                    @L.Payee
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div align="center">
+                                                    @L.Amount
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div align="center">
+                                                    @L.PaymentMode
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div align="center">
+                                                    @L.PaidDate
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="float: right; padding-right: 20px;">
+                                <table style="border: none !important">
+                                    <tr>
+                                        <td class="not-selected-row" style="border: none !important">
+                                            <h3>
+                                                <b>Total :</b></h3>
+                                        </td>
+                                        <td style="border: none !important">
+                                            <h4>
+                                                <b>$ @l.TotalAmount</b></h4>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            
+        </div>
+        </div>
+        }
+     
+    }
+    else
+    {
+        <h3>
+            No Records</h3> 
+    }
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        function myFunction() {
+            window.print();
+        }
+        function CallPrint(strid) {
+            var prtContent = document.getElementById(strid);
+            var WinPrint = window.open('', '', 'letf=0,top=0,width=1000,height=1000,toolbar=0,scrollbars=0,status=0');
+            WinPrint.document.write(prtContent.innerHTML);
+            WinPrint.document.close();
+            WinPrint.focus();
+            WinPrint.print();
+            WinPrint.close();
+            //prtContent.innerHTML = strOldOne;
+        }
+        function Show(id,e) {
+            if ($(e).val() == 'Click to Open') {
+                $('#' + id).show(2000);
+                $(e).val('Close');
+
+            }
+            else {
+                $('#' + id).hide(2000);
+                $(e).val('Click to Open');
+
+            }
+        }
+
+//         function PaymentReportController($scope) {
+//           
+//            $scope.order='PaidDate';
+//            $scope.orderby='true';
+//            $scope.Results = @Html.Raw(Json.Encode(ViewBag.Results)) ;
+
+//    
+//    }
+
+    </script>
+}
+
+   @*<div id="sreport" style="display: none;">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <table>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(m => m.From)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(m => m.From, new { @class = "date" })<br />
+                            @Html.ValidationMessageFor(m => m.From)
+                        </td>
+                        <td>
+                            @Html.LabelFor(m => m.To)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(m => m.To, new { @class = "date" })<br />
+                            @Html.ValidationMessageFor(m => m.To)
+                        </td>
+                        <td>
+                            <input type="submit" value="Search" />
+                        </td>
+                        <td>
+                            <a href="@Url.Action("PaymentReport", "User")">
+                                <input type="button" value="Show All" style="height: 33px; font-size: 1.2em;" /></a>
+                        </td>
+                    </tr>
+                </table>
+            }
+            <div id="divprint">
+                <table>
+                    <tr>
+                        <td>
+                            <table class="grid" cellpadding="0" cellspacing="0" style="margin: 10px 10px 10px 10px;
+                                width: 800px;">
+                                <thead class="gridhead">
+                                    <tr>
+                                        <td>
+                                            <div align="center">
+                                                Payment Id
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div align="center">
+                                                Customer Name
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div align="center">
+                                                Amount Paid
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div align="center">
+                                                Payment Mode
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div align="center">
+                                                Paid Date
+                                            </div>
+                                        </td>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (Payments L in list)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div align="center">
+                                                    @L.PaymentId
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div align="center">
+                                                    @(L.FirstName + " " + L.LastName)
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div align="center">
+                                                    @L.Amount
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div align="center">
+                                                    @L.PaymentMode
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div align="center">
+                                                    @L.PaidDate
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="float: right; padding-right: 20px;">
+                                <table style="border: none !important">
+                                    <tr>
+                                        <td class="not-selected-row" style="border: none !important">
+                                            <h3>
+                                                <b>Total :</b></h3>
+                                        </td>
+                                        <td style="border: none !important">
+                                            <h4>
+                                                <b>$ @ViewBag.checkoutAmount</b></h4>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <button onclick="CallPrint('divprint')">
+                Print this page</button>
+        </div>*@

@@ -1,0 +1,38 @@
+﻿@using BingHousing_BO
+@{
+    ViewBag.Title = "Archive Users - Swift Bill Pay";
+    ViewBag.PageTitle = "Archive Users";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+@if (ViewBag.Results != null && ((List<AccountUserModel>)ViewBag.Results).Count > 0)
+{
+    <div class="panel-body">
+        <div class="dataTable_wrapper">
+            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <thead>
+                    <tr>
+                        <th>User Name</th>
+                        <th>Operation</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (AccountUserModel L in (List<AccountUserModel>)ViewBag.Results)
+                    {
+                        <tr class="odd gradeX">
+                            <td>@L.Name</td>
+                            <td>
+                                <a href="@Url.Action("UnLockUser", "User", new { UserId = L.UserId })"><i class="fa fa-unlock"></i> Activate</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+}
+else
+{
+    <h5>No archived users found!</h5>
+}

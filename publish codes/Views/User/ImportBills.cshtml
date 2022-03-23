@@ -1,0 +1,48 @@
+﻿@model BingHousing.WebUI.MVC.Models.PayeeModel
+@{
+    ViewBag.Title = "Import Customer";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    List<SelectListItem> list = (List<SelectListItem>)ViewBag.payeelist;    
+}
+
+ @if (list.Count > 0)
+{
+    <div>
+        <h5>1. To add single customer click - <a href="@Url.Action("AddCustomerDetails","User")"><i class="fa fa-plus"></i> Add Customer</a></h5> <br/>
+        <h5>2. To Import a file, choose a Payee from the list and then upload file</h5><br />
+    
+        @using (Html.BeginForm("ImportBills", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row row-space">
+                    <div class="col-lg-2">
+                          <h5>Select Payee </h5>
+                    </div>
+                    <div class="col-lg-3">
+                       @Html.DropDownList("PayeeId", list, new { @class = "form-control" })
+                    </div>
+             </div>
+            
+            <div class="row">
+                    <div class="col-lg-6">
+                          <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                          <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                              <span class="input-group-addon btn btn-primary btn-file"><span class="fileinput-new">Select file</span><span class="fileinput-exists">Change</span><input type="file" name="file"></span>
+                              <a href="#" class="input-group-addon btn btn-primary fileinput-exists" data-dismiss="fileinput">Remove</a>
+                          </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <input type="submit" class="btn btn-primary btn-group btn-group-justified" value="Upload">
+                    </div>
+             </div>
+        }
+    </div>
+}
+else
+{
+    <div>
+        <h5>1. You need atleast one payee to import the customers. </h5>
+        <h5>2. To Add a Single Payee, click - <a href="@Url.Action("AddPayeeDetails","User")"><i class="fa fa-plus"></i> Add Payee</a></h5> <br/>
+        <h5>3. To goto Import Payee page click - <a href="@Url.Action("ImportPayees","User")"><i class="fa fa-plus"></i> Import Payees</a></h5>
+    </div>
+}

@@ -1,0 +1,22 @@
+﻿tr-selected {
+    background-color:#99ccff !important;
+}
+
+.svg-cart {
+    width:inherit;
+    height:2px;
+}
+
+.rec-cart {
+    width:100%;
+    height:2px;
+}
+
+.rec-cart .rec-cart-selected {
+    fill:#000000;
+}
+
+.rec-cart .rec-cart-notselected {
+    fill:#ebe4e4;
+}
+

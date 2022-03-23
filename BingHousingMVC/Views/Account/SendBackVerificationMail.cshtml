@@ -1,0 +1,41 @@
+﻿@model BingHousingMVC.Models.LoginModel
+
+@{
+    ViewBag.Title = "SendBackVerificationMail";
+   }
+<div  style="height:450px">
+<h2>Email Confirmation</h2>
+<p>
+
+</p>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    
+        <fieldset>
+            <legend>Account Information</legend>
+            <table>
+            <tr>
+            <td class = "EditTable1">
+            <div class="editor-label">
+                @Html.LabelFor(m => m.UserName)
+            </div></td><td>:</td>
+            <td class = "EditTable1">
+            <div class="editor-field">
+                @Html.TextBoxFor(m => m.UserName)<br />
+                @Html.ValidationMessageFor(m => m.UserName)
+            </div></td></tr>
+            <tr>
+            <td></td>
+            <td></td>
+            <td class = "EditTable1" style="float:left;"><p>
+                @*<input type="image" src="@Url.Content("~/Content/themes/base/images/send.jpg")" alt ="submit" value="Log On"  onmouseover="this.src='@Url.Content("~/Content/themes/base/images/send1.jpg")'" onmouseout="this.src='@Url.Content("~/Content/themes/base/images/send.jpg")'"/>
+            *@ <input type="submit" value="Submit" /></p></td></tr>
+            </table>
+            </fieldset>
+}
+<p style = "color:Red;">@ViewBag.msg</p>
+</div>

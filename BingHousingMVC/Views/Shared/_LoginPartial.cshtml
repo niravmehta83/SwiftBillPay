@@ -1,0 +1,73 @@
+﻿@if (Request.IsAuthenticated)
+{
+
+
+    List<SelectListItem> _Users = null;
+    string selectedName = System.Web.HttpContext.Current.Session["SelectedUserName"] as string ?? User.Identity.Name;
+    if (System.Web.HttpContext.Current.Cache["Users"] != null)
+    {
+        _Users = (List<SelectListItem>)System.Web.HttpContext.Current.Cache["Users"] ;
+              
+        
+    }
+    
+    
+    <text>
+    <div align="right">
+        <table border="1" width="100%" id="table1" align="right">
+            <tr>
+                <td align="right" width="35%" style="margin-top: 0; margin-bottom: 0">
+                    @if (!User.IsInRole("Admin"))
+                    {
+                        <p align="center" style="margin-top: 0; margin-bottom: 0">
+                            Hello,@User.Identity.Name!</p>
+
+                    }
+                    else
+                    {
+                        using (Html.BeginForm("UserSelection", "User", FormMethod.Post, new { Id = "selectUser" }))
+                        { @Html.AntiForgeryToken()
+                            if (_Users !=null)
+                            {
+                        <p>
+                            Hello,@Html.DropDownList("SelectedUserName", _Users.Where(a => a.Value != selectedName), selectedName, new { id = "dduser" })</p>
+                            }
+                        }
+                    }
+                </td>
+                <td width="30%" align="center" style="margin-top: 0; margin-bottom: 0">
+                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>}
+                </td>
+                <td align="center" width="35%" style="margin-top: 0; margin-bottom: 0">
+                    @Html.ActionLink("Change Password", "ChangePassword", "Account", routeValues: null, htmlAttributes: new { UserName = User.Identity.Name })
+                    @*@using (Html.BeginForm("ChangePassword", "Account", new { UserName = User.Identity.Name }, FormMethod.Get, htmlAttributes: new { id = "ResetpasswordForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <a href="javascript:document.getElementById('ResetpasswordForm').submit()">Change Password</a>}*@
+                </td>
+            </tr>
+        </table>
+    </div>
+    </text>
+}
+else
+{
+    <div align="right">
+        <table border="1" width="100%" id="table2" align="right">
+            <tr>
+                <td align="right" width="50%" style="margin-top: 0; margin-bottom: 0">
+                    <p align="center" style="margin-top: 0; margin-bottom: 0">@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</p>
+                </td>
+                <td width="50%" align="center" style="margin-top: 0; margin-bottom: 0">@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+                </td>
+            </tr>
+        </table>
+    </div>
+}
+@*<ul style="display:inline;list-style:none;">
+        <li style="display:inline;list-style:none;"></li>|
+        <li style="display:inline;list-style:none;"></li>
+    </ul>*@ 

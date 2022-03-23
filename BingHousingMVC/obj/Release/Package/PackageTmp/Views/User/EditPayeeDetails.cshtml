@@ -1,0 +1,221 @@
+﻿@model BingHousingMVC.Models.PayeeModel
+@{
+    ViewBag.Title = "EditPayeeDetails";
+}
+
+<div align="center">
+    <fieldset>
+        <legend id="title" style="color: Green; font-size: large">Edit Payee Details:</legend>
+        @using (Html.BeginForm("EditPayeeDetails", "User", FormMethod.Post, new { id = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <table>
+
+                <tr>
+                    <td class="EditTable">
+                        <div class="editor-label">
+                            @Html.Label("Payee" + "*")
+                        </div>
+                    </td>
+                    <td>
+                        :
+                    </td>
+                    <td class="EditTable">
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.Payee)<br />
+                            @Html.ValidationMessageFor(model => model.Payee)
+                            @Html.HiddenFor(model => model.PayeeId)
+                            @Html.HiddenFor(model => model.UserId)
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="EditTable">
+                        <div class="editor-label">
+                            @Html.Label("Payee Address" + "*")
+                        </div>
+                    </td>
+                    <td>
+                        :
+                    </td>
+                    <td class="EditTable">
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.PayeeAddress)<br />
+                            @Html.ValidationMessageFor(model => model.PayeeAddress)
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="EditTable">
+                        <div class="editor-label">
+                            @Html.Label("Payee Address2")
+                        </div>
+                    </td>
+                    <td>
+                        :
+                    </td>
+                    <td class="EditTable">
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.PayeeAddress2)<br />
+                            @Html.ValidationMessageFor(model => model.PayeeAddress2)
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="EditTable">
+                        <div class="editor-label">
+                            @Html.Label("Payee City" + "*")
+                        </div>
+                    </td>
+                    <td>
+                        :
+                    </td>
+                    <td class="EditTable">
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.PayeeCity)<br />
+                            @Html.ValidationMessageFor(model => model.PayeeCity)
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="EditTable">
+                        <div class="editor-label">
+                            @Html.Label("Payee State")
+                        </div>
+                    </td>
+                    <td>
+                        :
+                    </td>
+                    <td class="EditTable">
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.PayeeState)<br />
+                            @Html.ValidationMessageFor(model => model.PayeeState)
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="EditTable">
+                        <div class="editor-label">
+                            @Html.Label("Payee Zip Code" + "*")
+                        </div>
+                    </td>
+                    <td>
+                        :
+                    </td>
+                    <td class="EditTable">
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.PayeeZipCode)<br />
+                            @Html.ValidationMessageFor(model => model.PayeeZipCode)
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="EditTable">
+                        <div class="editor-label">
+                            @Html.Label("Payee Country" + "*")
+                        </div>
+                    </td>
+                    <td>
+                        :
+                    </td>
+                    <td class="EditTable">
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.PayeeCountry)<br />
+                            @Html.ValidationMessageFor(model => model.PayeeCountry)
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="EditTable">
+                        <div class="editor-label">
+                            @Html.Label("Payee Email" + "*")
+                        </div>
+                    </td>
+                    <td>
+                        :
+                    </td>
+                    <td class="EditTable">
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.PayeeEmail)<br />
+                            @Html.ValidationMessageFor(model => model.PayeeEmail)
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="EditTable">
+                        <div class="editor-label">
+                            @Html.Label("Payee Contact Person")
+                        </div>
+                    </td>
+                    <td>
+                        :
+                    </td>
+                    <td class="EditTable">
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.PayeeContactPerson)<br />
+                            @Html.ValidationMessageFor(model => model.PayeeContactPerson)
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="EditTable">
+                        <div class="editor-label">
+                            @Html.Label("Payee Comments" + "*")
+                        </div>
+                    </td>
+                    <td>
+                        :
+                    </td>
+                    <td class="EditTable">
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.PayeeComments)<br />
+                            @Html.ValidationMessageFor(model => model.PayeeComments)
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="EditTable">
+                        <div class="editor-label">
+                            @Html.Label("Payee Website" + "*")
+                        </div>
+                    </td>
+                    <td>
+                        :
+                    </td>
+                    <td class="EditTable">
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.PayeeWebsite)<br />
+                            @Html.ValidationMessageFor(model => model.PayeeWebsite)
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <div>
+                <input type="button" value="Make a Copy" id="btncopy" style="height: 33px;" />
+                <input type="submit" value="Update" />
+            </div>
+        }
+    </fieldset>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+         
+            $('#btncopy').click(function (event) {
+
+
+                $.ajax({ type: 'POST',
+                    url: '@Url.Action("CopyPayeeDetails", "User")',
+                    data: $("#form").serialize(),
+                    crossDomain: true,
+                    success: function (Data) { window.location.href = Data; },
+                    dataType: "json"
+                });
+
+            });
+
+        });
+    
+    </script>
+}

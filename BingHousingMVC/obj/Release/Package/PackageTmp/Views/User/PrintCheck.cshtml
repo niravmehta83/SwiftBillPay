@@ -1,0 +1,120 @@
+﻿@model List<BingHousing_BO.OnlineCheck>
+@{
+    ViewBag.Title = "Print ";
+   // Layout = "null";
+}
+<link rel="stylesheet" href="~/Content/print.css" media="print" />
+<div class="row">
+    <div class="col-md-12"><button type="button" class="btnPrint">Print Check</button></div>
+</div>
+<div id="divCheck">
+    @if (@Model.Count > 0)
+    {
+        var count = 1;
+        var firstCount = 1;
+        var secondCount = 1;
+        foreach (var item in @Model)
+        {
+
+            <table style="border:dotted 0px white;margin-top:-20px;max-height:6.5cm;min-height:6.5cm" width="1000" align="center">
+                <tr>
+                    <td style="width:90px;"></td>
+                    <td style="width:200px;">
+                        <span style="font-size:20px;  font-weight:bold;">@item.CustomerName</span><br />
+                        <span style="font-size:14px;">@item.Address</span><br />
+                        <span style="font-size:14px;">@item.Address2</span><br />
+                        <span style="font-size:14px;">@item.PhoneNumber</span><br />
+                        <span style="font-size:14px;">@item.Email</span><br />
+                    </td>
+                    <td style="width:90px;"></td>
+                    <td style="width:250px;">
+                        <span style="font-size:20px;  font-weight:bold;">@item.BankName</span><br />
+                        <span>@item.BankAddress</span><br />
+                        <span>@item.BankCity</span><br /><br /><br />
+                    </td>
+                    <td style="width:170px;" align="center"><br /><br /><br /><br /><br />@Html.Label("Date:")@Convert.ToDateTime(@item.DateOnCheck).ToString("MM/dd/yyyy")</td>
+                    <td style="width:40px;" align="right"><span style="font-size:18px;  font-weight:bold;">@item.CheckNumber</span><br /><br /><br /><br /><br /></td>
+                </tr>
+                <tr>
+                    <td colspan="6"><br /></td>
+                </tr>
+
+                <tr>
+                    <td style="width:90px;" class="check-font-small text-right padding-0">PAY TO THE ORDER OF</td>
+                    <td colspan="4">
+                        <div style="border-bottom: 1px solid #000!important;">
+                            <span style="font-size:18px;width:100%;font-weight:200;">@item.PayeeName</span>
+                        </div>
+                    </td>
+                    <td style="font-size:18px;width:40px;">$ <span style="border-bottom:1px solid #000!important;">@Convert.ToDecimal(@item.AmountOnCheck).ToString("0.00")</span><br /></td>
+                </tr>
+                <tr style="font-size:18px;  font-weight:200;">
+                    <td style="border-bottom:1px solid #000!important;" colspan="5">@item.Comment<br /></td>
+                    <td style="width:40px;">@Html.Label("DOLLARS")<br /></td>
+                </tr>
+                <tr>
+                    <td colspan="6"><br /></td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="width:400px;">
+                        @Html.Label("MEMO :")<br />
+                        <span style="font-size:14px;">@item.CheckMemo</span>
+                    </td>
+                    <td colspan="3"></td>
+                </tr>
+                <tr>
+                    <td colspan="6"><div style="height:.5cm"></div></td>
+                </tr>
+                <tr>
+                    <td colspan="4"></td>
+                    <td colspan="2" align="right" style="width:200px;">
+                        <span style="font-size:14px;">
+                            This draft is authorised by your depositor
+                        </span><br />
+                        <span style="border-bottom:1px solid #000!important;font-size:18px;  font-weight:200;">NO SIGNATURE REQUIRED</span><br><br>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6"><div style="height:.8cm"></div></td>
+                </tr>
+                <tr style="font-family:'MICR E13B';src:url('/Content/Fonts/micrenc.ttf');font-size:1.5em;">
+                    <td colspan="6" align="center">@Html.Label("C")@item.CheckNumber@Html.Label("C") @Html.Label("A")@item.RoutingNumber@Html.Label("A") @item.AccountNumber@Html.Label("C")</td>
+                </tr>
+            </table>
+            if (@count == (1 + (@firstCount - 1) * 3))
+            {
+                <div style="min-height:3.0cm">
+                </div>
+                firstCount = firstCount + 1;
+            }
+            if (@count == (2 + (@secondCount - 1) * 3))
+            {
+                <div style="min-height:2.32cm">
+                </div>
+                secondCount = secondCount + 1;
+            }
+            count = count + 1;
+        }
+    }
+</div>
+
+<div class="row">
+    <div class="col-md-12"><button type="button" class="btnPrint">Print Check</button></div>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $(".btnPrint").click(function () {
+            var prtContent = document.getElementById("divCheck");
+            var WinPrint = window.open('', '', 'letf=0,top=0,width=1000,height=1000,toolbar=0,scrollbars=0,status=0');
+            WinPrint.document.write(prtContent.innerHTML);
+            WinPrint.document.close();
+            WinPrint.focus();
+            WinPrint.print();
+            WinPrint.close();
+            window.location.href = "/User/Payments";
+
+        });
+    });
+</script>

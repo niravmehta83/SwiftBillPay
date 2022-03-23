@@ -1,0 +1,60 @@
+﻿@using BingHousing_BO;
+@{
+    ViewBag.Title = "ViewArchivedUsers";
+}
+<div align="center"><h2> Archived Users</h2>
+@if (ViewBag.Results != null)
+{
+        <table class="grid" cellpadding="0" cellspacing="0" style="margin: 10px 10px 10px 10px;">
+            <thead class="gridhead">
+                <tr>
+                    <td>
+                        <div align="center">
+                            UserName
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            Role Name
+                        </div>
+                    </td>
+                    <td>
+                        <div align="center">
+                            Operations
+                        </div>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (AccountUserModel L in (List<AccountUserModel>)ViewBag.Results)
+                {
+                    <tr>
+                        <td>
+                            <div align="center">
+                                @L.Name
+
+                            </div>
+                        </td>
+                        <td>
+                            <div align="center">
+                                @L.RoleName
+                            </div>
+                        </td>
+
+                        <td>
+                            <div align="center">
+                                <a id="btnedit" href="@Url.Action("UnLockUser", "User", new { UserId = L.UserId })">
+                                    <button>
+                                        Activate</button></a> 
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+}
+else
+{
+    <p>Sorry There is no Archieved Users</p>
+}
+</div>

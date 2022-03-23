@@ -1,0 +1,110 @@
+﻿@using BingHousing_BO
+@{
+    ViewBag.Title = "PayPal";
+    int count = ViewBag.Count != null ? Convert.ToInt32(ViewBag.Count) : 0;
+}
+
+
+<div align="center">
+    <h2>
+        Shopping Cart Items : @count</h2>
+    @if (ViewBag.Results != null)
+    {
+        <table>
+            <tr>
+                <td>
+                    <table class="grid" cellpadding="0" cellspacing="0" width="800px" style="margin: 10px 10px 10px 10px;">
+                        <thead class="gridhead">
+                            <tr>
+                               
+                                <td style="width: 60%">
+                                    <b>Description</b>
+                                </td>
+                                <td style="width: 10%">
+                                    <b>Quantity</b>
+                                </td>
+                                <td style="width: 10%">
+                                    <b>Unit Price</b>
+                                </td>
+                                <td style="width: 10%">
+                                    <b>Total</b>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (InvoiceDetail r in ViewBag.Results)
+                            {
+                                <tr>
+                                    
+                                    <td>
+                                        <div>
+                                            <b>Customer Id :</b>@r.InvoiceNumber<br />
+                                            <b>Name :</b>@r.CustomerFirstName @r.CustomerLastName<br />
+                                            <b>Description :</b>@r.BillDescription<br />
+                                            <b>Invoice # :</b>@r.InvoiceId<br />
+                                            <b>Billing Date :</b> @r.EmailSentDate.DayOfWeek @r.EmailSentDate.ToString("dd MMM yyyy")<br />
+                                            <b>Data Sent :</b> @r.EmailSentDate.DayOfWeek @r.EmailSentDate.ToString("dd MMM yyyy")<br />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="center">
+                                           <label   >
+                                                 @r.Quantity
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="center">
+                                            <label  id="lblup+@r.InvoiceId" >
+                                                <b>US$</b> @r.AmountDue
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="center">
+                                            <label  id="lbltp+@r.InvoiceId" >
+                                                <b>US$</b> @r.TotalAmountDue
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="float: right; padding-right:20px;">
+                        <table style="border: none !important">
+                            <tr>
+                                <td class="not-selected-row" style="border: none !important">
+                                    <h3>
+                                        <b>Product Cost :</b></h3>
+                                </td>
+                                <td style="border: none !important">
+                                    <h4>
+                                        <b>US$@ViewBag.checkoutAmount</b></h4>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div align="center">
+                      
+                                       
+
+                                           <a href="@ViewBag.Url"><input type="button" value="Pay Now"  /></a>
+                                           
+                                       
+                    </div>
+                </td>
+            </tr>
+        </table>
+    
+    
+    }
+</div>

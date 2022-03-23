@@ -1,0 +1,180 @@
+﻿@using BingHousing_BO
+@{
+    ViewBag.Title = "Cart";
+
+    int count = ViewBag.Count != null ? Convert.ToInt32(ViewBag.Count) : 0;
+    
+}
+<div align="center">
+    <h2>
+        Shopping Cart Items : @count</h2>
+    @if (ViewBag.Results != null)
+    {
+        <table>
+            <tr>
+                <td>
+                    <table class="grid" cellpadding="0" cellspacing="0" width="800px" style="margin: 10px 10px 10px 10px;">
+                        <thead class="gridhead">
+                            <tr>
+                                <td style="width: 10%">
+                                    <b>Remove</b>
+                                </td>
+                                <td style="width: 50%">
+                                    <b>Description</b>
+                                </td>
+                                <td style="width: 10%">
+                                    <b>Quantity</b>
+                                </td>
+                                <td style="width: 10%">
+                                    <b>Unit Price</b>
+                                </td>
+                                <td style="width: 10%">
+                                    <b>Late Charges</b>
+                                </td>
+                                <td style="width: 10%">
+                                    <b>Total</b>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (InvoiceDetail r in ViewBag.Results)
+                            {
+                                <tr>
+                                    <td>
+                                        <div align="center">
+                                            <a href="@Url.Action("RemoveCartItems", "Cart", new { invoiceId = r.InvoiceId })" >
+                                                <input value="remove" type="button" /></a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <b>Customer Id :</b>@r.InvoiceNumber<br />
+                                            <b>Name :</b>@r.CustomerFirstName @r.CustomerLastName<br />
+                                            <b>Description :</b>@r.BillDescription<br />
+                                            <b>Invoice # :</b>@r.InvoiceId<br />
+                                            <b>Billing Date :</b> @r.EmailSentDate.DayOfWeek @r.EmailSentDate.ToString("dd MMM yyyy")<br />
+                                            <b>Data Sent :</b> @r.EmailSentDate.DayOfWeek @r.EmailSentDate.ToString("dd MMM yyyy")<br />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="center">
+                                            @*<input  id="txt+@r.InvoiceId" value= "@r.Quantity" type="text" style="width:30px"   />*@
+                                            @r.Quantity
+
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="center">
+                                            <label  id="lblup+@r.InvoiceId" >
+                                                <b>US$</b> @r.AmountDue
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="center">
+                                            <label  id="lbllc+@r.InvoiceId" >
+                                                <b>US$</b> @r.LateCharges
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="center">
+                                            <label  id="lbltp+@r.InvoiceId" >
+                                                <b>US$</b> @(r.TotalAmountDue +r.LateCharges)
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="float: right; padding-right:20px;">
+                        <table style="border: none !important">
+                            <tr>
+                                <td class="not-selected-row" style="border: none !important">
+                                    <h3>
+                                        <b>Product Cost :</b></h3>
+                                </td>
+                                <td style="border: none !important">
+                                    <h4>
+                                        <b>US$@ViewBag.checkoutAmount</b></h4>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div align="center">
+                        <table style="border: none !important; ">
+                            <tr>
+                                <td  style="border: none !important">
+                                    
+                                </td>
+                                <td style="border: none !important">
+                                  @*  @using (Html.BeginForm("CartRecalculate", "Cart", FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.Hidden("invoicelist")
+                                        <input type="submit" value="Recalculate" style=" font-weight:600" />
+                                    }*@
+                                </td>
+                                <td style="border: none !important">
+                                    <a href="@Url.Action("CheckOut", "Cart")" >
+                                        <input type="button" value="Proceed Checkout" style="height: 32px; font-weight:600" />
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <div align="center">
+        <b>These are your Current Items in your shopping cart.</b><br />
+      @*  <b>You can alter the quantity and then click Recalculate.</b>*@
+        </div>
+    
+    }
+</div>
+@section Scripts{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('input[type="text"]').change(function () {
+
+                var id = $(this).attr('id');
+
+                if (isNaN($(this).val())) {
+                    $.notify({ message: 'Quantity shoud be a number' }, { type: 'info' });
+                }
+                else {
+                    var lbltpid = id.replace('txt', 'lbltp');
+                    var lblupid = id.replace('txt', 'lblup');
+                    var val1 = $(this).val();
+                    var val2 = '';
+                    if ($('#invoicelist').val() == '') {
+                        val2 = id.replace('txt+', '') + '-' + val1;
+                    }
+                    else {
+                        val2 = $('#invoicelist').val() + ',' + id.replace('txt+', '') + '-' + val1;
+                    }
+
+
+
+                    $('#invoicelist').val(val2);
+
+
+                    //alert($('#invoicelist').val());
+                }
+            });
+        });
+  
+    </script>
+}

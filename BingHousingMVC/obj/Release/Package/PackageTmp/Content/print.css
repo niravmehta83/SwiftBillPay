@@ -1,0 +1,42 @@
+﻿@media print {
+      @page { margin: 0; }
+  body { margin: 0cm;
+  }
+   a {
+        display:none;
+    }
+
+
+
+    font-face {
+        font-family: 'MICR E13B';
+        src: url('/Content/Fonts/micrenc.ttf') format("truetype"); /* Make sure your file location is right */
+    }
+
+    .micr-font {
+        font-family: 'MICR E13B';
+        font-size: 2.0em;
+    }
+
+    .check-font-small {
+        font-size: 14px;
+    }
+
+    .check-font-large {
+        font-size: 18px;
+        font-weight: 200;
+    }
+
+    .display-inline {
+        display: inline;
+    }
+
+    .padding-0 {
+        padding: 0px !important;
+    }
+
+    .underline {
+        border-bottom: 1px solid #000 !important;
+        /*text-decoration-line:underline !important;*/
+    }
+}

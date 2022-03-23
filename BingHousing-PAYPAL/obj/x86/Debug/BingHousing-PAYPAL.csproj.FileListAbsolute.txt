@@ -1,0 +1,8 @@
+F:\Workshop\BingHousingMVC\BingHousing-PAYPAL\bin\x86\Debug\BingHousing-PAYPAL.dll
+F:\Workshop\BingHousingMVC\BingHousing-PAYPAL\bin\x86\Debug\BingHousing-PAYPAL.pdb
+F:\Workshop\BingHousingMVC\BingHousing-PAYPAL\bin\x86\Debug\Newtonsoft.Json.dll
+F:\Workshop\BingHousingMVC\BingHousing-PAYPAL\bin\x86\Debug\PayPalCoreSDK.dll
+F:\Workshop\BingHousingMVC\BingHousing-PAYPAL\bin\x86\Debug\RestApiSDK.dll
+F:\Workshop\BingHousingMVC\BingHousing-PAYPAL\bin\x86\Debug\Newtonsoft.Json.xml
+F:\Workshop\BingHousingMVC\BingHousing-PAYPAL\obj\x86\Debug\BingHousing-PAYPAL.dll
+F:\Workshop\BingHousingMVC\BingHousing-PAYPAL\obj\x86\Debug\BingHousing-PAYPAL.pdb

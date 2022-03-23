@@ -1,0 +1,97 @@
+﻿@{
+    ViewBag.Title = "Swift Bill Pay";
+    Layout = "~/Views/Shared/_LayoutLanding.cshtml";
+}
+
+<!-- Header Carousel -->
+<header id="myCarousel" class="carousel slide">
+    @*<!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        </ol>*@
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+        <div class="item active">
+            <div class="fill" style="background-image:url(../../Content/img/modern-bg.png);"></div>
+        </div>
+    </div>
+</header>
+
+<!-- Page Content -->
+<div class="container">
+
+    <!-- Marketing Icons Section -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                Welcome to Smart Bill Pay
+            </h1>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4><i class="fa fa-fw fa-pie-chart"></i> Dashboard</h4>
+                </div>
+                <div class="panel-body">
+                    <p>Use this page to view various options available to manage rent, customers, emails, bills and others.</p>
+                    <a href="@Url.Action("Main","Home")" class="btn btn-primary">View Dashboard</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4><i class="fa fa-fw  fa-cc-paypal"></i> Rent Payment</h4>
+                </div>
+                <div class="panel-body">
+                    <p>Swift Bill pay customers can use this page to pay their rents.</p>
+                    <a href="@Url.Action("CartLogin", "Cart")" class="btn btn-primary">Pay Rent</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4><i class="fa fa-fw fa-gift"></i> Subscriptions</h4>
+                </div>
+                <div class="panel-body">
+                    <p>View and subscribe multiple subscription options that will allow users to access exciting functionalities </p>
+                    @if (Request.IsAuthenticated && User.Identity.Name.ToUpper() == "ADMIN")
+                    {
+                        <a href="@Url.Action("EditSubscription", "Subscription")" class="btn btn-primary">View Plans</a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("ShowSubscriptions", "Subscription")" class="btn btn-primary">View Plans</a>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.row -->
+    <!-- Call to Action Section -->
+    <div class="well">
+        <div class="row">
+            <div class="col-md-8">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, expedita, saepe, vero rerum deleniti beatae veniam harum neque nemo praesentium cum alias asperiores commodi.</p>
+            </div>
+            <div class="col-md-4">
+                <a class="btn btn-lg btn-primary btn-block" href="#">Call to Action</a>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="row">
+            <div class="col-lg-12">
+                <p>Copyright &copy; Your Website 2016</p>
+            </div>
+        </div>
+    </footer>
+
+</div>

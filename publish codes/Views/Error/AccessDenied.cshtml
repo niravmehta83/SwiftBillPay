@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Access Denied - Swift Bill Pay";
+    Layout = "~/Views/Shared/_LayoutWizard.cshtml";
+}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4><i class="fa fa-sign-in"></i> Access Denied</h4>
+    </div>
+    <div class="panel-body">
+
+        <a href="@Url.Action("Login","Account")" class="btn btn-primary">Log in</a>
+        <a href="@Url.Action("Register","Account")" class="btn btn-primary">Register</a>
+
+    </div>
+</div>

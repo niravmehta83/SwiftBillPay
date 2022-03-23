@@ -1,0 +1,65 @@
+﻿@using BingHousing_BO
+@{
+    ViewBag.Title = "Bills - Swift Bill Pay";
+    ViewBag.PageTitle = "Customers";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+@if (ViewBag.Results != null)
+{
+        <div class="panel-body" id="foo">
+        @if (((List<CustomerDetail>)ViewBag.Results).Count() > 0)
+        { 
+             <div class="dataTable_wrapper">
+             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                 <thead class="gridhead">
+                     <tr>
+                         <th>Customer Id</th>
+                         <th>First Name</th>
+                         <th>Last Name</th>
+                         <th>Customer Email</th>
+                         <th>Amount Due</th>
+                         <th>Bill Description</th>
+                         <th>Bill Date</th>
+                         <th>Payee</th>
+                         <th>Payee Email</th>
+                         <th>Operations</th>
+                     </tr>
+                 </thead>
+                <tbody>
+                            
+                    @foreach (CustomerDetail L in (List<CustomerDetail>)ViewBag.Results)
+                    {
+                        <tr class="odd gradeX">
+                            <td>@(L.CustomerFirstName.Trim().ToCharArray()[0].ToString().ToUpper() + L.UserId.ToString() + L.CustomerId.ToString())</td>
+                            <td>@L.CustomerFirstName</td>
+                            <td>@L.CustomerLastName</td>
+                            <td>@L.CustomerEmail</td>
+                            <td>@L.AmountDue</td>
+                            <td>@L.BillDescription</td>
+                            <td>@L.NextBillDate.Date.ToShortDateString()</td>
+                            <td>@L.Payee</td>
+                            <td>@L.PayeeEmail</td>
+                            <td>
+                                <a href="@Url.Action("EditCustomerDetails", "User", new { CustomerId = L.CustomerId })"><i class="fa fa-edit"></i> Edit</a>&nbsp
+                                <a href="@Url.Action("DeleteCustomerDetails", "User", new { CustomerId = L.CustomerId })"><i class="fa fa-trash"></i> Delete</a>
+                            </td>
+                        </tr>
+                    }
+            
+                </tbody>
+                </table>
+             </div>
+
+    }
+    else
+    {
+        <h5>No Records</h5> 
+    }
+        
+    </div>
+}
+else
+{
+    <h5>No Records</h5> 
+}

@@ -1,0 +1,62 @@
+﻿@model BingHousing.WebUI.MVC.Models.UserModel
+@{
+    ViewBag.Title = "User Details - Swift Bill Pay";
+    Layout = "~/Views/Shared/_LayoutWizard.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4><i class="fa fa-register"></i> User Details</h4>
+                </div>
+                <div class="panel-body">
+                    @Html.Partial("_ErrorPanel")
+                    @using (Html.BeginForm("RegisterUserDetails", "Account", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-group">
+                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", placeholder = "First Name", autofocus = "true" })
+                        </div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", placeholder = "Last Name", type = "text" })
+                        </div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "Address Line 1", type = "text" })
+                        </div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(m => m.Address2, new { @class = "form-control", placeholder = "Address Line 2", type = "text" })
+                        </div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(m => m.City, new { @class = "form-control", placeholder = "City", type = "text" })
+                        </div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(m => m.State, new { @class = "form-control", placeholder = "State", type = "text" })
+                        </div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(m => m.ZipCode, new { @class = "form-control", placeholder = "Zip Code", type = "text" })
+                        </div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(m => m.Country, new { @class = "form-control", placeholder = "Country", type = "text" })
+                        </div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", placeholder = "PhoneNumber", type = "text" })
+                        </div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control", placeholder = "Mobile", type = "text" })
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary btn-group btn-group-justified" value="Create Account">
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+
+

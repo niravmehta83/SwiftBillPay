@@ -1,0 +1,187 @@
+﻿@model  BingHousingMVC.Models.UserModel
+@{
+    ViewBag.Title = "User Details";
+}
+
+<fieldset>
+    <legend id="title" style="color: Green; font-size: large">User Profile:</legend>
+    @using (Html.BeginForm("RegisterUserDetails","Account",FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <p>
+            * fields are Madentary.</p>
+       
+            <table class="EditTable">
+                <tr>
+                    <td class="EditTable">
+                        <div class="editor-label">
+                            @Html.Label("First Name" + "*")
+                        </div>
+                    </td>
+                    <td>
+                        :
+                    </td>
+                    <td class="EditTable">
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.FirstName)<br />
+                            @Html.ValidationMessageFor(model => model.FirstName)
+                            
+                            
+                        </div>
+                    </td>
+                    <td style="width: 50px">
+                    </td>
+                    <td class="EditTable">
+                        <div class="editor-label">
+                            @Html.Label("Last Name" + "*")
+                        </div>
+                    </td>
+                    <td>
+                        :
+                    </td>
+                    <td class="EditTable">
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.LastName)<br />
+                            @Html.ValidationMessageFor(model => model.LastName)
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    
+                    <td class="EditTable">
+                        <div class="editor-label">
+                            @Html.Label("Address" + "*")
+                        </div>
+                    </td>
+                    <td>
+                        :
+                    </td>
+                    <td class="EditTable">
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.Address)<br />
+                            @Html.ValidationMessageFor(model => model.Address)
+                        </div>
+                    </td>
+                    <td>
+                    </td>
+                    <td class="EditTable">
+                        <div class="editor-label">
+                            @Html.Label("Address2")
+                        </div>
+                    </td>
+                    <td>
+                        :
+                    </td>
+                    <td class="EditTable">
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.Address2)<br />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="EditTable">
+                        <div class="editor-label">
+                            @Html.Label("City" + "*")
+                        </div>
+                    </td>
+                    <td>
+                        :
+                    </td>
+                    <td class="EditTable">
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.City)<br />
+                            @Html.ValidationMessageFor(model => model.City)
+                        </div>
+                    </td>
+                    <td>
+                    </td>
+                    <td class="EditTable">
+                        <div class="editor-label">
+                            @Html.Label("State" + "*")
+                        </div>
+                    </td>
+                    <td>
+                        :
+                    </td>
+                    <td class="EditTable">
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.State)<br />
+                            @Html.ValidationMessageFor(model => model.State)
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="EditTable">
+                        <div class="editor-label">
+                            @Html.Label("Zip Code" + "*")
+                        </div>
+                    </td>
+                    <td>
+                        :
+                    </td>
+                    <td class="EditTable">
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.ZipCode)<br />
+                            @Html.ValidationMessageFor(model => model.ZipCode)
+                        </div>
+                    </td>
+                    <td>
+                    </td>
+                    <td class="EditTable">
+                        <div class="editor-label">
+                            @Html.Label("Country" + "*")
+                        </div>
+                    </td>
+                    <td>
+                        :
+                    </td>
+                    <td class="EditTable">
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.Country)<br />
+                            @Html.ValidationMessageFor(model => model.Country)
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="EditTable">
+                        <div class="editor-label">
+                            @Html.Label("PhoneNumber" + "*")
+                        </div>
+                    </td>
+                    <td>
+                        :
+                    </td>
+                    <td class="EditTable">
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.PhoneNumber)<br />
+                            @Html.ValidationMessageFor(model => model.PhoneNumber)
+                        </div>
+                    </td>
+                    <td>
+                    </td>
+                    <td class="EditTable">
+                        <div class="editor-label">
+                            @Html.Label("Mobile")
+                        </div>
+                    </td>
+                    <td>
+                        :
+                    </td>
+                    <td class="EditTable">
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.Mobile)<br />
+                            @Html.ValidationMessageFor(model => model.Mobile)
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        
+    
+      
+        <p>
+            <input type="submit" value="Create the Account" />
+        </p>
+   
+    }
+</fieldset>

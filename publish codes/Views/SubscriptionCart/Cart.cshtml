@@ -1,0 +1,55 @@
+﻿@using BingHousing_BO
+@model BingHousing.WebUI.MVC.Models.UserModel
+@{
+    ViewBag.Title = "Subscription Cart - Swift Bill Pay";
+    Layout = "~/Views/Shared/_LayoutWizard.cshtml";
+
+    Plan selectedPlan = ViewBag.SelectedPlan as Plan;
+    BingHousing.WebUI.MVC.Models.RegisterModel registerModel = ViewBag.RegisterUser as BingHousing.WebUI.MVC.Models.RegisterModel;
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Subcription Cart
+            </div>
+            <div class="panel-body">
+
+            <!--Cart items-->
+            @if (selectedPlan != null)
+            {
+                if (Model != null)
+                {
+                    if (registerModel == null)
+	                {
+		                @Html.Partial("_Review", Model) 
+	                }
+                }
+            }
+            else
+            {
+                <div class="row">
+                    <div class="col-lg-4"></div>
+                    <div class="col-lg-4">
+                        <div class="well">
+                            <h4>No items found in cart!!</h4>
+                            <a href="@Url.Action("ShowSubscriptions","Subscription")">
+                                <input type="button" value="Browse Subscription" class="btn btn-primary" />
+                            </a>
+                            <a href="@Url.Action("Index","Home")">
+                                <input type="button" value="Go back to home" class="btn btn-primary" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4"></div>
+
+                </div>
+             }
+         <!-- /Cart items-->
+        </div>
+                <!-- /.col-lg-12 -->
+        </div>
+<!-- /.row -->
+    </div>
+</div>

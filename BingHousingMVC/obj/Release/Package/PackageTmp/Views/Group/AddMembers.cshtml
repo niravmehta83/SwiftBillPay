@@ -1,0 +1,184 @@
+﻿
+@using BingHousing_BO
+@model BingHousingMVC.Models.GroupModel
+@{
+    ViewBag.Title = "Add Group Members - Swift Bill Pay";
+    ViewBag.PageTitle = "Add Group Members";
+    List<CustomerDetail> allCustomers = ViewBag.AllCustomers as List<CustomerDetail>;
+    allCustomers = allCustomers.OrderBy(a => a.CustomerFirstName).ToList();
+    string userName = System.Web.HttpContext.Current.Session["SelectedUserName"] as string ?? User.Identity.Name;
+}
+<h3>@Model.GroupName
+    <span class="badge">( @Model.GroupMembers.Count)</span>
+    <div style="float: right;">
+        @using (Html.BeginForm("AddNewCustomer", "Group", FormMethod.Get, new { id = "addnewCustomer" }))
+        {
+            @Html.Hidden("hdnGroupId", Model.GroupId)
+            <button type="submit" >Add new customer</button>
+        }   
+        <br />   
+        <a href="@Url.Action("SendBills", "Group", new { GroupId = Model.GroupId.ToString() })"> <button type="submit" >Send Mail</button></a>
+    </div>
+</h3>
+<h6>Members in the Group:
+</h6>
+<div class="panel-body" id="foo">
+    @if (@Model.GroupMembers != null && Model.GroupMembers.Count > 0)
+    {    
+           Model.GroupMembers = Model.GroupMembers.OrderBy(a => a.CustomerName).ToList();     
+        <div>
+            <table class="grid">
+                <thead class="gridhead">
+                    <tr>
+                        <th>
+                            Customer Name
+                        </th>
+                        <th>Payee (PayeeEmail)</th>
+                        <th>
+                            Added on
+                        </th>
+                        <th>
+                            Select
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var group in Model.GroupMembers)
+                    {
+                        <tr class="odd gradeX">
+                            <td><a href="@Url.Action("EditCustomerDetails", "User", new { CustomerId = group.CustomerId })" target="_blank"> @group.CustomerName</a> 
+                            </td>
+                            <td>@group.Payee (@group.PayeeEmail)</td>
+                            <td>@group.AddedOn
+                            </td>
+                            <td>
+                                <input type="checkbox" onclick="grpmem_onclick(this, 'hdnSelectedMember')" id="@group.CustomerId" />
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        
+        <div style="float: left">
+                    @using (Html.BeginForm("AddMembers", "Group", FormMethod.Post, new { id = "selectCustomer" }))
+                    {
+                        @Html.AntiForgeryToken();
+                        @Html.Hidden("hdnSelectedMember", Model.GroupId)
+           
+                        <button type="submit" class="btn-circle" data-toggle2="tooltip" title="Remove selected customer(s)">
+                            Remove selected customer(s)</button>
+                    }
+                </div>
+        
+    }
+    else
+    {
+        <h5>
+            No Records</h5>
+    }
+</div>
+<br/>
+
+<div>    
+
+                <h4 class="modal-title">
+                    Select customers to add
+                </h4>           
+            <div class="modal-body">
+                @if (@allCustomers != null && allCustomers.Count > 0)
+                {
+                <div class="dataTable_wrapper">
+                    @using (Html.BeginForm("AddCustomer", "Group", FormMethod.Post, new { id = "addCustomer" }))
+                    {
+                        <div class="pull-right">
+                            @Html.AntiForgeryToken()
+                            @Html.Hidden("hdnAddMember", Model.GroupId)
+                            @if (allCustomers.Count > 0)
+                            {
+                                <button type="submit" class="btn btn-primary">
+                                    Add Selected
+                                </button>
+                            }
+                        </div>
+                        <table class="grid">
+                            <thead class="gridhead">
+                                <tr>
+                                    <th>
+                                        Customer Name
+                                    </th>
+                                    <th>
+                                        Payee (PayeeEmail)
+                                    </th>
+                                    <th>
+                                        Select
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var customer in allCustomers)
+                            {
+                                if (true)
+                                {
+                                        <tr class="odd gradeX">
+                                            <td>
+                                                <a href="@Url.Action("EditCustomerDetails", "User", new { CustomerId = customer.CustomerId })" target="_blank"> @customer.CustomerFirstName @customer.CustomerLastName</a>
+                                            </td>
+                                            <td>@customer.Payee (@customer.PayeeEmail)</td>
+                                            <td>
+                                                <input type="checkbox" onclick="grpmem_onclick(this, 'hdnAddMember')" id="@customer.CustomerId" />
+                                            </td>
+                                        </tr>
+                                }
+                            }
+                            </tbody>
+                        </table>
+                        <div>
+                                                        
+                            @if (allCustomers.Count > 0)
+                            {
+                                <button type="submit" class="btn btn-primary">
+                                    Add Selected
+                                </button>
+                            }
+                        </div>
+                    }
+                    </div>
+                }
+                else
+                {
+                <h5>
+                    No Records
+                </h5>
+                }
+            </div>
+        </div>
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('[data-toggle2="tooltip"]').tooltip();
+        });
+      
+        /*Concatinates the selected customer Id in hdnField*/
+        function grpmem_onclick(el, hdnCtrlName) {
+            var target = document.getElementById(hdnCtrlName);
+            if (el != 'undefined') {
+                var el_id = el.id;
+                if (el_id != 'undefined') {
+
+                    var id = "<" + el_id + ">";
+                    if (target.value.indexOf(id) > -1) {
+                        //el.removeClass("btn-selected");
+                        var temp = target.value.replace("," + id, '');
+                        target.value = temp.replace(id, '');
+                    } else {
+                        //el.addClass("btn-selected");
+                        target.value += target.value == "" ? id : ("," + id);
+                    }
+                }
+            }
+        }
+
+
+    </script>
+

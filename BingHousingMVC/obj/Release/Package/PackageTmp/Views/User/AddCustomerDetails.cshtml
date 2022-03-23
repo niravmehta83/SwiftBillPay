@@ -1,0 +1,796 @@
+﻿@model BingHousingMVC.Models.CustomerModel
+@{
+    ViewBag.Title = "Add Customer Details";
+    List<SelectListItem> list = (List<SelectListItem>)ViewBag.payeelist;
+}
+<div align="center">
+    <fieldset>
+        <legend id="title" style="color: Green; font-size: large">Add Customer Details:</legend>
+        @if (list.Count > 0)
+        {
+            using (Html.BeginForm("AddCustomerDetails", "User", FormMethod.Post, new { id = "form", onsubmit = "Validate()" }))
+            {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+           <b> @Html.Label("Type * :") @Html.RadioButtonFor(m => m.Type, "Customer")@Html.Label("Customer")
+            @Html.RadioButtonFor(m => m.Type, "Company")@Html.Label("Company")</b>
+            
+           @* <input type="radio" class="type" name="type" value="Company" />*@
+            <div id="divform" style="display: none">
+                <table>
+                    <tr >
+                        <td class="EditTable">
+                            <div class="editor-label" id="divfn">
+                                @Html.Label("Customer First Name" + "*")
+                            </div>
+                            <div class="editor-label" id="divcn">
+                                @Html.Label("Company Name" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.CustomerFirstName)<br />
+                                @Html.ValidationMessageFor(model => model.CustomerFirstName)
+                            </div>
+                        </td>
+                        <td style="width: 50px">
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-label" id="divlnl">
+                                @Html.Label("Customer Last Name" + "*")
+                            </div>
+                        </td>
+                        <td >
+                        <div id="divlns">:</div>
+                            
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field" id="divlntb">
+                                @Html.EditorFor(model => model.CustomerLastName)<br />
+                                @Html.ValidationMessageFor(model => model.CustomerLastName)
+                                <div id="divmcln" style="color:Red"></div>
+                            </div>
+                        </td>
+                    </tr>
+                  
+                 
+                    <tr>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Address" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.CustomerAddress)<br />
+                                @Html.ValidationMessageFor(model => model.CustomerAddress)
+                            </div>
+                        </td>
+                        <td style="width: 50px">
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Address2")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.CustomerAddress2)<br />
+                                @Html.ValidationMessageFor(model => model.CustomerAddress2)
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("City" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.CustomerCity)<br />
+                                @Html.ValidationMessageFor(model => model.CustomerCity)
+                            </div>
+                        </td>
+                        <td style="width: 50px">
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("State" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.CustomerState)<br />
+                                @Html.ValidationMessageFor(model => model.CustomerState)
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Zip Code" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.CustomerZipCode)<br />
+                                @Html.ValidationMessageFor(model => model.CustomerZipCode)
+                            </div>
+                        </td>
+                        <td style="width: 50px">
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Country")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.CustomerCountry)<br />
+                                @Html.ValidationMessageFor(model => model.CustomerCountry)
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Email" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.CustomerEmail)<br />
+                                @Html.ValidationMessageFor(model => model.CustomerEmail)
+                            </div>
+                        </td>
+                        <td style="width: 50px">
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Amount Due" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.AmountDue)<br />
+                                @Html.ValidationMessageFor(model => model.AmountDue)
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Customer Phone")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.CustomerPhoneNo)<br />
+                            </div>
+                        </td>
+                        <td style="width: 50px"></td>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Emergency Phone")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.EmergencyPhoneNo)<br />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Cc EmailId")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.CCEmail)<br />
+                            </div>
+                        </td>
+                        <td style="width: 50px"></td>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Bcc Email")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.BCCEmail)<br />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Bill Description" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.BillDescription)<br />
+                                @Html.ValidationMessageFor(model => model.BillDescription)
+                            </div>
+                        </td>
+                        <td style="width: 50px">
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Bill Date* (MM/DD/YYYY)")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.NextBillDate, new { @class = "datefield", id = "NextBillDate", @placeholder = "MM-DD-YYYY" })<br />
+                                @Html.ValidationMessageFor(model => model.NextBillDate)
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Inervals Type" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.DropDownListFor(model => model.IntervalTypeID, (List<SelectListItem>)ViewBag.IntervalType)<br />
+                                @Html.ValidationMessageFor(model => model.IntervalTypeID)
+                            </div>
+                        </td>
+                        <td style="width: 50px">
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Intervals" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.Intervals)<br />
+                                @Html.ValidationMessageFor(model => model.Intervals)
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Payee" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.DropDownListFor(model => model.PayeeId, (List<SelectListItem>)ViewBag.payeelist)<br />
+                                @Html.ValidationMessageFor(model => model.PayeeId)
+                            </div>
+                        </td>
+                        <td style="width: 50px">
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Late Charges" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.CheckBoxFor(model => model.LateCharges)<br />
+                                @Html.ValidationMessageFor(model => model.LateCharges)
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Late Charges Start Day" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.LateChargesStartday)<br />
+                                @Html.ValidationMessageFor(model => model.LateChargesStartday)
+                            </div>
+                        </td>
+                        <td style="width: 50px">
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Late Charges Start Day Amount" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.LateChargesStartdayAmount)<br />
+                                @Html.ValidationMessageFor(model => model.LateChargesStartdayAmount)
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Late Charges There After Day" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.LateChargesThereAfterday)<br />
+                                @Html.ValidationMessageFor(model => model.LateChargesThereAfterday)
+                            </div>
+                        </td>
+                        <td style="width: 50px">
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Late Charges There After Day Amount" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.LateChargesThereAfterdayAmount)<br />
+                                @Html.ValidationMessageFor(model => model.LateChargesThereAfterdayAmount)
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <div>
+                    <input type="submit" value="Add" />
+                </div>
+                
+            </div>
+             
+          @*   <div id="divformc" style="display: none">
+                <table>
+                   
+                    <tr>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Company Name" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.CustomerFirstName)<br />
+                                @Html.ValidationMessageFor(model => model.CustomerFirstName)
+                            </div>
+                        </td>
+                        <td style="width: 50px">
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                            </div>
+                        </td>
+                        <td>
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Company Address" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.CustomerAddress)<br />
+                                @Html.ValidationMessageFor(model => model.CustomerAddress)
+                            </div>
+                        </td>
+                        <td style="width: 50px">
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Company Address2")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.CustomerAddress2)<br />
+                                @Html.ValidationMessageFor(model => model.CustomerAddress2)
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Company City" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.CustomerCity)<br />
+                                @Html.ValidationMessageFor(model => model.CustomerCity)
+                            </div>
+                        </td>
+                        <td style="width: 50px">
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Company State" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.CustomerState)<br />
+                                @Html.ValidationMessageFor(model => model.CustomerState)
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Company Zip Code" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.CustomerZipCode)<br />
+                                @Html.ValidationMessageFor(model => model.CustomerZipCode)
+                            </div>
+                        </td>
+                        <td style="width: 50px">
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Company Country")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.CustomerCountry)<br />
+                                @Html.ValidationMessageFor(model => model.CustomerCountry)
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Company Email" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.CustomerEmail)<br />
+                                @Html.ValidationMessageFor(model => model.CustomerEmail)
+                            </div>
+                        </td>
+                        <td style="width: 50px">
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Company Amount Due" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.AmountDue)<br />
+                                @Html.ValidationMessageFor(model => model.AmountDue)
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Bill Description" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.BillDescription)<br />
+                                @Html.ValidationMessageFor(model => model.BillDescription)
+                            </div>
+                        </td>
+                        <td style="width: 50px">
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Bill Date" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.NextBillDate, new { @class = "datefield" })<br />
+                                @Html.ValidationMessageFor(model => model.NextBillDate)
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Inervals Type" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.DropDownListFor(model => model.IntervalType, (List<SelectListItem>)ViewBag.IntervalType)<br />
+                                @Html.ValidationMessageFor(model => model.NextBillDate)
+                            </div>
+                        </td>
+                        <td style="width: 50px">
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Intervals" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.Intervals)<br />
+                                @Html.ValidationMessageFor(model => model.Intervals)
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Payee" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.DropDownListFor(model => model.PayeeId, (List<SelectListItem>)ViewBag.payeelist)<br />
+                                @Html.ValidationMessageFor(model => model.PayeeId)
+                            </div>
+                        </td>
+                        <td style="width: 50px">
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Late Charges" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.CheckBoxFor(model => model.LateCharges)<br />
+                                @Html.ValidationMessageFor(model => model.LateCharges)
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Late Charges Start Day" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.LateChargesStartday)<br />
+                                @Html.ValidationMessageFor(model => model.LateChargesStartday)
+                            </div>
+                        </td>
+                        <td style="width: 50px">
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Late Charges Start Day Amount" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.LateChargesStartdayAmount)<br />
+                                @Html.ValidationMessageFor(model => model.LateChargesStartdayAmount)
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Late Charges There After Day" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.LateChargesThereAfterday)<br />
+                                @Html.ValidationMessageFor(model => model.LateChargesThereAfterday)
+                            </div>
+                        </td>
+                        <td style="width: 50px">
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-label">
+                                @Html.Label("Late Charges There After Day Amount" + "*")
+                            </div>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td class="EditTable">
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.LateChargesThereAfterdayAmount)<br />
+                                @Html.ValidationMessageFor(model => model.LateChargesThereAfterdayAmount)
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+
+                
+            </div>*@
+            
+            
+            }
+        }
+        else
+        {
+            <p>
+                Note: 1. you need atleast one payee to import the customers.If you Want to Add a
+                Single Payee Please use the Following Link <a href="@Url.Action("AddPayeeDetails", "User")">
+                    <button>
+                        Add Payee</button></a> or use <a href="@Url.Action("ImportPayees", "User")">
+                            <button>
+                                Import Payees</button></a> Option to Import multiple payees from
+                excel.
+            </p>
+        }
+    </fieldset>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        var countChecked = function () {
+            var n = $("input:checked").val();
+
+            if (n == 'Company') {
+                $('#divform').show();
+                $('#divcn').show();
+                $('#divfn').hide();
+                $('#divlnl').hide();
+                $('#divlntb').hide();
+                $('#divlns').hide();
+            }
+           else if (n == 'Customer') {
+               $('#divform').show();
+               $('#divcn').hide();
+               $('#divfn').show();
+               $('#divlnl').show();
+               $('#divlntb').show();
+               $('#divlns').show();
+            }
+            else {
+                
+                $('#divform').hide();
+            }
+        };
+        countChecked();
+        $("input[type=radio]").on("click", countChecked);
+
+        function Validate() {
+            var n = $('#Type').val();
+
+            if (n == 'Customer') {
+                //alert($('#CustomerLastName').val());
+            }
+        }
+        jQuery(function ($) {
+            $("#NextBillDate").mask("99-99-9999", { placeholder: 'MM/DD/YYYY' });
+        });
+    </script>
+}

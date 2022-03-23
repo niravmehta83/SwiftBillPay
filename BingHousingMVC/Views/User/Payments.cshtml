@@ -1,0 +1,313 @@
+﻿@using BingHousing_BO
+@{
+    ViewBag.Title = "Payments";
+}
+<div ng-controller="SearchController" align="center" class="ng-cloak">
+    <h2>Payments</h2>
+    @*@if (ViewBag.Results != null)
+        {*@
+
+    <lable>Search by Payee:</lable> <input type="text" ng-model="Payee" />
+    <lable>FirstName:</lable> <input type="text" ng-model="firstName" />
+    <lable>LastName:</lable> <input type="text" ng-model="lastName" /><label>
+        Sort by:
+        <select ng-model="order">
+            <option value="FirstName" selected="selected">Customer Name</option>
+            <option value="Payee">Payee</option>
+            <option value="PaidDate">Paid Date</option>
+
+        </select>
+        <select ng-model="orderby">
+            <option value="false">Ascending</option>
+            <option value="true" selected="selected">Descending</option>
+
+        </select>
+    </label>
+
+    <div class="col-md-12"><button type="button" class="btnselectedPrint">Print Checks</button></div>
+    <table class="grid ng-cloak" cellpadding="0" cellspacing="0" style="margin:10px 10px 10px 10px;">
+        <thead class="gridhead">
+            <tr>
+                <td style="width: 3%">
+                    <b>Payment Id</b>
+                </td>
+                <td style="width: 3%">
+                    <b>Invoice #</b>
+                </td>
+                <td style="width: 3%">
+                    <b>Customer</b>
+                </td>
+                <td style="width: 7%">
+                    <b>Payee</b>
+                </td>
+                <td style="width: 5%">
+                    <b>Paid Date</b>
+                </td>
+                <td style="width: 10%">
+                    <b>Amount Paid</b>
+                </td>
+                <td style="width: 3%">
+                    <b>Payment Mode</b>
+                </td>
+                <td style="width: 3%">
+                    <b>Actions</b>
+                </td>
+                <td style="width: 11%">Print / Modify Check</td>
+                <td style="width: 2%">
+                    Do not Print
+                    <br />
+                    <input class="allCheckBox" type="checkbox" />
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="r in Results|unique:'PaymentId'|filter: { FirstName: firstName}|filter: { LastName: lastName}|filter: { Payee: Payee}|orderBy:order:orderby track by r.PaymentId" id="{{r.CustomerId}}">
+                <td style="width: 3%"><lable ng-bind="r.PaymentId"></td>
+                <td style="width: 3%"><lable ng-bind="r.InvoiceId"></td>
+                <td style="width: 3%"><lable ng-bind="r.FirstName"></lable>&nbsp<lable ng-bind="r.LastName" /> </td>
+                <td style="width: 7%"><lable ng-bind="r.Payee"></lable></td>
+                <td style="width: 10%"><lable ng-bind="r.PaidDate| jsonDate : 'MM-dd-yyyy HH:mm'" /></td>
+                <td style="width: 10%" ng-if="isOneMonthPayment(r.PaymentId,r.PaidDate)">
+                    <span style="float:left;display:inline;width:136px;">{{r.BillDescription}}</span>
+                    <span style="text-align:right;float:right;display:inline;width:50px;">US$ {{r.Amount}}</span>
+                </td>
+                <td style="width: 3%" ng-if="!(isOneMonthPayment(r.PaymentId,r.PaidDate))">
+                    <div ng-repeat="b in Results|filter: { 'PaymentId' : r.PaymentId,'PaidDate':r.PaidDate }">
+                        <span style="float:left;display:inline;width:136px;">{{$index+1}}) {{b.BillDescription}}</span>
+                        <span style="text-align:right;float:right;display:inline;width:50px;">US$ {{b.Amount}}</span>
+                    </div>
+                    <div style="width:160px;">___________________________________</div>
+                    <div>
+                        <span style="float:left;display:inline;width:136px;">Total</span>
+                        <span style="text-align:right;float:right;display:inline;width:50px;" ng-bind="getTotal(r.PaymentId,r.PaidDate)"></span>
+
+                    </div>
+                </td>
+                <td style="width: 3%"><lable ng-bind="r.PaymentMode" /></td>
+                <td style="width: 3%">
+                    <div ng-if="r.PaymentMode == 'CheckOnline'" align="center">
+                        <a id="btnedit" href="@Url.Action("CsvDownload", "User")?PaymentId={{r.PaymentId}}">
+                            <button>
+                                Download
+                            </button>
+                        </a>
+                    </div>
+                </td>
+                <td style="width: 11%">
+                    <div ng-if="r.PaymentMode == 'CheckOnline'" align="center">
+                        <a ng-click="IsAlreadyprinted(r)" class="{{r.Css}}">
+                            <button>
+                                <span ng-if="r.IsPrinted">Check Processed</span>
+                                <span ng-if="!r.IsPrinted">Print Check</span>
+                            </button>
+                        </a> /
+                        <a ng-click="UpdateOnlineCheck(r.PaymentId)">
+                            <button>
+                                Modify Check
+                            </button>
+                        </a>
+                    </div>
+                </td>
+                <td style="width: 2%">
+                    <div ng-if="r.PaymentMode == 'CheckOnline'" align="center">
+                        <input class="singleCheckBox" name="selectedRows" value="{{r.PaymentId}}" type="checkbox" />
+                    </div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <div class="col-md-12"><button type="button" class="btnselectedPrint">Print Checks</button></div>
+
+    <div align="center" id="dialog" title="Update Routing Number" ng-controller="SearchController" style="display: none;">
+        <table style="border:none">
+            <tr style="border:none">
+                <td style="border:none">
+                    @Html.Label("For PaymentId:")<br />
+                </td>
+                <td>
+                    <label id="lblPaymentId">{{OnlineCheck.PaymenId}}</label>
+                </td>
+            </tr>
+            <tr style="border:none">
+                <td style="border:none">
+                    @Html.Label("Account Number:")<br />
+                </td>
+                <td>
+                    <input type="text" ng-model="AccountNumber" value={{AccountNumber}} id="AccountNumber" name="AccountNumber" />
+                </td>
+            </tr>
+            <tr style="border:none">
+                <td style="border:none">
+                    @Html.Label("Routing Number:")<br />
+                </td>
+                <td>
+                    <input type="text" ng-model="RoutingNumber" value={{RoutingNumber}} id="RoutingNumber" name="RoutingNumber" />
+                </td>
+            </tr>
+        </table>
+        <div align="center" style="margin-top:10px;"><input type="submit" ng-click="UpdateRoutingNumber()" value="Update" /><input type="button" value="Cancel" ng-click="cancelUpdate()" /></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#dialog").dialog({
+            autoOpen: false,
+            width: 470,
+            height: 250,
+            show: {
+                effect: "blind",
+                duration: 1000
+            },
+            hide: {
+                effect: "explode",
+                duration: 1000
+            }
+        });
+        $(".allCheckBox").click(function () {
+            var isChecked = this.checked;
+            $('.allCheckBox').each(function () { this.checked = (isChecked ? true : false) });
+            $('.singleCheckBox').each(function () { this.checked = (isChecked ? true : false) });
+            $('.singleCheckBox').closest('tr').addClass(isChecked ? 'selected-row' : 'not-selected-row');
+            $('.singleCheckBox').closest('tr').removeClass(isChecked ? 'not-selected-row' : 'selected-row');
+        });
+
+        $('.singleCheckBox').click(function () {
+            var isChecked = this.checked;//this.checked;
+            $(this).closest('tr').addClass(isChecked ? 'selected-row' : 'not-selected-row');
+            $(this).closest('tr').removeClass(isChecked ? 'not-selected-row' : 'selected-row');
+            if (isChecked && $('.singleCheckBox').length == $('.selected-row').length)
+                $('.allCheckBox').each(function () { this.checked = true });
+            else
+                $('.allCheckBox').each(function () { this.checked = false });
+
+        });
+    });
+
+    $(document).ready(function(){
+        $(".btnselectedPrint").click(function () {
+            if ($(".singleCheckBox:checkbox:not(:checked)").length > 0) {
+            var PaymentId= $.map($(".singleCheckBox:checkbox:not(:checked)"),
+                    function (e) { return $(e).val(); }).join(",");            
+                       
+                window.location.href = "/User/PrintSelectedCheck?PaymentIds="+PaymentId;
+            }
+            else
+            {
+                $.notify({ message: 'Please un select any One to print check.' }, { type: 'info' });
+                return false;
+            }
+        });
+   
+    });
+</script>
+
+    @section scripts{
+    <script>
+        function SearchController($scope,$filter) {
+
+            $scope.order='PaidDate';
+            $scope.orderby='true';
+            $scope.Results = @Html.Raw(Json.Encode(ViewBag.Results)) ;
+              $scope.OnlineCheck={};
+
+            $scope.IsAlreadyprinted=function(payment)
+            {              
+                if(!payment.IsPrinted)
+                {
+                    window.location.href='/User/PrintCheck?PaymentId='+payment.PaymentId;                       
+                }
+                else
+                {
+                    if(confirm("Already Printed.Do you want to Print again??"))
+                    {
+                        window.location.href='/User/PrintCheck?PaymentId='+payment.PaymentId;  
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }                   
+            }       
+
+            $scope.isOneMonthPayment=function(PaymentId,PaidDate)
+            {
+                
+                var result=true;
+                var myObjects = $filter('filter')(@Html.Raw(Json.Encode(ViewBag.Results)), { PaymentId: PaymentId ,PaidDate:PaidDate});
+                if(myObjects.length>1)
+                {
+                    result=false;
+                }
+                return result;
+            }
+
+            $scope.getTotal=function(PaymentId,PaidDate)
+            { 
+                var Total=0;
+                var myObjects = $filter('filter')(@Html.Raw(Json.Encode(ViewBag.Results)), { PaymentId: PaymentId,PaidDate:PaidDate });  
+                for(var i=0; i<myObjects.length;i++)
+                {
+                    Total=parseFloat(Total)+parseFloat(myObjects[i].Amount);
+                }
+                return "US$ " +Total;
+            }
+
+            
+             
+            $scope.UpdateOnlineCheck = function(paymentId)
+            {          
+                $.ajax({
+                    url : "/cart/UpdateCheckOnline",
+                    dataType: "json",
+                    type: 'GET',
+                    data:{PaymentId :paymentId},
+                    cache:false,
+                    async:false,
+                    success : function (data) {
+                        $scope.OnlineCheck.RoutingNumber = data;
+                        $("#lblPaymentId").text(data.PaymentId);
+                        $("#RoutingNumber").val(data.RoutingNumber);
+                        $("#AccountNumber").val(data.AccountNumber);
+                        $("#dialog").dialog("open");
+                    }
+                });
+                return $scope.OnlineCheck;
+
+            }
+
+            $scope.UpdateRoutingNumber=function()
+            {
+                if($("#RoutingNumber").val() === "" || $("#AccountNumber").val() === "")
+                {
+                    $.notify({ message: 'All fields are required' }, { type: 'error' }); 
+                }
+                else
+                {
+                    $.ajax({
+                        url : "/cart/UpdateRoutngNumber",
+                        dataType: "json",
+                        type: 'get',
+                        data:{PaymentId : $("#lblPaymentId").text(),RoutingNumber: $("#RoutingNumber").val(),AccountNumber: $("#AccountNumber").val()},
+                        cache:false,
+                        success : function (data) {
+                            $("#dialog").dialog("close");
+                            $.notify({ message: 'Check Detail updated successfuly.' }, { type: 'success' });                       
+                        
+                        }
+                    });
+                }
+                
+
+            }
+
+            $scope.cancelUpdate=function()
+            {
+                $("#dialog").dialog("close");
+            }
+        };
+
+    </script>
+    }

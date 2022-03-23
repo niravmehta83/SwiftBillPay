@@ -1,0 +1,347 @@
+﻿@model BingHousing.WebUI.MVC.Models.CustomerModel
+@{
+    ViewBag.Title = "Edit Customer Details";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+@using (Html.BeginForm("EditCustomerDetails", "User", FormMethod.Post, new { id = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Type)
+    @Html.HiddenFor(m => m.CustomerId)
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-4">
+                        @*<label>First Name *</label>*@
+                        <div class="editor-label" id="divfn">
+                            @Html.Label("Customer First Name" + "*")
+                        </div>
+                        <div class="editor-label" id="divcn">
+                            @Html.Label("Company Name" + "*")
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        @Html.TextBoxFor(m => m.CustomerFirstName, new { @class = "form-control", placeholder = "Name", autocomplete = "off" })
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="row row-space" id="divlnl">
+                <div class="form-group">
+                    <div class="col-lg-4">
+
+                        <div class="editor-label">
+                            @Html.Label("Customer Last Name" + "*")
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        @Html.TextBoxFor(m => m.CustomerLastName, new { @class = "form-control", placeholder = "Last Name", autocomplete = "off" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-4">
+                        <label>Address Line 1 *</label>
+                    </div>
+                    <div class="col-lg-7">
+                        @Html.TextBoxFor(m => m.CustomerAddress, new { @class = "form-control", placeholder = "Address Line 1", autocomplete = "off" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-4">
+                        <label>Address Line 2</label>
+                    </div>
+                    <div class="col-lg-7">
+                        @Html.TextBoxFor(m => m.CustomerAddress2, new { @class = "form-control", placeholder = "Address Line 2", autocomplete = "off" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-4">
+                        <label>City *</label>
+                    </div>
+                    <div class="col-lg-7">
+                        @Html.TextBoxFor(m => m.CustomerCity, new { @class = "form-control", placeholder = "City", autocomplete = "off" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-4">
+                        <label>State *</label>
+                    </div>
+                    <div class="col-lg-7">
+                        @Html.TextBoxFor(m => m.CustomerState, new { @class = "form-control", placeholder = "State", autocomplete = "off" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-4">
+                        <label>Zip Code *</label>
+                    </div>
+                    <div class="col-lg-7">
+                        @Html.TextBoxFor(m => m.CustomerZipCode, new { @class = "form-control", placeholder = "Zip Code", autocomplete = "off" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-4">
+                        <label>Country *</label>
+                    </div>
+                    <div class="col-lg-7">
+                        @Html.TextBoxFor(m => m.CustomerCountry, new { @class = "form-control", placeholder = "Country", autocomplete = "off" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-4">
+                        <label>Email *</label>
+                    </div>
+                    <div class="col-lg-7">
+                        @Html.TextBoxFor(m => m.CustomerEmail, new { @class = "form-control", placeholder = "Customer Email", autocomplete = "off" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-4">
+                        <label>Amount Due *</label>
+                    </div>
+                    <div class="col-lg-7">
+                        @Html.TextBoxFor(m => m.AmountDue, new { @class = "form-control", placeholder = "Amount Due", autocomplete = "off" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-4">
+                        <label>Bill Description *</label>
+                    </div>
+                    <div class="col-lg-7">
+                        @Html.TextBoxFor(m => m.BillDescription, new { @class = "form-control", placeholder = "Bill Description", autocomplete = "off" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="row row-space">
+                <div class="col-lg-4">
+                    <label>Bill Date *</label>
+                </div>
+                <div class="col-lg-7">
+                    @Html.TextBoxFor(m => m.NextBillDate, new { @class = "form-control datefield", @readonly = "true", @placeholder = "mm/dd/yyyy" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-4">
+                        <label>Interval Type *</label>
+                    </div>
+                    <div class="col-lg-5">
+                        @Html.DropDownListFor(model => model.IntervalType, (List<SelectListItem>)ViewBag.IntervalType, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-4">
+                        <label>Intervals *</label>
+                    </div>
+                    <div class="col-lg-7">
+                        @Html.TextBoxFor(m => m.Intervals, new { @class = "form-control", placeholder = "Intervals", autocomplete = "off" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-4">
+                        <label>Payee *</label>
+                    </div>
+                    <div class="col-lg-5">
+                        @Html.DropDownListFor(m => m.PayeeId, (List<SelectListItem>)ViewBag.payeelist, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-4">
+                        <label>Late Charge *</label>
+                    </div>
+                    <div class="col-lg-7">
+                        @Html.CheckBoxFor(m => m.LateCharges)<br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-4">
+                        <label>Late Charges Start Day *</label>
+                    </div>
+                    <div class="col-lg-7">
+                        @Html.TextBoxFor(m => m.LateChargesStartday, new { @class = "form-control", placeholder = "", autocomplete = "off" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-4">
+                        <label>Late Charges Amount *</label>
+                    </div>
+                    <div class="col-lg-7">
+                        @Html.TextBoxFor(m => m.LateChargesStartdayAmount, new { @class = "form-control", placeholder = "", autocomplete = "off" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-4">
+                        <label>Late Charges There After Day *</label>
+                    </div>
+                    <div class="col-lg-7">
+                        @Html.TextBoxFor(m => m.LateChargesThereAfterday, new { @class = "form-control", placeholder = "", autocomplete = "off" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="row row-space">
+                <div class="form-group">
+                    <div class="col-lg-4">
+                        <label>Late Charges There After Amount *</label>
+                    </div>
+                    <div class="col-lg-7">
+                        @Html.TextBoxFor(m => m.LateChargesThereAfterdayAmount, new { @class = "form-control", placeholder = "Late charge there after amount", autocomplete = "off" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-space">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <div class="row row-space">
+                <div class="col-lg-3"></div>
+                <div class="col-lg-3">
+                    <input type="button" class="btn btn-primary" value="Make a Copy" id="btncopy">
+                </div>
+                <div class="col-lg-3">
+                    <input type="submit" class="btn btn-primary" value="Update">
+                </div>
+                <div class="col-lg-3"></div>
+            </div>
+        </div>
+    </div>
+}
+
+            @section Scripts{
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $('#btncopy').click(function (event) {
+
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '@Url.Action("CopyCustomerDetails", "User")',
+                                data: $("#form").serialize(),
+                                crossDomain: true,
+                                success: function (Data) { window.location.href = Data; },
+                                dataType: "json"
+                            });
+
+                        });
+
+                    });
+                    var countChecked = function () {
+                        //debugger;
+                        var n = $("#Type").val();
+
+                        if (n == 'Company') {
+
+                            $('#divcn').show();
+                            $('#divfn').hide();
+                            $('#divlnl').hide();
+                            $('#divlntb').hide();
+                            $('#divlns').hide();
+                        }
+                        else if (n == 'Customer') {
+
+                            $('#divcn').hide();
+                            $('#divfn').show();
+                            $('#divlnl').show();
+                            $('#divlntb').show();
+                            $('#divlns').show();
+                        }
+                        else {
+
+                            $('#divform').hide();
+                        }
+                    };
+                    countChecked();
+
+                    $(function () {
+                        $(".datefield").datepicker();
+                    });
+                </script>
+            }

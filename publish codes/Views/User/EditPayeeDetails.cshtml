@@ -1,0 +1,160 @@
+﻿@model BingHousing.WebUI.MVC.Models.PayeeModel
+@{
+    ViewBag.Title = "Add Payee - Swift Bill Pay";
+    ViewBag.PageTitle = "Edit Payee";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+@using (Html.BeginForm("EditPayeeDetails", "User", FormMethod.Post, new { id = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row row-space">
+        <div class="form-group">
+            <div class="col-lg-3">
+                <label>Payee *</label>
+            </div>
+            <div class="col-lg-6">
+                @Html.TextBoxFor(model => model.Payee, new { @class = "form-control", placeholder = "Payee", autocomplete = "off" })
+                @Html.HiddenFor(model => model.PayeeId)
+                @Html.HiddenFor(model => model.UserId)
+            </div>
+        </div>
+    </div>
+    <div class="row row-space">
+        <div class="form-group">
+            <div class="col-lg-3">
+                <label>Payee Address 1 *</label>
+            </div>
+            <div class="col-lg-6">
+                @Html.TextBoxFor(m => m.PayeeAddress, new { @class = "form-control", placeholder = "Payee Address Line 1", autocomplete = "off" })
+            </div>
+        </div>
+    </div>
+    <div class="row row-space">
+        <div class="form-group">
+            <div class="col-lg-3">
+                <label>Payee Address 2</label>
+            </div>
+            <div class="col-lg-6">
+                @Html.TextBoxFor(m => m.PayeeAddress2, new { @class = "form-control", placeholder = "Payee Address Line 2", autocomplete = "off" })
+            </div>
+        </div>
+    </div>
+    <div class="row row-space">
+        <div class="form-group">
+            <div class="col-lg-3">
+                <label>Payee City *</label>
+            </div>
+            <div class="col-lg-6">
+                @Html.TextBoxFor(m => m.PayeeCity, new { @class = "form-control", placeholder = "Payee City", autocomplete = "off" })
+            </div>
+        </div>
+    </div>
+    <div class="row row-space">
+        <div class="form-group">
+            <div class="col-lg-3">
+                <label>Payee State *</label>
+            </div>
+            <div class="col-lg-6">
+                @Html.TextBoxFor(m => m.PayeeState, new { @class = "form-control", placeholder = "Payee State", autocomplete = "off" })
+            </div>
+        </div>
+    </div>
+    <div class="row row-space">
+        <div class="form-group">
+            <div class="col-lg-3">
+                <label>Payee Country *</label>
+            </div>
+            <div class="col-lg-6">
+                @Html.TextBoxFor(m => m.PayeeCountry, new { @class = "form-control", placeholder = "Payee Country", autocomplete = "off" })
+            </div>
+        </div>
+    </div>
+    <div class="row row-space">
+        <div class="form-group">
+            <div class="col-lg-3">
+                <label>Payee Zip Code *</label>
+            </div>
+            <div class="col-lg-6">
+                @Html.TextBoxFor(m => m.PayeeZipCode, new { @class = "form-control", placeholder = "Payee Zip Code", autocomplete = "off" })
+            </div>
+        </div>
+    </div>
+    <div class="row row-space">
+        <div class="form-group">
+            <div class="col-lg-3">
+                <label>Payee Email *</label>
+            </div>
+            <div class="col-lg-6">
+                @Html.TextBoxFor(m => m.PayeeEmail, new { @class = "form-control", placeholder = "Payee Email", autocomplete = "off" })
+            </div>
+        </div>
+    </div>
+    <div class="row row-space">
+        <div class="form-group">
+            <div class="col-lg-3">
+                <label>Payee Contact Person</label>
+            </div>
+            <div class="col-lg-6">
+                @Html.TextBoxFor(m => m.PayeeContactPerson, new { @class = "form-control", placeholder = "Payee Contact Person", autocomplete = "off" })
+            </div>
+        </div>
+    </div>
+    <div class="row row-space">
+        <div class="form-group">
+            <div class="col-lg-3">
+                <label>Payee Comments</label>
+            </div>
+            <div class="col-lg-6">
+                @Html.TextBoxFor(m => m.PayeeComments, new { @class = "form-control", placeholder = "Payee Comments", autocomplete = "off" })
+            </div>
+        </div>
+    </div>
+    <div class="row row-space">
+        <div class="form-group">
+            <div class="col-lg-3">
+                <label>Payee Website</label>
+            </div>
+            <div class="col-lg-6">
+                @Html.TextBoxFor(m => m.PayeeWebsite, new { @class = "form-control", placeholder = "Payee Website", autocomplete = "off" })
+            </div>
+        </div>
+    </div>
+    <div class="row row-space">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <div class="row row-space">
+                <div class="col-lg-3"></div>
+                    <div class="col-lg-3">
+                        <input type="button" class="btn btn-primary" value="Make a Copy" id="btncopy">
+                    </div>
+                    <div class="col-lg-3">
+                        <input type="submit" class="btn btn-primary" value="Update">
+                    </div>
+                    <div class="col-lg-3"></div>
+                </div>
+        </div>
+    </div>
+}
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+         
+            $('#btncopy').click(function (event) {
+
+
+                $.ajax({ type: 'POST',
+                    url: '@Url.Action("CopyPayeeDetails", "User")',
+                    data: $("#form").serialize(),
+                    crossDomain: true,
+                    success: function (Data) { window.location.href = Data; },
+                    dataType: "json"
+                });
+
+            });
+
+        });
+    
+    </script>
+}

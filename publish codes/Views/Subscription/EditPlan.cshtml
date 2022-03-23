@@ -1,0 +1,69 @@
+﻿@model BingHousing.WebUI.MVC.Models.PlanModel
+
+@{
+    ViewBag.Title = "Edit Plan - Swift Bill Pay";
+    ViewBag.PageTitle = "Edit Plan";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+
+@using (Html.BeginForm("EditPlan", "Subscription", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(model => model.PlanId)
+
+    <div class="row row-space">
+        <div class="form-group">
+            <div class="col-lg-3">
+                <label>Subcription Plan Name *</label>
+            </div>
+            <div class="col-lg-6">
+                @Html.TextBoxFor(m => m.PlanName, new { @class = "form-control", placeholder = "Plan Name", autocomplete = "off" })
+            </div>
+        </div>
+    </div>
+    <div class="row row-space">
+        <div class="form-group">
+            <div class="col-lg-3">
+                <label>Plan Description </label>
+            </div>
+            <div class="col-lg-6">
+                @Html.TextBoxFor(m => m.PlanDescription, new { @class = "form-control", placeholder = "Plan Description", autocomplete = "off" })
+            </div>
+        </div>
+    </div>
+    <div class="row row-space">
+        <div class="form-group">
+            <div class="col-lg-3">
+                <label>Plan Amount * </label>
+            </div>
+            <div class="col-lg-6">
+                @Html.TextBoxFor(m => m.PlanAmount, new { @class = "form-control", placeholder = "Plan Amount", autocomplete = "off" })
+            </div>
+        </div>
+    </div>
+    <div class="row row-space">
+        <div class="form-group">
+            <div class="col-lg-3">
+                <label>Is Admin Support Plan *</label>
+            </div>
+            <div class="col-lg-6">
+                @Html.CheckBoxFor(model => model.IsAdminPlan)
+            </div>
+        </div>
+    </div>
+    <div class="row row-space">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <div class="row row-space">
+                <div class="col-lg-4"></div>
+                <div class="col-lg-4">
+                    <input type="submit" class="btn btn-primary" value="Save">
+                </div>
+                <div class="col-lg-4"></div>
+            </div>
+        </div>
+    </div>
+}

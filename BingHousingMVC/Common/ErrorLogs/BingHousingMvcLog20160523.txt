@@ -1,0 +1,7 @@
+
+Error in Path :/User/EditCustomerDetails
+Raw Url :/User/EditCustomerDetails
+Message :Object reference not set to an instance of an object.
+Source :BingHousingMVC
+Stack Trace :   at BingHousingMVC.Models.CustomerModel.get_CustomerEmail() in F:\Workshop\BingHousingMVC\BingHousingMVC\Models\CustomerModel.cs:line 206
+TargetSite :System.String get_CustomerEmail()

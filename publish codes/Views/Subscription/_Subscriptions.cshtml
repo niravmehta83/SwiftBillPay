@@ -1,0 +1,54 @@
+﻿@using BingHousing_BO;
+@model ICollection<Plan>
+@{
+    string selectedName = System.Web.HttpContext.Current.Session["SelectedUserName"] as string ?? User.Identity.Name;
+}
+@if (Model.Count == 0)
+{
+    <div class="message-info">
+        <p>
+            Sorry, no subcription plans available.</p>
+    </div>
+}
+else
+{
+    <div id="page-wrapper" style="margin-left:10px;margin-right:10px;">
+        <div class="row">
+
+            @foreach (Plan m in Model)
+            {
+                    
+                <div class="col-lg-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            @m.PlanName
+                        </div>
+                        <div class="panel-body">
+                            <p><b>Subscription Description: </b>@m.PlanDescription</p>
+                            <p><b>Price</b><h4>$ @m.PlanAmount</h4></p>
+                        </div>
+                        <div class="panel-footer">
+                            @if (Request.IsAuthenticated && (selectedName ?? "").ToUpper() == "ADMIN")
+                            {
+                                <a id="btnedit" href="@Url.Action("EditPlan", "Subscription", new { PlanId = m.PlanId })">
+                                    <input type="button" value="Edit" class="btn btn-primary" />
+                                </a>
+                                <a id="btndelete" href="@Url.Action("DeletePlan", "Subscription", new { PlanId = m.PlanId })">
+                                    <input type="button" value="Delete" class="btn btn-primary" />
+                                </a>
+                            }
+                            else
+                            {
+                                <a id="btnBuy" href="@Url.Action("Cart", "SubscriptionCart", new { id = @m.PlanId})">
+                                    <input type="button" value="Buy Now" class="btn btn-primary" />
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        </div>
+        
+        }

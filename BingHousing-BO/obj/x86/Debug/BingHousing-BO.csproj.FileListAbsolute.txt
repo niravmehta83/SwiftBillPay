@@ -1,0 +1,5 @@
+F:\Workshop\BingHousingMVC\BingHousing-BO\bin\x86\Debug\BingHousing-BO.dll.config
+F:\Workshop\BingHousingMVC\BingHousing-BO\bin\x86\Debug\BingHousing-BO.dll
+F:\Workshop\BingHousingMVC\BingHousing-BO\bin\x86\Debug\BingHousing-BO.pdb
+F:\Workshop\BingHousingMVC\BingHousing-BO\obj\x86\Debug\BingHousing-BO.dll
+F:\Workshop\BingHousingMVC\BingHousing-BO\obj\x86\Debug\BingHousing-BO.pdb

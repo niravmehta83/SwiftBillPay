@@ -1,0 +1,7 @@
+F:\Workshop\BingHousingMVC\BingHousing-DAL\bin\x86\Debug\BingHousing-DAL.dll
+F:\Workshop\BingHousingMVC\BingHousing-DAL\bin\x86\Debug\BingHousing-DAL.pdb
+F:\Workshop\BingHousingMVC\BingHousing-DAL\bin\x86\Debug\BingHousing-BO.dll
+F:\Workshop\BingHousingMVC\BingHousing-DAL\bin\x86\Debug\BingHousing-BO.pdb
+F:\Workshop\BingHousingMVC\BingHousing-DAL\obj\x86\Debug\BingHousing-DAL.csprojResolveAssemblyReference.cache
+F:\Workshop\BingHousingMVC\BingHousing-DAL\obj\x86\Debug\BingHousing-DAL.dll
+F:\Workshop\BingHousingMVC\BingHousing-DAL\obj\x86\Debug\BingHousing-DAL.pdb

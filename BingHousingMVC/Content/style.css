@@ -1,0 +1,116 @@
+body{
+margin:0px 0px 0px 0px;
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:11px;  
+color:#000033;
+background-image:url("./images/dot.jpg);  	
+}
+.back{
+background-image:url(../images/mid_back.jpg);
+background-repeat:repeat-x;
+}
+.sarch_back{
+background-image:url(../images/search_back.jpg);
+background-repeat:no-repeat;
+width:900px;
+height:150px;
+}
+.bottom{
+background-image:url(../images/bottom.jpg);
+background-repeat:repeat-x;
+}
+.txt{
+font-family:Arial, Helvetica, sans-serif
+font-size:11px;
+font-weight:bold;	 
+color:#e4e4e4; 
+}
+.home{
+background-image:url(../images/home1.jpg);
+background-repeat:no-repeat;
+}
+#latest{
+padding:50px  0px 0px 70px;
+color:#004f78;
+font-size:16px;
+}
+#small{
+padding:15px  0px 0px 10px;
+color:#004f78;
+font-size:10px;
+}
+#small_hospital{
+padding:10px  0px 0px 90px;
+color:#646464;
+font-weight:normal;
+font-size:11px;
+}
+.home2{
+background-image:url(../images/home2.jpg);
+background-repeat:no-repeat;
+}
+#small2{
+padding:10px  0px 0px 10px;
+color:#004f78;
+font-size:10px;
+}
+.box{
+background-image:url(../images/box.jpg);
+background-repeat:no-repeat;
+height:159px;
+}
+#news{
+padding:30px  0px 0px 70px;
+color:#004f78;
+font-size:16px;
+}
+#news1{
+padding:20px  0px 0px 10px;
+color:#004f78;
+font-size:10px;
+font-weight:bold;
+}
+#news3{
+padding:05px 0px 0px 10px;
+color:#646464;
+font-size:10px;
+font-weight:bold;
+}
+.box1{
+background-image:url(../images/box1.jpg);
+background-repeat:no-repeat;
+height:93px;
+}
+#news11{
+padding:10px  0px 0px 10px;
+color:#004f78;
+font-size:10px;
+font-weight:bold;
+}
+#treatment{
+padding:90px 0px 0px 40px;
+}
+#subtreatment{
+padding:90px 0px 0px 20px;
+}
+#sbutton{
+padding:83px 0px 0px 20px;
+}
+
+.break-Inv-col{
+    word-wrap: break-word;
+      min-width: 100px !important;
+      max-width: 100px !important;
+      white-space:normal !important;
+}
+
+.break-Desc-col{
+    word-wrap: break-word;
+      min-width: 300px !important;
+      max-width: 300px !important;
+      white-space:normal !important;
+}
+
+.color-red{
+    color:red !important;
+}
