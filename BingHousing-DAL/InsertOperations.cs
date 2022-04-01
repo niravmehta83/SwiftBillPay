@@ -40,6 +40,18 @@ namespace BingHousingMVC_DAL
 
             }
         }
+        internal static int InsertACHDepositAccountDetail(ACHAccountDepositDetail model)
+        {
+            using (BHDbaseEntities Dbase = new BHDbaseEntities())
+            {
+
+                Dbase.ACHAccountDepositDetails.Add(model);
+
+                Dbase.SaveChanges();
+
+                return model.ACHDepositAccountId;
+            }
+        }
 
         internal static void InsertCustomerDetails(Customer obj)
         {

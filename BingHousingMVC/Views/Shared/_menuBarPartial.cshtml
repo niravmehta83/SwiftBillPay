@@ -32,55 +32,56 @@
                                 <li>@Html.ActionLink("Import Customer", "ImportBills", "User")</li>
                             </ul>
                         </li>
-                                    <li>
-                                        <a href="#">ADD</a>
-                                        <ul>
-                                            <li>@Html.ActionLink("Add Payee", "AddPayeeDetails", "User")</li>
-                                            <li>@Html.ActionLink("Add Customer", "AddCustomerDetails", "User")</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="#">View</a>
-                                        <ul>
-                                            <li>@Html.ActionLink("View Customer", "Customers", "User")</li>
-                                            <li>@Html.ActionLink("View Payee", "Payees", "User")</li>
-                                        </ul>
-                                    </li>
-                                    <li>@Html.ActionLink("Invoices", "Invoice", "User", new { isSendmail = false }, null) </li>
-                                    <li>
-                                        <a href="#">Email</a>
-                                        <ul>
-                                            <li>@Html.ActionLink("Email Customers", "Bills", "User")</li>
-                                            <li>@Html.ActionLink("Send Reminder Bills", "Invoice", "User", new { isSendmail = true }, null) </li>
+                        <li>
+                            <a href="#">ADD</a>
+                            <ul>
+                                <li>@Html.ActionLink("Add Payee", "AddPayeeDetails", "User")</li>
+                                <li>@Html.ActionLink("Add Customer", "AddCustomerDetails", "User")</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">View</a>
+                            <ul>
+                                <li>@Html.ActionLink("View Customer", "Customers", "User")</li>
+                                <li>@Html.ActionLink("View Payee", "Payees", "User")</li>
+                            </ul>
+                        </li>
+                        <li>@Html.ActionLink("Invoices", "Invoice", "User", new { isSendmail = false }, null) </li>
+                        <li>
+                            <a href="#">Email</a>
+                            <ul>
+                                <li>@Html.ActionLink("Email Customers", "Bills", "User")</li>
+                                <li>@Html.ActionLink("Send Reminder Bills", "Invoice", "User", new { isSendmail = true }, null) </li>
 
-                                        </ul>
-                                    </li>
+                            </ul>
+                        </li>
 
-                                    <li>@Html.ActionLink("Edit User Details", "EditUserDetails", "Account") </li>
+                        <li>@Html.ActionLink("Edit User Details", "EditUserDetails", "Account") </li>
 
-                                    <li>@Html.ActionLink("Payments", "Payments", "User") </li>
-                                    <li>@Html.ActionLink("PayPal Setup", "PayPalSetup", "User") </li>
-                                    <li>
-                                        <a href="#">Groups</a>
-                                        <ul>
+                        <li>@Html.ActionLink("Payments", "Payments", "User") </li>
+                        <li>@Html.ActionLink("PayPal Setup", "PayPalSetup", "User") </li>
+                        <li>@Html.ActionLink("ACH Deposit Set Up", "ACHDepositSetUp", "User") </li>
+                        <li>
+                            <a href="#">Groups</a>
+                            <ul>
 
-                                            <li>@Html.ActionLink("Create Group", "Create", "Group") </li>
-                                            <li>@Html.ActionLink("Mange Group", "ManageGroup", "Group") </li>
-                                            <li>@Html.ActionLink("Mange Members", "ManageMembers", "Group") </li>
-                                            <li>@Html.ActionLink("send Group Emails", "ManageMembers", "Group", new { isSendmail = true }, null) </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="#">Reports</a>
-                                        <ul>
+                                <li>@Html.ActionLink("Create Group", "Create", "Group") </li>
+                                <li>@Html.ActionLink("Mange Group", "ManageGroup", "Group") </li>
+                                <li>@Html.ActionLink("Mange Members", "ManageMembers", "Group") </li>
+                                <li>@Html.ActionLink("send Group Emails", "ManageMembers", "Group", new { isSendmail = true }, null) </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Reports</a>
+                            <ul>
 
-                                            <li>@Html.ActionLink("Payments", "PaymentsReport", "User") </li>
-                                            <li>@Html.ActionLink("Emailed Bills", "EmailedReport", "User") </li>
-                                            <li>@Html.ActionLink("Reminder Emails", "RemainderEmailedReport", "User") </li>
-                                            <li>@Html.ActionLink("Unpaid Bills", "UnPaidBillsReport", "User") </li>
-                                            
-                                        </ul>
-                                    </li>
+                                <li>@Html.ActionLink("Payments", "PaymentsReport", "User") </li>
+                                <li>@Html.ActionLink("Emailed Bills", "EmailedReport", "User") </li>
+                                <li>@Html.ActionLink("Reminder Emails", "RemainderEmailedReport", "User") </li>
+                                <li>@Html.ActionLink("Unpaid Bills", "UnPaidBillsReport", "User") </li>
+
+                            </ul>
+                        </li>
                         if (User.IsInRole("Admin"))
                         {
                             <li>
@@ -100,7 +101,7 @@
                     {
                         <li>@Html.ActionLink("Subscriptions", "ShowSubscriptions", "Subscription")</li>
                     }
-                    
+
                 </ul>
             </nav><br /><br />
         </div>

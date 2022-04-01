@@ -53,7 +53,8 @@ namespace BingHousing_BO
         public DbSet<webpages_Membership> webpages_Membership { get; set; }
         public DbSet<webpages_OAuthMembership> webpages_OAuthMembership { get; set; }
         public DbSet<webpages_Roles> webpages_Roles { get; set; }
-    
+        public DbSet<ACHAccountDepositDetail> ACHAccountDepositDetails { get; set; }
+
         public virtual ObjectResult<CustomerDetail> GetCustomerDetails(Nullable<int> id, Nullable<bool> isCustomer)
         {
             var idParameter = id.HasValue ?

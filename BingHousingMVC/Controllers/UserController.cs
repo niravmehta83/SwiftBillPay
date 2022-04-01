@@ -151,6 +151,71 @@ namespace BingHousingMVC.Controllers
             return View();
         }
 
+
+        public ActionResult ACHDepositSetup()
+        {
+            string name = System.Web.HttpContext.Current.Session["SelectedUserName"] as string ?? User.Identity.Name;
+            int UserId = WebSecurity.GetUserId(name);
+
+            List<SelectListItem> payeelist = dbase.GetAllPayee(UserId).Select(a => new SelectListItem { Text = a.Payee1, Value = a.PayeeId.ToString() }).ToList<SelectListItem>();
+            ViewBag.payeelist = payeelist;
+
+            if (payeelist.Count > 0)
+            {
+                ACHAccountDepositDetail dtl = ACHAccountDepositDetail.GetACHDepositAccountDetail(dbase, Convert.ToInt32(payeelist[0].Value));
+                ACHDepositAccountModel model = new ACHDepositAccountModel();
+
+                if (dtl != null)
+                {
+                    model.PayeeId = dtl.PayeeId;
+                    model.StripeProductionKey = dtl.StripeProductionKey;
+                    model.ACHDepositAccountId = dtl.ACHDepositAccountId;
+                    model.StripeTestKey = dtl.StripeTestKey;
+                }
+                return View(model);
+            }
+            else
+            {
+                return View();
+            }
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ACHDepositSetup(ACHDepositAccountModel model)
+        {
+            string name = System.Web.HttpContext.Current.Session["SelectedUserName"] as string ?? User.Identity.Name;
+            int UserId = WebSecurity.GetUserId(name);
+
+            List<SelectListItem> payeelist = dbase.GetAllPayee(UserId).Select(a => new SelectListItem { Text = a.Payee1, Value = a.PayeeId.ToString() }).ToList<SelectListItem>();
+            ViewBag.payeelist = payeelist;
+
+
+            if (ModelState.IsValid)
+            {
+                ACHAccountDepositDetail dtl = new ACHAccountDepositDetail();
+                dtl.ACHDepositAccountId = model.ACHDepositAccountId;
+                dtl.PayeeId = model.PayeeId;
+                dtl.StripeTestKey = model.StripeTestKey;
+                dtl.StripeProductionKey = model.StripeProductionKey;
+                dtl.InsertedOn = DateTime.Now;
+                dtl.UpdatedOn = DateTime.Now;
+
+
+                if (model.ACHDepositAccountId == 0)
+                {
+                    dbase.InsertACHAccountDepositDetail(dtl);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    dbase.UpdateACHDepositAcountDetails(dtl);
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            return View(model);
+        }
         //
         // GET: ImportBills
 

@@ -692,6 +692,7 @@
     <Content Include="Views\User\_ReminderEmailedReports.cshtml" />
     <Content Include="Views\User\UnpaidBillsReport.cshtml" />
     <Content Include="Views\Cart\ACHDeposit.cshtml" />
+    <Content Include="Views\User\ACHDepositSetup.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

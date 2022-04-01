@@ -425,6 +425,48 @@ namespace BingHousingMVC.Models
             set { clientSecretId = value; }
         }
     }
+    public class ACHDepositAccountModel
+    {
+        private int accid;
+        private string stripetestkey;
+        private string stripeproductionkey;
+        private int _payeeid;
+
+
+
+        public int PayeeId
+        {
+            get
+            {
+                return _payeeid;
+            }
+
+            set
+            {
+                _payeeid = value;
+            }
+        }
+
+        public int ACHDepositAccountId
+        {
+            get { return accid; }
+            set { accid = value; }
+        }
+        [Required]
+        [Display(Name = "Stripe TestMode Key")]
+        public string StripeTestKey
+        {
+            get { return stripetestkey; }
+            set { stripetestkey = value; }
+        }
+        [Required]
+        [Display(Name = "Stripe Production Key")]
+        public string StripeProductionKey
+        {
+            get { return stripeproductionkey; }
+            set { stripeproductionkey = value; }
+        }
+    }
 
 
     public class DurationModel

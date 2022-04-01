@@ -80,6 +80,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ACHAccountDepositDetail.cs" />
+    <Compile Include="ACHDepositTransaction.cs" />
     <Compile Include="BHContext.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

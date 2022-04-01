@@ -28,6 +28,22 @@ namespace BingHousingMVC_DAL
 
             }
         }
+        internal static void DeleteACHDepositDetails(int Id)
+        {
+            using (BHDbaseEntities Dbase = new BHDbaseEntities())
+            {
+
+                ACHAccountDepositDetail cd = Dbase.ACHAccountDepositDetails.SingleOrDefault(c => c.ACHDepositAccountId == Id);
+
+                if (cd != null)
+                {
+                    Dbase.ACHAccountDepositDetails.Remove(cd);
+
+                    Dbase.SaveChanges();
+                }
+
+            }
+        }
 
         internal static void DeletePayee(int PayeeId)
         {

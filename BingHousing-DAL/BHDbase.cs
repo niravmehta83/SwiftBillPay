@@ -636,6 +636,34 @@ namespace BingHousingMVC_DAL
 
         #endregion
 
+        public int InsertACHAccountDepositDetail(ACHAccountDepositDetail model)
+        {
+            return InsertOperations.InsertACHDepositAccountDetail(model);
+
+        }
+
+        public void UpdateACHDepositAcountDetails(ACHAccountDepositDetail model)
+        {
+            UpdateOperations.UpdateACHDepositAcountDetails(model);
+        }
+        public List<ACHAccountDepositDetail> GetAllACHDepositAccountDetails()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ACHAccountDepositDetail GetACHDepositAccountDetail(int CustomerId)
+        {
+            return GetOperations.GetACHDepositAccountDetail(CustomerId);
+
+        }
+
+       
+        public void DeleteACHDepositAccountDetails(int Id)
+        {
+            DeleteOperations.DeleteACHDepositDetails(Id);
+
+        }
+
 
     }
 }

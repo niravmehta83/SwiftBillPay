@@ -57,6 +57,9 @@ namespace BingHousing_BO
 
         int InsertCheckOnline(OnlineCheck model);
 
+        int InsertACHAccountDepositDetail(ACHAccountDepositDetail model);
+
+
         #endregion
 
 
@@ -73,6 +76,7 @@ namespace BingHousing_BO
         void UpdatePayee(Payee model);
 
         void UpdatePlan(Plan model);
+        void UpdateACHDepositAcountDetails(ACHAccountDepositDetail model);
 
         void UpdateSubcription(Subscription model);
 
@@ -101,6 +105,8 @@ namespace BingHousing_BO
         void DeleteSubcription(int Id);
 
         void DeleteGroup(int groupId);
+        void DeleteACHDepositAccountDetails(int Id);
+
 
         void DeleteInvoice(int invoiceId);
         void DeleteGroupMember(int groupMemberId, bool IsCustomerId);
@@ -122,6 +128,9 @@ namespace BingHousing_BO
 
         List<string> GetallUserName();
 
+        List<ACHAccountDepositDetail> GetAllACHDepositAccountDetails();
+
+
         List<string> GetallUserName(bool isAdmin);
 
         List<AccountUserModel> GetAllActiveUser();
@@ -137,6 +146,9 @@ namespace BingHousing_BO
         Customer GetCustomer(int CustomerId);
 
         List<CustomerDetail> GetCustomerList(int UserId);
+
+        ACHAccountDepositDetail GetACHDepositAccountDetail(int UserId);
+
 
         List<CustomerDetail> GetCustomerList();
 

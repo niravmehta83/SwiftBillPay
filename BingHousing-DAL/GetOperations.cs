@@ -31,6 +31,19 @@ namespace BingHousingMVC_DAL
 
             }
         }
+        internal static ACHAccountDepositDetail GetACHDepositAccountDetail(int Id)
+        {
+
+
+            using (BHDbaseEntities Dbase = new BHDbaseEntities())
+            {
+                ACHAccountDepositDetail model = Dbase.ACHAccountDepositDetails.SingleOrDefault(a => a.PayeeId == Id);
+
+                return model;
+
+
+            }
+        }
 
         internal static CustomerProfile GetCustomerProfile(int UserId)
         {
