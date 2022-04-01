@@ -56,6 +56,7 @@ namespace BingHousing_BO
         public DbSet<ACHAccountDepositDetail> ACHAccountDepositDetails { get; set; }
         public DbSet<UserACHBankAccount> ACHBankAccounts { get; set; }
 
+        public DbSet<ChargeDetail> ACHDetails { get; set; }
 
 
         public virtual ObjectResult<CustomerDetail> GetCustomerDetails(Nullable<int> id, Nullable<bool> isCustomer)

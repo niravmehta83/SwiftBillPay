@@ -21,6 +21,7 @@ using BingHousing_PAYPAL;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using BingHousing_ACHDeposit;
+using Stripe;
 
 namespace BingHousingMVC.Controllers
 {
@@ -350,7 +351,121 @@ namespace BingHousingMVC.Controllers
         //    return RedirectToPaymentPage(PaymentMode);
 
         //}
+        [CustomerAuthorize]
+        public ActionResult StripeCharge()
+        {
+            IBHDbase bHDbase = new BHDbase();
 
+            int userId = bHDbase.GetUserId(base.User.Identity.Name);
+
+            List<SelectListItem> payeelist = dbase.GetAllPayee(userId).Select(a => new SelectListItem { Text = a.Payee1, Value = a.PayeeId.ToString() }).ToList<SelectListItem>();
+            ViewBag.payeelist = payeelist;
+           
+
+            List<InvoiceDetail> item = null;
+            StripeChargeModel stripeChargeModel = new StripeChargeModel();
+            if (base.Session["cartitems"] != null)
+            {
+                int currentUserId = WebSecurity.CurrentUserId;
+                item = (List<InvoiceDetail>)base.Session["cartitems"];
+                stripeChargeModel.Amount = Convert.ToInt64(item.Sum<InvoiceDetail>((InvoiceDetail a) => a.TotalAmountDue) + item.Sum<InvoiceDetail>((InvoiceDetail a) => a.LateCharges));
+                stripeChargeModel.Payee = item[0].Payee;
+                stripeChargeModel.UserId = currentUserId;
+                stripeChargeModel.InvoiceNumber = item.FirstOrDefault<InvoiceDetail>().InvoiceNumber;
+                CheckOutModel checkOutRegisterModel = bHDbase.GetCustomerProfile(userId).ToCheckOutRegisterModel();
+            }
+
+            return base.View(stripeChargeModel);
+        }
+
+        [CustomerAuthorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult StripeCharge(StripeChargeModel model)
+        {
+            ChargeDetail chargeDetail = new ChargeDetail();
+            IBHDbase bHDbase = new BHDbase();
+            int userId = bHDbase.GetUserId(base.User.Identity.Name);
+            CustomerProfile customerProfile = bHDbase.GetCustomerProfile(userId);
+
+            chargeDetail.UserId = userId;
+            chargeDetail.Amount = model.Amount;
+            model.UserId = userId;
+
+            List<InvoiceDetail> item = null;
+            if (base.Session["cartitems"] != null)
+            {
+                item = (List<InvoiceDetail>)base.Session["cartitems"];
+                List<int> list = (
+                    from a in item
+                    select a.InvoiceId).ToList<int>();
+                model.InsertedOn = DateTime.Now;
+                model.InvoiceId = item[0].InvoiceId;
+                Charge charge1 = new Charge();
+                // StripeACHDeposit.ChargeCustomer(out charge1, customerProfile.StripeCustomerId, Convert.ToInt64(model.Amount)) // need to enable to charge but now in US we do not ge data
+                int num = this.dbase.InsertACHDepositPaymentDetail(chargeDetail, list);
+                object month = DateTime.Now.Month;
+                DateTime now = DateTime.Now;
+                Tuple<CheckOutModel, StripeChargeModel> tuple = new Tuple<CheckOutModel, StripeChargeModel>(this.dbase.GetCustomerProfile(model.UserId).ToCheckOutRegisterModel(), model);
+
+
+                OnlineCheck onlineCheck = new OnlineCheck()
+                {
+                    CustomerName = string.Concat(tuple.Item1.FirstName, " ", tuple.Item1.LastName),
+                    PaymentId = new int?(num),
+                    PhoneNumber = tuple.Item1.PhoneNumber,
+                    Email = tuple.Item1.Email,
+                    AmountOnCheck = new decimal?(Convert.ToDecimal(tuple.Item2.Amount)),
+                    Comment = tuple.Item2.Comment,
+                    PayeeName = tuple.Item2.Payee,
+                };
+                onlineCheck.Comment = tuple.Item2.Comment;
+                string StripeCustomerid = "";
+                PaymentMailModel paymentMailModel = new PaymentMailModel()
+                {
+                    BillDescription = item[0].BillDescription,
+                    BillingDate = item[0].EmailSentDate,
+                    ShippingCost = Convert.ToDecimal(0),
+                    Tax = Convert.ToDecimal(0),
+                    ShippingMethod = "Normal Post",
+                    PaymentType = "ACH Deposit",
+                    Address1 = tuple.Item1.Address,
+                    Address2 = string.Concat(new string[] { tuple.Item1.City, " ", tuple.Item1.State, " ", tuple.Item1.ZipCode }),
+                    Country = tuple.Item1.Country,
+                    Phone = tuple.Item1.PhoneNumber,
+                    PaymentDate = DateTime.Now.Date,
+                    OrderId = num,
+                    BillingId = string.Join(",", (
+                        from a in list
+                        select a.ToString()).ToArray<string>())
+                };
+                decimal num1 = item.Sum<InvoiceDetail>((InvoiceDetail a) => a.TotalAmountDue) + item.Sum<InvoiceDetail>((InvoiceDetail a) => a.LateCharges);
+                paymentMailModel.Amount = num1.ToString();
+                paymentMailModel.From = item[0].PayeeEmail;
+                paymentMailModel.To = tuple.Item1.Email;
+                paymentMailModel.Sub = string.Concat("Thanks for the Payment of Order Number ", num.ToString());
+                paymentMailModel.Name = string.Concat(tuple.Item1.FirstName, " ", tuple.Item1.LastName);
+                paymentMailModel.Type = MailType.EmailPamentCustomer;
+                paymentMailModel.ProjectNumber = item[0].InvoiceNumber;
+                paymentMailModel.Payee = item[0].Payee;
+                AccountMembershipService accountMembershipService = new AccountMembershipService();
+                ((IMembershipService)accountMembershipService).SendEmail(paymentMailModel);
+                paymentMailModel.From = tuple.Item1.Email;
+                paymentMailModel.To = item[0].PayeeEmail;
+                paymentMailModel.Sub = string.Concat("Check import text file for Order# ", num.ToString());
+                paymentMailModel.Type = MailType.EmailPaymentUser;
+                ((IMembershipService)accountMembershipService).SendEmail(paymentMailModel);
+                paymentMailModel.To = this.dbase.GetUserEmail(item[0].UserId);
+                ((IMembershipService)accountMembershipService).SendEmail(paymentMailModel);
+                paymentMailModel.Address2 = string.Concat(new string[] { tuple.Item1.City, "$", tuple.Item1.State, "$", tuple.Item1.ZipCode });
+                return base.RedirectToAction("PaymentSuccess", paymentMailModel);
+
+
+            }
+            ViewBag.SuccessMsg = "Charge Success";
+
+            return base.View(model);
+        }
 
         public ActionResult UserPaymentRegistration()
         {

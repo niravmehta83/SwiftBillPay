@@ -34,7 +34,12 @@ namespace BingHousingMVC_DAL
             return GetOperations.GetCustomer(CustomerId);
 
         }
+        public int InsertACHDepositPaymentDetail(ChargeDetail model, List<int> invoiceIdlist)
+        {
 
+            return InsertOperations.InsertACHDepositPaymentDetail(model, invoiceIdlist);
+
+        }
         public CustomerDetail GetCustomerDetails(int CustomerId, int GroupId=0)
         {
                 return GetOperations.GetCustomerDetail(CustomerId,GroupId);

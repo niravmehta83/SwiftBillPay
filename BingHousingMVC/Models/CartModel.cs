@@ -723,4 +723,82 @@ namespace BingHousingMVC.Models
 
     }
 
+    public class StripeChargeModel
+    {
+        private int _invoiceId;
+        private int _userid;
+        private int _payeeid;
+
+        private string _payee;
+        private long _amount;
+        private string _comments;
+        private DateTime _idate;
+        private string _invoicenumber;
+        private string _stripecustomerid;
+        private string _stripecustomerDefaultsourceid;
+        public string StripeCustomerDefaultSourceId
+        {
+            get { return _stripecustomerDefaultsourceid; }
+            set { _stripecustomerDefaultsourceid = value; }
+        }
+        public int InvoiceId
+        {
+            get { return _invoiceId; }
+            set { _invoiceId = value; }
+        }
+        public int UserId
+        {
+            get { return _userid; }
+            set { _userid = value; }
+        }
+
+
+        [Required]
+        public int PayeeId
+        {
+            get { return _payeeid; }
+            set { _payeeid = value; }
+        }
+
+        [Required]
+        public string Payee
+        {
+            get { return _payee; }
+            set { _payee = value; }
+        }
+
+        public string StripeCustomerId
+        {
+            get { return _stripecustomerid; }
+            set { _stripecustomerid = value; }
+        }
+
+        [Required]
+        [RegularExpression(@"^[0-9|.]*$", ErrorMessage = "Enter only numbers")]
+        public long Amount
+        {
+            get { return _amount; }
+            set { _amount = value; }
+
+        }
+        public string Comment
+        {
+            get { return _comments; }
+            set { _comments = value; }
+        }
+
+        public DateTime InsertedOn
+        {
+            get { return _idate; }
+            set { _idate = value; }
+        }
+        public string InvoiceNumber
+        {
+            get { return _invoicenumber; }
+            set { _invoicenumber = value; }
+        }
+
+    }
+
+
 }

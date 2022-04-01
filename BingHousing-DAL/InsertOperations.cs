@@ -26,6 +26,67 @@ namespace BingHousingMVC_DAL
 
             }
         }
+        internal static int InsertACHDepositPaymentDetail(ChargeDetail model, List<int> invoiceIdlist)
+        {
+
+            int paymentId = 0;
+            var scope = new TransactionScope(
+            // a new transaction will always be created
+            TransactionScopeOption.RequiresNew,
+            // we will allow volatile data to be read during transaction
+            new TransactionOptions()
+            {
+                IsolationLevel = IsolationLevel.ReadUncommitted
+            }
+        );
+            using (scope)
+            {
+                using (BHDbaseEntities Dbase = new BHDbaseEntities())
+                {
+
+                    model.InsertedOn = DateTime.Now;
+                    model.ChargeResourceId = "test";
+                    model.TransactionId = "test";
+                    Dbase.ACHDetails.Add(model);
+
+                    Dbase.SaveChanges();
+
+                    PaymentDetail pmodel = new PaymentDetail();
+
+                    pmodel.PaymentModeId = 2;
+
+                    pmodel.PayPalId = model.ChargeId;
+
+                    pmodel.Insertedby = model.UserId;
+
+                    pmodel.InsertedOn = DateTime.Now;
+
+                    Dbase.PaymentDetails.Add(pmodel);
+
+                    Dbase.SaveChanges();
+
+                    paymentId = pmodel.PaymentId;
+
+                    foreach (int i in invoiceIdlist)
+                    {
+                        var Inv = Dbase.Invoices.SingleOrDefault(a => a.InvoiceId == i);
+                        Inv.IsPaid = true;
+                        Inv.PaymentId = paymentId;
+                    }
+
+                    Dbase.SaveChanges();
+
+
+                }
+
+                // everything good; complete
+                scope.Complete();
+
+                return paymentId;
+            }
+
+        }
+
         internal static string InsertACHRegistration(UserACHBankAccount model)
         {
             using (BHDbaseEntities Dbase = new BHDbaseEntities())
