@@ -58,7 +58,6 @@ E:\Isaac\SWIFTBILLPAY\SWIFTBILLPAY\Logging\obj\Debug\Logging.pdb
 D:\SwiftBillPay\Logging\bin\Debug\Logging.dll
 D:\SwiftBillPay\Logging\bin\Debug\Logging.pdb
 D:\SwiftBillPay\Logging\bin\Debug\log4net.dll
-D:\SwiftBillPay\Logging\obj\Debug\Logging.csproj.AssemblyReference.cache
 D:\SwiftBillPay\Logging\obj\Debug\Logging.csproj.CoreCompileInputs.cache
 D:\SwiftBillPay\Logging\obj\Debug\Logging.csproj.CopyComplete
 D:\SwiftBillPay\Logging\obj\Debug\Logging.dll

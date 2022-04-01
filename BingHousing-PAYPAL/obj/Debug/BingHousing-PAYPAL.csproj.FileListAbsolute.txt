@@ -59,8 +59,8 @@ D:\SwiftBillPay\BingHousing-PAYPAL\bin\Debug\BingHousing-PAYPAL.pdb
 D:\SwiftBillPay\BingHousing-PAYPAL\bin\Debug\Newtonsoft.Json.dll
 D:\SwiftBillPay\BingHousing-PAYPAL\bin\Debug\PayPalCoreSDK.dll
 D:\SwiftBillPay\BingHousing-PAYPAL\bin\Debug\RestApiSDK.dll
-D:\SwiftBillPay\BingHousing-PAYPAL\obj\Debug\BingHousing-PAYPAL.csproj.AssemblyReference.cache
 D:\SwiftBillPay\BingHousing-PAYPAL\obj\Debug\BingHousing-PAYPAL.csproj.CoreCompileInputs.cache
 D:\SwiftBillPay\BingHousing-PAYPAL\obj\Debug\BingHousing-PAYPAL.csproj.CopyComplete
 D:\SwiftBillPay\BingHousing-PAYPAL\obj\Debug\BingHousing-PAYPAL.dll
 D:\SwiftBillPay\BingHousing-PAYPAL\obj\Debug\BingHousing-PAYPAL.pdb
+D:\SwiftBillPay\BingHousing-PAYPAL\obj\Debug\BingHousing-PAYPAL.csproj.AssemblyReference.cache

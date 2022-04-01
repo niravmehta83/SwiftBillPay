@@ -176,6 +176,8 @@
     <EntitySetMapping Name="CustomerProfiles">
       <EntityTypeMapping TypeName="BHDbaseModel.CustomerProfile">
         <MappingFragment StoreEntitySet="CustomerProfile">
+          <ScalarProperty Name="StripeCustomerDefaultSourceId" ColumnName="StripeCustomerDefaultSourceId" />
+          <ScalarProperty Name="StripeCustomerId" ColumnName="StripeCustomerId" />
           <ScalarProperty Name="Comments" ColumnName="Comments" />
           <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
           <ScalarProperty Name="JOML" ColumnName="JOML" />
@@ -502,6 +504,46 @@
           <ScalarProperty Name="StripeProductionKey" ColumnName="StripeProductionKey" />
           <ScalarProperty Name="PayeeId" ColumnName="PayeeId" />
           <ScalarProperty Name="ACHDepositAccountId" ColumnName="ACHDepositAccountId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ChargeDetails">
+      <EntityTypeMapping TypeName="BHDbaseModel.ChargeDetail">
+        <MappingFragment StoreEntitySet="ChargeDetail">
+          <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+          <ScalarProperty Name="ChargeResourceId" ColumnName="ChargeResourceId" />
+          <ScalarProperty Name="ChargeId" ColumnName="ChargeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserACHBankAccounts">
+      <EntityTypeMapping TypeName="BHDbaseModel.UserACHBankAccount">
+        <MappingFragment StoreEntitySet="UserACHBankAccount">
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="CustomerDefaultSourceId" ColumnName="CustomerDefaultSourceId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="BankToken" ColumnName="BankToken" />
+          <ScalarProperty Name="AccountStatus" ColumnName="AccountStatus" />
+          <ScalarProperty Name="AccountType" ColumnName="AccountType" />
+          <ScalarProperty Name="RoutingNumber" ColumnName="RoutingNumber" />
+          <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
+          <ScalarProperty Name="AccountHolderName" ColumnName="AccountHolderName" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ACHDepositDetails">
+      <EntityTypeMapping TypeName="BHDbaseModel.ACHDepositDetail">
+        <MappingFragment StoreEntitySet="ACHDepositDetail">
+          <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+          <ScalarProperty Name="ACHDepositResourceId" ColumnName="ACHDepositResourceId" />
+          <ScalarProperty Name="ACHDepositId" ColumnName="ACHDepositId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -88,6 +88,9 @@
     <Compile Include="ACHAccountDepositDetail.cs">
       <DependentUpon>BHContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="ACHDepositDetail.cs">
+      <DependentUpon>BHContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="ACHDepositTransaction.cs" />
     <Compile Include="BHContext.Context.cs">
       <AutoGen>True</AutoGen>
@@ -104,7 +107,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BHContext.edmx</DependentUpon>
     </Compile>
-    <Compile Include="ChargeDetail.cs" />
+    <Compile Include="ChargeDetail.cs">
+      <DependentUpon>BHContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="CheckDetail.cs">
       <DependentUpon>BHContext.tt</DependentUpon>
     </Compile>
@@ -192,7 +197,9 @@
       <DependentUpon>BHContext.tt</DependentUpon>
     </Compile>
     <Compile Include="User.cs" />
-    <Compile Include="UserACHBankAccount.cs" />
+    <Compile Include="UserACHBankAccount.cs">
+      <DependentUpon>BHContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="UserDetail.cs">
       <DependentUpon>BHContext.tt</DependentUpon>
     </Compile>

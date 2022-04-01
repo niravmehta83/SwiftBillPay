@@ -12,12 +12,12 @@ namespace BingHousing_BO
     using System;
     using System.Collections.Generic;
     
-    public partial class ChargeDetail
+    public partial class ACHDepositDetail
     {
-        public int ChargeId { get; set; }
-        public string ChargeResourceId { get; set; }
-        public string TransactionId { get; set; }
-        public decimal Amount { get; set; }
+        public int ACHDepositId { get; set; }
+        public string ACHDepositResourceId { get; set; }
+        public byte[] TransactionID { get; set; }
+        public string Amount { get; set; }
         public int UserId { get; set; }
         public Nullable<System.DateTime> InsertedOn { get; set; }
     }

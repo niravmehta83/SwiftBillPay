@@ -11,6 +11,34 @@
     <Property Name="InsertedOn" Type="datetime" Nullable="false" />
     <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DB_9DAB6A_BHDbase.dbo.ACHDepositDetail' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="ACHDepositDetail">
+    <Key>
+      <PropertyRef Name="ACHDepositId" />
+      <PropertyRef Name="ACHDepositResourceId" />
+      <PropertyRef Name="TransactionID" />
+      <PropertyRef Name="Amount" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="ACHDepositId" Type="int" Nullable="false" />
+    <Property Name="ACHDepositResourceId" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="TransactionID" Type="varbinary" MaxLength="500" Nullable="false" />
+    <Property Name="Amount" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="InsertedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ChargeDetail">
+    <Key>
+      <PropertyRef Name="ChargeId" />
+    </Key>
+    <Property Name="ChargeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ChargeResourceId" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="TransactionId" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="InsertedOn" Type="datetime" />
+  </EntityType>
   <EntityType Name="CheckDetail">
     <Key>
       <PropertyRef Name="CheckId" />
@@ -87,6 +115,8 @@
     <Property Name="JOML" Type="bit" Nullable="false" />
     <Property Name="PaymentMode" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="Comments" Type="nvarchar" MaxLength="500" />
+    <Property Name="StripeCustomerId" Type="nvarchar" MaxLength="500" />
+    <Property Name="StripeCustomerDefaultSourceId" Type="nvarchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="Group">
     <Key>
@@ -281,6 +311,21 @@
     <Property Name="PaymentId" Type="int" />
     <Property Name="SubscriptionFrom" Type="datetime" />
     <Property Name="SubscriptionTo" Type="datetime" />
+  </EntityType>
+  <EntityType Name="UserACHBankAccount">
+    <Key>
+      <PropertyRef Name="CustomerId" />
+    </Key>
+    <Property Name="UserId" Type="int" />
+    <Property Name="AccountHolderName" Type="varchar" MaxLength="255" />
+    <Property Name="AccountNumber" Type="varchar" MaxLength="255" />
+    <Property Name="RoutingNumber" Type="varchar" MaxLength="255" />
+    <Property Name="AccountType" Type="varchar" MaxLength="255" />
+    <Property Name="AccountStatus" Type="varchar" MaxLength="255" />
+    <Property Name="BankToken" Type="varchar" MaxLength="255" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CustomerDefaultSourceId" Type="varchar" MaxLength="500" />
+    <Property Name="CustomerId" Type="varchar" MaxLength="500" Nullable="false" />
   </EntityType>
   <EntityType Name="UserDetails">
     <Key>
@@ -697,6 +742,7 @@
   </Function>
   <EntityContainer Name="BHDbaseModelStoreContainer">
     <EntitySet Name="ACHAccountDepositDetail" EntityType="Self.ACHAccountDepositDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ChargeDetail" EntityType="Self.ChargeDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CheckDetail" EntityType="Self.CheckDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CustomerProfile" EntityType="Self.CustomerProfile" Schema="dbo" store:Type="Tables" />
@@ -716,6 +762,7 @@
     <EntitySet Name="RemainderEmail" EntityType="Self.RemainderEmail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RoutingNumber" EntityType="Self.RoutingNumber" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Subscription" EntityType="Self.Subscription" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserACHBankAccount" EntityType="Self.UserACHBankAccount" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserSecurity" EntityType="Self.UserSecurity" Schema="dbo" store:Type="Tables" />
@@ -723,6 +770,16 @@
     <EntitySet Name="webpages_OAuthMembership" EntityType="Self.webpages_OAuthMembership" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="webpages_Roles" EntityType="Self.webpages_Roles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="webpages_UsersInRoles" EntityType="Self.webpages_UsersInRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ACHDepositDetail" EntityType="Self.ACHDepositDetail" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+[ACHDepositDetail].[ACHDepositId] AS [ACHDepositId], 
+[ACHDepositDetail].[ACHDepositResourceId] AS [ACHDepositResourceId], 
+[ACHDepositDetail].[TransactionID] AS [TransactionID], 
+[ACHDepositDetail].[Amount] AS [Amount], 
+[ACHDepositDetail].[UserId] AS [UserId], 
+[ACHDepositDetail].[InsertedOn] AS [InsertedOn]
+FROM [dbo].[ACHDepositDetail] AS [ACHDepositDetail]</DefiningQuery>
+    </EntitySet>
     <AssociationSet Name="FK__CheckDeta__UserI__571DF1D5" Association="Self.FK__CheckDeta__UserI__571DF1D5">
       <End Role="UserProfile" EntitySet="UserProfile" />
       <End Role="CheckDetail" EntitySet="CheckDetail" />

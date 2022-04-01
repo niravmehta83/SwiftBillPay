@@ -30,9 +30,9 @@ namespace BingHousing_BO
         public bool JOML { get; set; }
         public string PaymentMode { get; set; }
         public string Comments { get; set; }
-
         public string StripeCustomerId { get; set; }
         public string StripeCustomerDefaultSourceId { get; set; }
+    
         public virtual UserProfile UserProfile { get; set; }
     }
 }

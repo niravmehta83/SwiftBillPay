@@ -163,6 +163,9 @@
       <Parameter Name="To" Mode="In" Type="DateTime" />
     </FunctionImport>
     <EntitySet Name="ACHAccountDepositDetails" EntityType="BHDbaseModel.ACHAccountDepositDetail" />
+    <EntitySet Name="ChargeDetails" EntityType="BHDbaseModel.ChargeDetail" />
+    <EntitySet Name="UserACHBankAccounts" EntityType="BHDbaseModel.UserACHBankAccount" />
+    <EntitySet Name="ACHDepositDetails" EntityType="BHDbaseModel.ACHDepositDetail" />
   </EntityContainer>
   <ComplexType Name="CustomerDetail">
     <Property Type="Int32" Name="CustomerId" Nullable="false" />
@@ -332,6 +335,8 @@
     <Property Name="PaymentMode" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="UserProfile" Relationship="BHDbaseModel.FK_CustomerProfile_UserProfile" FromRole="CustomerProfile" ToRole="UserProfile" />
+    <Property Name="StripeCustomerId" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="StripeCustomerDefaultSourceId" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Group">
     <Key>
@@ -969,5 +974,46 @@
     <Property Name="StripeTestKey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="InsertedOn" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="ChargeDetail">
+    <Key>
+      <PropertyRef Name="ChargeId" />
+    </Key>
+    <Property Name="ChargeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ChargeResourceId" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="TransactionId" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="InsertedOn" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="UserACHBankAccount">
+    <Key>
+      <PropertyRef Name="CustomerId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="AccountHolderName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="AccountNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="RoutingNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="AccountType" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="AccountStatus" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="BankToken" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CustomerDefaultSourceId" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="CustomerId" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="ACHDepositDetail">
+    <Key>
+      <PropertyRef Name="ACHDepositId" />
+      <PropertyRef Name="ACHDepositResourceId" />
+      <PropertyRef Name="TransactionID" />
+      <PropertyRef Name="Amount" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="ACHDepositId" Type="Int32" Nullable="false" />
+    <Property Name="ACHDepositResourceId" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="TransactionID" Type="Binary" Nullable="false" MaxLength="500" FixedLength="false" />
+    <Property Name="Amount" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="InsertedOn" Type="DateTime" Precision="3" />
   </EntityType>
 </Schema>

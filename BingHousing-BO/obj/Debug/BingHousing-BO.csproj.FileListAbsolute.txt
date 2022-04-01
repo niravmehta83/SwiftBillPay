@@ -46,3 +46,4 @@ D:\SwiftBillPay\BingHousing-BO\obj\Debug\BingHousing-BO.csproj.CoreCompileInputs
 D:\SwiftBillPay\BingHousing-BO\obj\Debug\BingHousing-BO.csproj.CopyComplete
 D:\SwiftBillPay\BingHousing-BO\obj\Debug\BingHousing-BO.dll
 D:\SwiftBillPay\BingHousing-BO\obj\Debug\BingHousing-BO.pdb
+D:\SwiftBillPay\BingHousing-BO\obj\Debug\BingHousing-BO.csproj.AssemblyReference.cache
