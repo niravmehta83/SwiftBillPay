@@ -5,6 +5,17 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="BHDbaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityType Name="ACHAccountDepositDetail">
+          <Key>
+            <PropertyRef Name="ACHDepositAccountId" />
+          </Key>
+          <Property Name="ACHDepositAccountId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PayeeId" Type="int" Nullable="false" />
+          <Property Name="StripeProductionKey" Type="varchar" MaxLength="50" />
+          <Property Name="StripeTestKey" Type="varchar" MaxLength="50" />
+          <Property Name="InsertedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="CheckDetail">
           <Key>
             <PropertyRef Name="CheckId" />
@@ -690,6 +701,7 @@
           <Parameter Name="Search" Type="nvarchar" Mode="In" />
         </Function>
         <EntityContainer Name="BHDbaseModelStoreContainer">
+          <EntitySet Name="ACHAccountDepositDetail" EntityType="Self.ACHAccountDepositDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CheckDetail" EntityType="Self.CheckDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomerProfile" EntityType="Self.CustomerProfile" Schema="dbo" store:Type="Tables" />
@@ -983,6 +995,7 @@
             <Parameter Name="From" Mode="In" Type="DateTime" />
             <Parameter Name="To" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <EntitySet Name="ACHAccountDepositDetails" EntityType="BHDbaseModel.ACHAccountDepositDetail" />
         </EntityContainer>
         <ComplexType Name="CustomerDetail">
           <Property Type="Int32" Name="CustomerId" Nullable="false" />
@@ -1779,6 +1792,17 @@
           <Property Type="Int32" Name="PayeeId" Nullable="false" />
           <Property Type="String" Name="Payee" Nullable="false" MaxLength="100" />
         </ComplexType>
+        <EntityType Name="ACHAccountDepositDetail">
+          <Key>
+            <PropertyRef Name="ACHDepositAccountId" />
+          </Key>
+          <Property Name="ACHDepositAccountId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PayeeId" Type="Int32" Nullable="false" />
+          <Property Name="StripeProductionKey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StripeTestKey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="InsertedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2277,6 +2301,18 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="ACHAccountDepositDetails">
+            <EntityTypeMapping TypeName="BHDbaseModel.ACHAccountDepositDetail">
+              <MappingFragment StoreEntitySet="ACHAccountDepositDetail">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+                <ScalarProperty Name="StripeTestKey" ColumnName="StripeTestKey" />
+                <ScalarProperty Name="StripeProductionKey" ColumnName="StripeProductionKey" />
+                <ScalarProperty Name="PayeeId" ColumnName="PayeeId" />
+                <ScalarProperty Name="ACHDepositAccountId" ColumnName="ACHDepositAccountId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2349,6 +2385,7 @@
         <AssociationConnector Association="BHDbaseModel.FK__UserDetai__UserI__36B12243" />
         <AssociationConnector Association="BHDbaseModel.FK__UserSecur__UserI__1B0907CE" />
         <AssociationConnector Association="BHDbaseModel.webpages_UsersInRoles" />
+        <EntityTypeShape EntityType="BHDbaseModel.ACHAccountDepositDetail" Width="1.5" PointX="10.375" PointY="0.75" />
       </Diagram>
     </Diagrams>
   </Designer>
