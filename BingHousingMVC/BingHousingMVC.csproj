@@ -229,6 +229,7 @@
     <Compile Include="Models\PlanModel.cs" />
     <Compile Include="Models\PrintCheckModel.cs" />
     <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Models\UserPaymentRegistrationModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\AppConstant.cs" />
     <Compile Include="Utility\LateChargesHelper.cs" />
@@ -510,6 +511,10 @@
       <Project>{3CC483DA-7BDA-44EE-A93D-EBAB7259A60E}</Project>
       <Name>BingHousing-PAYPAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BingHousing-Stripe\BingHousing-Stripe.csproj">
+      <Project>{bb5cdc6d-efef-4146-9b53-a6dc97bc972a}</Project>
+      <Name>BingHousing-Stripe</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logging\Logging.csproj">
       <Project>{D35D6759-C835-41F6-9649-5A49BEA8A166}</Project>
       <Name>Logging</Name>
@@ -693,6 +698,7 @@
     <Content Include="Views\User\UnpaidBillsReport.cshtml" />
     <Content Include="Views\Cart\ACHDeposit.cshtml" />
     <Content Include="Views\User\ACHDepositSetup.cshtml" />
+    <Content Include="Views\Cart\UserPaymentRegistration.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

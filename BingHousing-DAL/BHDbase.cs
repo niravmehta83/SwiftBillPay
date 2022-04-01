@@ -364,7 +364,12 @@ namespace BingHousingMVC_DAL
 
         }
 
+        public string InsertACHRegistration(UserACHBankAccount model)
+        {
 
+            return InsertOperations.InsertACHRegistration(model);
+
+        }
         public void InsertUserDetails(UserDetail model)
         {
                InsertOperations.InsertUserDetails(model);
@@ -471,7 +476,12 @@ namespace BingHousingMVC_DAL
                 UpdateOperations.UpdateUserDetails(model);
            
         }
+        public void UpdateCustomerProfile(CustomerProfile model)
+        {
 
+            UpdateOperations.UpdateCustomerProfileDetails(model);
+
+        }
         public void UpdateCustomer(Customer model)
         {
             

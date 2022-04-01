@@ -186,6 +186,7 @@
       <DependentUpon>BHContext.tt</DependentUpon>
     </Compile>
     <Compile Include="User.cs" />
+    <Compile Include="UserACHBankAccount.cs" />
     <Compile Include="UserDetail.cs">
       <DependentUpon>BHContext.tt</DependentUpon>
     </Compile>

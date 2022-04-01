@@ -26,6 +26,20 @@ namespace BingHousingMVC_DAL
 
             }
         }
+        internal static string InsertACHRegistration(UserACHBankAccount model)
+        {
+            using (BHDbaseEntities Dbase = new BHDbaseEntities())
+            {
+
+                Dbase.ACHBankAccounts.Add(model);
+
+                Dbase.SaveChanges();
+
+                return model.CustomerId;
+
+
+            }
+        }
 
         internal static void InsertUserDetails(UserDetail model)
         {

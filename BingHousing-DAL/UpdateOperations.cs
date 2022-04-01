@@ -34,7 +34,19 @@ namespace BingHousingMVC_DAL
 
             }
         }
+        internal static void UpdateCustomerProfileDetails(CustomerProfile model)
+        {
+            using (BHDbaseEntities Dbase = new BHDbaseEntities())
+            {
+                CustomerProfile newmodel = Dbase.CustomerProfiles.Select(c => c).Where(c => c.CustomerProfileId == model.CustomerProfileId).SingleOrDefault();
+                if (newmodel != null)
+                {
+                    Dbase.Entry(newmodel).CurrentValues.SetValues(model);
+                    Dbase.SaveChanges();
+                }
 
+            }
+        }
         internal static void UpdateACHDepositAcountDetails(ACHAccountDepositDetail model)
         {
             using (BHDbaseEntities Dbase = new BHDbaseEntities())

@@ -56,6 +56,7 @@ namespace BingHousing_BO
         void InsertGroupMember(GroupMember groupMember);
 
         int InsertCheckOnline(OnlineCheck model);
+        string InsertACHRegistration(UserACHBankAccount model);
 
         int InsertACHAccountDepositDetail(ACHAccountDepositDetail model);
 
@@ -79,6 +80,7 @@ namespace BingHousing_BO
         void UpdateACHDepositAcountDetails(ACHAccountDepositDetail model);
 
         void UpdateSubcription(Subscription model);
+        void UpdateCustomerProfile(CustomerProfile model);
 
         void UpdateGroup(Group group);
         void UpdateBillDesc(string[] CustomerIds, string BillDesc,int Groupid);

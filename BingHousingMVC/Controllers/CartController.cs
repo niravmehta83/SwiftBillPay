@@ -20,6 +20,8 @@ using PayPal;
 using BingHousing_PAYPAL;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using BingHousing_Stripe;
+using BingHousing_ACHDeposit;
 
 namespace BingHousingMVC.Controllers
 {
@@ -349,6 +351,117 @@ namespace BingHousingMVC.Controllers
         //    return RedirectToPaymentPage(PaymentMode);
 
         //}
+
+
+        public ActionResult UserPaymentRegistration()
+        {
+            string name = System.Web.HttpContext.Current.Session["SelectedUserName"] as string ?? User.Identity.Name;
+            int UserId = WebSecurity.GetUserId(name);
+
+            //List<SelectListItem> payeelist = Payee.GetAllPayees(dbase, UserId).Select(a => new SelectListItem { Text = a.Payee1, Value = a.PayeeId.ToString() }).ToList<SelectListItem>();
+            //ViewBag.payeelist = payeelist;
+            //if (payeelist.Count > 0)
+            //{
+            //    //UserPaymentRegistration dtl = ACHAccountDepositDetail.GetACHDepositAccountDetail(dbase, Convert.ToInt32(payeelist[0].Value));
+            //    UserPaymentRegistration model = new UserPaymentRegistration();
+
+            //    //if (dtl != null)
+            //    //{
+            //    //    model.PayeeId = dtl.PayeeId;
+            //    //    model.StripeProductionKey = dtl.StripeProductionKey;
+            //    //    model.ACHDepositAccountId = dtl.ACHDepositAccountId;
+            //    //    model.StripeTestKey = dtl.StripeTestKey;
+            //    //}
+            //    return View(model);
+            //}
+            //else
+            //{
+            return View();
+            //}
+
+        }
+
+        [HttpPost]
+        public ActionResult UserPaymentRegistration(UserPaymentRegistrationModel model)
+        {
+            bool isSuccess = false;
+            try
+            {
+                string name = System.Web.HttpContext.Current.Session["SelectedUserName"] as string ?? User.Identity.Name;
+                int UserId = WebSecurity.GetUserId(name);
+                CustomerProfile customerProfile = dbase.GetCustomerProfile(UserId);
+                string BankToken = "";
+                string BankStatus = "";
+                if (StripeACHDeposit.CreateBankToken(out BankToken, out BankStatus, model.AccountHolderName, model.Accounttype, model.RoutingNumber, model.AccountNumber))
+                {
+                    string stripecustomerid = "";
+                    string stripecustomerdefaultsourceid = "";
+                    if (StripeACHDeposit.GetCustomerDetails(out stripecustomerid, out stripecustomerdefaultsourceid, BankToken, "TimePay"))
+                    {
+                        string accountnumber = model.AccountNumber;
+                        customerProfile.StripeCustomerDefaultSourceId = stripecustomerdefaultsourceid;
+                        customerProfile.StripeCustomerId = stripecustomerid;
+                        dbase.UpdateCustomerProfile(customerProfile);
+                        UserACHBankAccount userACHBankAccount = new UserACHBankAccount();
+                        userACHBankAccount.UserId = UserId;
+                        userACHBankAccount.CustomerId = stripecustomerid;
+                        userACHBankAccount.CustomerDefaultSourceId = stripecustomerdefaultsourceid;
+                        userACHBankAccount.AccountHolderName = model.AccountHolderName;
+                        userACHBankAccount.RoutingNumber = model.RoutingNumber;
+                        userACHBankAccount.AccountNumber = model.AccountNumber;
+                        userACHBankAccount.AccountType = model.Accounttype;
+                        accountnumber = "********";
+                        accountnumber = accountnumber + model.AccountNumber.Substring(model.AccountNumber.Length - 4);
+                        userACHBankAccount.AccountNumber = accountnumber;
+                        dbase.InsertACHRegistration(userACHBankAccount);
+                        if (StripeACHDeposit.VerifyBankAccount(stripecustomerid, stripecustomerdefaultsourceid))
+                        {
+                            isSuccess = true;
+                        }
+                        ViewBag.SuccessMsg = "Note That It takes 2 or 3 days to update the Bank Status";
+
+                    }
+                }
+
+                //ViewBag.payeelist = Payee.GetAllPayees(dbase, UserId).Select(a => new SelectListItem { Text = a.Payee1, Value = a.PayeeId.ToString() }).ToList<SelectListItem>();
+
+                //if (ModelState.IsValid)
+                //{
+                //    ACHAccountDepositDetail dtl = new ACHAccountDepositDetail();
+                //    dtl.ACHDepositAccountId = model.ACHDepositAccountId;
+                //    dtl.PayeeId = model.PayeeId;
+                //    dtl.StripeTestKey = model.StripeTestKey;
+                //    dtl.StripeProductionKey = model.StripeProductionKey;
+                //    dtl.InsertedOn = DateTime.Now;
+                //    dtl.UpdatedOn = DateTime.Now;
+
+
+                //    if (model.ACHDepositAccountId == 0)
+                //    {
+                //        dbase.InsertACHAccountDepositDetail(dtl);
+                //        return RedirectToAction("Index", "Home");
+                //    }
+                //    else
+                //    {
+                //        dbase.UpdateACHDepositAcountDetails(dtl);
+                //        return RedirectToAction("Index", "Home");
+                //    }
+                //}
+
+            }
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+            }
+            finally
+            {
+                if (!isSuccess)
+                {
+                    ViewBag.SuccessMsg = "Something Wrong , Please Re-Register";
+                }
+            }
+            return View(model);
+        }
 
         [CustomerAuthorize]
         public ActionResult CheckOnline()

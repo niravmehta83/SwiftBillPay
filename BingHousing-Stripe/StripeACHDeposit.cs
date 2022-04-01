@@ -1,8 +1,11 @@
 ﻿using Stripe;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace BingHousing_Stripe
+namespace BingHousing_ACHDeposit
 {
     public static class StripeACHDeposit
     {
@@ -14,7 +17,7 @@ namespace BingHousing_Stripe
         /// </summary>
         /// <param name="banktoken"></param>
         /// <returns></returns>
-        public static bool CreateBankToken(out string banktoken, string accountholdername, string accountholdertype, string routingnumber, string accountnumber)
+        public static bool CreateBankToken(out string banktoken, out string bankstatus, string accountholdername, string accountholdertype, string routingnumber, string accountnumber)
         {
             bool success = false;
             try
@@ -35,11 +38,13 @@ namespace BingHousing_Stripe
                 var banktokenservice = new TokenService();
                 var banktokenresponse = banktokenservice.Create(banktokenOptions);
                 banktoken = banktokenresponse.Id;
+                bankstatus = banktokenresponse.BankAccount.Status;
                 success = true;
             }
             catch (Exception ex)
             {
                 banktoken = "";
+                bankstatus = "";
                 ex.Message.ToString();
             }
             return success;
@@ -118,6 +123,27 @@ namespace BingHousing_Stripe
             }
             return success;
         }
+
+        public static bool GetBankAccountStatus(string stripecustomerid, string stripecustomersourceid)
+        {
+            bool success = false;
+            try
+            {
+                StripeConfiguration.ApiKey = StripeKey;
+
+                var bankverifyresponse = new BankAccountService();
+                var verifyresponse = bankverifyresponse.Get(stripecustomerid,
+                        stripecustomersourceid);
+                if (verifyresponse.Status == "verified")
+                    success = true;
+            }
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+            }
+            return success;
+        }
+
 
         /// <summary>
         /// 
