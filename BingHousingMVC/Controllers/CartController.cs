@@ -557,110 +557,110 @@ namespace BingHousingMVC.Controllers
             return View(model);
         }
 
-        [CustomerAuthorize]
-        [ValidateAntiForgeryToken]
-        [HttpPost]
-        public ActionResult ACHDeposit(ACHModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                List<InvoiceDetail> list = null;
-                if (Session["cartitems"] != null)
-                {
-                    list = (List<InvoiceDetail>)Session["cartitems"];
+        //[CustomerAuthorize]
+        //[ValidateAntiForgeryToken]
+        //[HttpPost]
+        //public ActionResult ACHDeposit(ACHModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        List<InvoiceDetail> list = null;
+        //        if (Session["cartitems"] != null)
+        //        {
+        //            list = (List<InvoiceDetail>)Session["cartitems"];
 
-                    IBHDbase dbase = new BHDbase();
+        //            IBHDbase dbase = new BHDbase();
 
-                    List<int> invoicelist = list.Select(a => a.InvoiceId).ToList();
-                    model.InsertedOn = DateTime.Now;
-                    model.RoutingNumber = model.RoutingNumber.TrimStart('0');//to remove zeros in the front
-                    int PaymentId = dbase.InsertCheckPaymentDetail(model.ToCheckDetail(), invoicelist, 2);
-                    var monthYearFolder = DateTime.Now.Month + "." + DateTime.Now.Year;
-                    string path = ConfigurationManager.AppSettings["CheckPath"] + "/" + monthYearFolder + "/" + PaymentId + ".csv";
-                    //string path = ConfigurationManager.AppSettings["CheckPath"] + "/" + monthYearFolder+"/" + list[0].UserId + "/" + list[0].CustomerId + "/" + PaymentId + ".csv";
+        //            List<int> invoicelist = list.Select(a => a.InvoiceId).ToList();
+        //            model.InsertedOn = DateTime.Now;
+        //            model.RoutingNumber = model.RoutingNumber.TrimStart('0');//to remove zeros in the front
+        //            int PaymentId = dbase.InsertCheckPaymentDetail(model.ToCheckDetail(), invoicelist, 2);
+        //            var monthYearFolder = DateTime.Now.Month + "." + DateTime.Now.Year;
+        //            string path = ConfigurationManager.AppSettings["CheckPath"] + "/" + monthYearFolder + "/" + PaymentId + ".csv";
+        //            //string path = ConfigurationManager.AppSettings["CheckPath"] + "/" + monthYearFolder+"/" + list[0].UserId + "/" + list[0].CustomerId + "/" + PaymentId + ".csv";
 
-                    if (!System.IO.File.Exists(Server.MapPath(path)))
-                    {
-                        Directory.CreateDirectory(Path.GetDirectoryName(Server.MapPath(path)));
-                    }
+        //            if (!System.IO.File.Exists(Server.MapPath(path)))
+        //            {
+        //                Directory.CreateDirectory(Path.GetDirectoryName(Server.MapPath(path)));
+        //            }
 
-                    Tuple<CheckOutModel, CheckModel> tmodel = new Tuple<CheckOutModel, CheckModel>(dbase.GetCustomerProfile(model.UserId).ToCheckOutRegisterModel(), model);
-                    OnlineCheck check = new OnlineCheck();
-                    check.CustomerName = tmodel.Item1.FirstName + " " + tmodel.Item1.LastName;
-                    check.PaymentId = PaymentId;
-                    check.PhoneNumber = tmodel.Item1.PhoneNumber;
-                    check.Email = tmodel.Item1.Email;
+        //            Tuple<CheckOutModel, CheckModel> tmodel = new Tuple<CheckOutModel, CheckModel>(dbase.GetCustomerProfile(model.UserId).ToCheckOutRegisterModel(), model);
+        //            OnlineCheck check = new OnlineCheck();
+        //            check.CustomerName = tmodel.Item1.FirstName + " " + tmodel.Item1.LastName;
+        //            check.PaymentId = PaymentId;
+        //            check.PhoneNumber = tmodel.Item1.PhoneNumber;
+        //            check.Email = tmodel.Item1.Email;
 
-                    check.CheckNumber = tmodel.Item2.CheckNumber;
-                    check.AmountOnCheck = Convert.ToDecimal(tmodel.Item2.AmountOnCheck);
-                    check.BankName = tmodel.Item2.BankName;
-                    check.BankAddress = tmodel.Item2.BankAddress.Replace(',', ' ');
-                    check.BankCity = tmodel.Item2.BankCity + " " + tmodel.Item2.BankState + " " + tmodel.Item2.BankZip;
-                    check.Comment = tmodel.Item2.Comment;
-                    check.PayeeName = tmodel.Item2.Payee;
-                    check.DateOnCheck = model.DateOnCheck;
-                    check.Address = tmodel.Item2.AddressOnCheck.Replace(',', ' ');
-                    check.Address2 = tmodel.Item2.CityOnCheck + " " + tmodel.Item2.StateOnCheck + " " + tmodel.Item2.ZipOnCheck;
-                    check.RoutingNumber = tmodel.Item2.RoutingNumber;
-                    check.AccountNumber = tmodel.Item2.AccountNumber;
-                    check.Comment = tmodel.Item2.Comment;
-                    check.CheckMemo = tmodel.Item2.CheckMemo;
-                    var csvData = BingHousingMVC.GlobalOperations.Extensions.getCheckCsvFileData(tmodel);
-                    check.CsvFileData = csvData;
-                    var res = dbase.InsertCheckOnline(check);
+        //            check.CheckNumber = tmodel.Item2.CheckNumber;
+        //            check.AmountOnCheck = Convert.ToDecimal(tmodel.Item2.AmountOnCheck);
+        //            check.BankName = tmodel.Item2.BankName;
+        //            check.BankAddress = tmodel.Item2.BankAddress.Replace(',', ' ');
+        //            check.BankCity = tmodel.Item2.BankCity + " " + tmodel.Item2.BankState + " " + tmodel.Item2.BankZip;
+        //            check.Comment = tmodel.Item2.Comment;
+        //            check.PayeeName = tmodel.Item2.Payee;
+        //            check.DateOnCheck = model.DateOnCheck;
+        //            check.Address = tmodel.Item2.AddressOnCheck.Replace(',', ' ');
+        //            check.Address2 = tmodel.Item2.CityOnCheck + " " + tmodel.Item2.StateOnCheck + " " + tmodel.Item2.ZipOnCheck;
+        //            check.RoutingNumber = tmodel.Item2.RoutingNumber;
+        //            check.AccountNumber = tmodel.Item2.AccountNumber;
+        //            check.Comment = tmodel.Item2.Comment;
+        //            check.CheckMemo = tmodel.Item2.CheckMemo;
+        //            var csvData = BingHousingMVC.GlobalOperations.Extensions.getCheckCsvFileData(tmodel);
+        //            check.CsvFileData = csvData;
+        //            var res = dbase.InsertCheckOnline(check);
 
-                    if (res > 0 && CSVOperations.CreateCSV(tmodel, Server.MapPath(path)))
-                    {
-                        //string bckpath = Server.MapPath(path.Replace(ConfigurationManager.AppSettings["CheckPath"], ConfigurationManager.AppSettings["CheckBckUpPath"]));
+        //            if (res > 0 && CSVOperations.CreateCSV(tmodel, Server.MapPath(path)))
+        //            {
+        //                //string bckpath = Server.MapPath(path.Replace(ConfigurationManager.AppSettings["CheckPath"], ConfigurationManager.AppSettings["CheckBckUpPath"]));
 
-                        //CSVOperations.MakeCopy(Server.MapPath(path), bckpath);
-                        PaymentMailModel pmodel = new PaymentMailModel();
-                        pmodel.BillDescription = list[0].BillDescription;
-                        pmodel.BillingDate = list[0].EmailSentDate;
-                        pmodel.ShippingCost = Convert.ToDecimal(0);
-                        pmodel.Tax = Convert.ToDecimal(0); ;
-                        pmodel.ShippingMethod = "Normal Post";
-                        pmodel.PaymentType = "Check On-Line";
-                        pmodel.Address1 = tmodel.Item1.Address;
-                        pmodel.Address2 = tmodel.Item1.City + " " + tmodel.Item1.State + " " + tmodel.Item1.ZipCode;
-                        pmodel.Country = tmodel.Item1.Country;
-                        pmodel.Phone = tmodel.Item1.PhoneNumber;
-                        pmodel.PaymentDate = DateTime.Now.Date;
-                        pmodel.OrderId = PaymentId;
-                        pmodel.BillingId = String.Join(",", invoicelist.Select(a => a.ToString()).ToArray());
-                        pmodel.Amount = (list.Sum(a => a.TotalAmountDue) + list.Sum(a => a.LateCharges)).ToString();
+        //                //CSVOperations.MakeCopy(Server.MapPath(path), bckpath);
+        //                PaymentMailModel pmodel = new PaymentMailModel();
+        //                pmodel.BillDescription = list[0].BillDescription;
+        //                pmodel.BillingDate = list[0].EmailSentDate;
+        //                pmodel.ShippingCost = Convert.ToDecimal(0);
+        //                pmodel.Tax = Convert.ToDecimal(0); ;
+        //                pmodel.ShippingMethod = "Normal Post";
+        //                pmodel.PaymentType = "Check On-Line";
+        //                pmodel.Address1 = tmodel.Item1.Address;
+        //                pmodel.Address2 = tmodel.Item1.City + " " + tmodel.Item1.State + " " + tmodel.Item1.ZipCode;
+        //                pmodel.Country = tmodel.Item1.Country;
+        //                pmodel.Phone = tmodel.Item1.PhoneNumber;
+        //                pmodel.PaymentDate = DateTime.Now.Date;
+        //                pmodel.OrderId = PaymentId;
+        //                pmodel.BillingId = String.Join(",", invoicelist.Select(a => a.ToString()).ToArray());
+        //                pmodel.Amount = (list.Sum(a => a.TotalAmountDue) + list.Sum(a => a.LateCharges)).ToString();
 
-                        pmodel.From = list[0].PayeeEmail;
-                        pmodel.To = tmodel.Item1.Email;
-                        pmodel.Payee = tmodel.Item2.Payee;
-                        pmodel.Sub = "Thanks for the Payment of Order Number " + PaymentId.ToString();
-                        pmodel.Name = tmodel.Item1.FirstName + " " + tmodel.Item1.LastName;
-                        pmodel.Type = MailType.EmailPamentCustomer;
-                        pmodel.ProjectNumber = list[0].InvoiceNumber;
+        //                pmodel.From = list[0].PayeeEmail;
+        //                pmodel.To = tmodel.Item1.Email;
+        //                pmodel.Payee = tmodel.Item2.Payee;
+        //                pmodel.Sub = "Thanks for the Payment of Order Number " + PaymentId.ToString();
+        //                pmodel.Name = tmodel.Item1.FirstName + " " + tmodel.Item1.LastName;
+        //                pmodel.Type = MailType.EmailPamentCustomer;
+        //                pmodel.ProjectNumber = list[0].InvoiceNumber;
 
-                        IMembershipService Mail = new AccountMembershipService();
+        //                IMembershipService Mail = new AccountMembershipService();
 
-                        Mail.SendEmail(pmodel);
+        //                Mail.SendEmail(pmodel);
 
-                        pmodel.From = tmodel.Item1.Email;
-                        pmodel.To = list[0].PayeeEmail;
-                        pmodel.Sub = "Check import text file for Order# " + PaymentId.ToString();
-                        pmodel.Type = MailType.EmailPaymentUser;
+        //                pmodel.From = tmodel.Item1.Email;
+        //                pmodel.To = list[0].PayeeEmail;
+        //                pmodel.Sub = "Check import text file for Order# " + PaymentId.ToString();
+        //                pmodel.Type = MailType.EmailPaymentUser;
 
-                        pmodel.Attachment = Server.MapPath(path);
+        //                pmodel.Attachment = Server.MapPath(path);
 
-                        Mail.SendEmail(pmodel);
+        //                Mail.SendEmail(pmodel);
 
-                        pmodel.To = dbase.GetUserEmail(list[0].UserId);
+        //                pmodel.To = dbase.GetUserEmail(list[0].UserId);
 
-                        Mail.SendEmail(pmodel);
-                        pmodel.Address2 = tmodel.Item1.City + "$" + tmodel.Item1.State + "$" + tmodel.Item1.ZipCode;
-                        return RedirectToAction("PaymentSuccess", pmodel);
-                    }
-                }
-            }
-            return View(model);
-        }
+        //                Mail.SendEmail(pmodel);
+        //                pmodel.Address2 = tmodel.Item1.City + "$" + tmodel.Item1.State + "$" + tmodel.Item1.ZipCode;
+        //                return RedirectToAction("PaymentSuccess", pmodel);
+        //            }
+        //        }
+        //    }
+        //    return View(model);
+        //}
         public JsonResult UpdateCheckOnline (int PaymentId)
         {
             string[] paymentIds = new string[] { PaymentId.ToString() };

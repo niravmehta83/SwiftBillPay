@@ -52,3 +52,15 @@ E:\Isaac\SWIFTBILLPAY\SWIFTBILLPAY\BingHousing-DAL\obj\Debug\BingHousing-DAL.csp
 E:\Isaac\SWIFTBILLPAY\SWIFTBILLPAY\BingHousing-DAL\obj\Debug\BingHousing-DAL.csproj.CopyComplete
 E:\Isaac\SWIFTBILLPAY\SWIFTBILLPAY\BingHousing-DAL\obj\Debug\BingHousing-DAL.dll
 E:\Isaac\SWIFTBILLPAY\SWIFTBILLPAY\BingHousing-DAL\obj\Debug\BingHousing-DAL.pdb
+D:\SwiftBillPay\BingHousing-DAL\bin\Debug\BingHousing-DAL.dll
+D:\SwiftBillPay\BingHousing-DAL\bin\Debug\BingHousing-DAL.pdb
+D:\SwiftBillPay\BingHousing-DAL\bin\Debug\BingHousing-BO.dll
+D:\SwiftBillPay\BingHousing-DAL\bin\Debug\EntityFramework.dll
+D:\SwiftBillPay\BingHousing-DAL\bin\Debug\BingHousing-BO.pdb
+D:\SwiftBillPay\BingHousing-DAL\bin\Debug\BingHousing-BO.dll.config
+D:\SwiftBillPay\BingHousing-DAL\bin\Debug\EntityFramework.xml
+D:\SwiftBillPay\BingHousing-DAL\obj\Debug\BingHousing-DAL.csproj.AssemblyReference.cache
+D:\SwiftBillPay\BingHousing-DAL\obj\Debug\BingHousing-DAL.csproj.CoreCompileInputs.cache
+D:\SwiftBillPay\BingHousing-DAL\obj\Debug\BingHousing-DAL.csproj.CopyComplete
+D:\SwiftBillPay\BingHousing-DAL\obj\Debug\BingHousing-DAL.dll
+D:\SwiftBillPay\BingHousing-DAL\obj\Debug\BingHousing-DAL.pdb
