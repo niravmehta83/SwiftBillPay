@@ -5,6 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using BingHousing_BO;
+using CompareAttribute = System.ComponentModel.DataAnnotations.CompareAttribute;
 
 namespace BingHousingMVC.Models
 {

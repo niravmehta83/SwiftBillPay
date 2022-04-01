@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Globalization;
 using System.Web.Mvc;
 using System.Web.Security;
+using CompareAttribute = System.ComponentModel.DataAnnotations.CompareAttribute;
 
 namespace BingHousingMVC.Models
 {

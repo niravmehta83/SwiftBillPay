@@ -373,9 +373,7 @@ D:\SwiftBillPay\BingHousingMVC\bin\Microsoft.Web.WebPages.OAuth.dll
 D:\SwiftBillPay\BingHousingMVC\bin\Newtonsoft.Json.dll
 D:\SwiftBillPay\BingHousingMVC\bin\PayPalCoreSDK.dll
 D:\SwiftBillPay\BingHousingMVC\bin\RestApiSDK.dll
-D:\SwiftBillPay\BingHousingMVC\bin\System.Net.Http.dll
 D:\SwiftBillPay\BingHousingMVC\bin\System.Net.Http.Formatting.dll
-D:\SwiftBillPay\BingHousingMVC\bin\System.Net.Http.WebRequest.dll
 D:\SwiftBillPay\BingHousingMVC\bin\System.Web.Helpers.dll
 D:\SwiftBillPay\BingHousingMVC\bin\System.Web.Http.dll
 D:\SwiftBillPay\BingHousingMVC\bin\System.Web.Http.WebHost.dll
@@ -413,8 +411,6 @@ D:\SwiftBillPay\BingHousingMVC\bin\System.Web.WebPages.xml
 D:\SwiftBillPay\BingHousingMVC\bin\System.Web.WebPages.Deployment.xml
 D:\SwiftBillPay\BingHousingMVC\bin\System.Web.WebPages.Razor.xml
 D:\SwiftBillPay\BingHousingMVC\bin\EntityFramework.xml
-D:\SwiftBillPay\BingHousingMVC\bin\System.Net.Http.xml
-D:\SwiftBillPay\BingHousingMVC\bin\System.Net.Http.WebRequest.xml
 D:\SwiftBillPay\BingHousingMVC\bin\WebMatrix.Data.xml
 D:\SwiftBillPay\BingHousingMVC\bin\WebMatrix.WebData.xml
 D:\SwiftBillPay\BingHousingMVC\bin\Org.Mentalis.Security.Cryptography.xml
@@ -422,3 +418,17 @@ D:\SwiftBillPay\BingHousingMVC\bin\Mono.Math.xml
 D:\SwiftBillPay\BingHousingMVC\obj\Debug\BingHousingMVC.csproj.CopyComplete
 D:\SwiftBillPay\BingHousingMVC\obj\Debug\BingHousingMVC.dll
 D:\SwiftBillPay\BingHousingMVC\obj\Debug\BingHousingMVC.pdb
+D:\SwiftBillPay\BingHousingMVC\bin\BingHousing-Stripe.dll
+D:\SwiftBillPay\BingHousingMVC\bin\Stripe.net.dll
+D:\SwiftBillPay\BingHousingMVC\bin\System.ValueTuple.dll
+D:\SwiftBillPay\BingHousingMVC\bin\Microsoft.Bcl.AsyncInterfaces.dll
+D:\SwiftBillPay\BingHousingMVC\bin\System.Threading.Tasks.Extensions.dll
+D:\SwiftBillPay\BingHousingMVC\bin\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\SwiftBillPay\BingHousingMVC\bin\netstandard.dll
+D:\SwiftBillPay\BingHousingMVC\bin\System.Runtime.CompilerServices.Unsafe.dll
+D:\SwiftBillPay\BingHousingMVC\bin\BingHousing-Stripe.pdb
+D:\SwiftBillPay\BingHousingMVC\bin\Stripe.net.pdb
+D:\SwiftBillPay\BingHousingMVC\bin\Stripe.net.xml
+D:\SwiftBillPay\BingHousingMVC\bin\Microsoft.Bcl.AsyncInterfaces.xml
+D:\SwiftBillPay\BingHousingMVC\bin\System.Threading.Tasks.Extensions.xml
+D:\SwiftBillPay\BingHousingMVC\bin\System.Runtime.CompilerServices.Unsafe.xml

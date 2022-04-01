@@ -20,7 +20,6 @@ using PayPal;
 using BingHousing_PAYPAL;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
-using BingHousing_Stripe;
 using BingHousing_ACHDeposit;
 
 namespace BingHousingMVC.Controllers
