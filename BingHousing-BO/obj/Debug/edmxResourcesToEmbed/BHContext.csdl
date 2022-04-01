@@ -162,6 +162,7 @@
       <Parameter Name="From" Mode="In" Type="DateTime" />
       <Parameter Name="To" Mode="In" Type="DateTime" />
     </FunctionImport>
+    <EntitySet Name="ACHAccountDepositDetails" EntityType="BHDbaseModel.ACHAccountDepositDetail" />
   </EntityContainer>
   <ComplexType Name="CustomerDetail">
     <Property Type="Int32" Name="CustomerId" Nullable="false" />
@@ -958,4 +959,15 @@
     <Property Type="Int32" Name="PayeeId" Nullable="false" />
     <Property Type="String" Name="Payee" Nullable="false" MaxLength="100" />
   </ComplexType>
+  <EntityType Name="ACHAccountDepositDetail">
+    <Key>
+      <PropertyRef Name="ACHDepositAccountId" />
+    </Key>
+    <Property Name="ACHDepositAccountId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PayeeId" Type="Int32" Nullable="false" />
+    <Property Name="StripeProductionKey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="StripeTestKey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="InsertedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
 </Schema>

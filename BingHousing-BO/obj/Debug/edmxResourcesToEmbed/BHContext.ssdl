@@ -1,5 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="BHDbaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityType Name="ACHAccountDepositDetail">
+    <Key>
+      <PropertyRef Name="ACHDepositAccountId" />
+    </Key>
+    <Property Name="ACHDepositAccountId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PayeeId" Type="int" Nullable="false" />
+    <Property Name="StripeProductionKey" Type="varchar" MaxLength="50" />
+    <Property Name="StripeTestKey" Type="varchar" MaxLength="50" />
+    <Property Name="InsertedOn" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+  </EntityType>
   <EntityType Name="CheckDetail">
     <Key>
       <PropertyRef Name="CheckId" />
@@ -685,6 +696,7 @@
     <Parameter Name="Search" Type="nvarchar" Mode="In" />
   </Function>
   <EntityContainer Name="BHDbaseModelStoreContainer">
+    <EntitySet Name="ACHAccountDepositDetail" EntityType="Self.ACHAccountDepositDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CheckDetail" EntityType="Self.CheckDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CustomerProfile" EntityType="Self.CustomerProfile" Schema="dbo" store:Type="Tables" />

@@ -493,5 +493,17 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="ACHAccountDepositDetails">
+      <EntityTypeMapping TypeName="BHDbaseModel.ACHAccountDepositDetail">
+        <MappingFragment StoreEntitySet="ACHAccountDepositDetail">
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+          <ScalarProperty Name="StripeTestKey" ColumnName="StripeTestKey" />
+          <ScalarProperty Name="StripeProductionKey" ColumnName="StripeProductionKey" />
+          <ScalarProperty Name="PayeeId" ColumnName="PayeeId" />
+          <ScalarProperty Name="ACHDepositAccountId" ColumnName="ACHDepositAccountId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
