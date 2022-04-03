@@ -1,7 +1,8 @@
 ﻿@model BingHousingMVC.Models.UserPaymentRegistrationModel
 @{
     ViewBag.Title = "UserPaymentRegistration";
-    Layout = "~/Views/Shared/_LayoutWizard.cshtml";
+    var message = ViewBag.SuccessMsg;
+
 }
 <div class="row">
     <div class="col-md-4"></div>
@@ -11,7 +12,6 @@
                 <h4><i class="fa fa-sign-in"></i> ACH Registration</h4>
             </div>
             <div class="panel-body">
-                @Html.Partial("_ErrorPanel")
                 @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
                 {
                     @Html.AntiForgeryToken()
@@ -28,10 +28,10 @@
                         @Html.RadioButtonFor(model => model.Accounttype, "Company")
                     </div>
                     <div class="form-group">
-                        @Html.TextBoxFor(m => m.RoutingNumber, new { @class = "form-control", placeholder = "Account Number", type = "number" })
+                        @Html.TextBoxFor(m => m.AccountNumber, new { @class = "form-control", placeholder = "Account Number", type = "number" })
                     </div>
                     <div class="form-group">
-                        @Html.TextBoxFor(m => m.AccountNumber, new { @class = "form-control", placeholder = "Routing Number", type = "number" })
+                        @Html.TextBoxFor(m => m.RoutingNumber, new { @class = "form-control", placeholder = "Routing Number", type = "number" })
                     </div>
 
 
@@ -45,6 +45,15 @@
     </div>
     <div class="col-md-4"></div>
 </div>
+@section Scripts{
+    <script type="text/javascript">
+   var message = '@message';
+    if(message){
+        alert(message);
+    }
+    </script>
+}
+
 
 
 

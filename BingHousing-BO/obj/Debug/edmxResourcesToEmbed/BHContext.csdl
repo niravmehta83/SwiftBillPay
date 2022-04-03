@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="BHDbaseModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
-  <EntityContainer Name="BHDbaseEntities" annotation:LazyLoadingEnabled="true">
+<Schema Namespace="BHDbaseModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+  <EntityContainer Name="BHDbaseEntities" annotation:LazyLoadingEnabled="true" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
     <FunctionImport Name="GetCustomerDetails" ReturnType="Collection(BHDbaseModel.CustomerDetail)">
       <Parameter Name="Id" Mode="In" Type="Int32" />
       <Parameter Name="IsCustomer" Mode="In" Type="Boolean" />
@@ -30,7 +30,6 @@
     </FunctionImport>
     <EntitySet Name="CheckDetails" EntityType="BHDbaseModel.CheckDetail" />
     <EntitySet Name="Customers" EntityType="BHDbaseModel.Customer" />
-    <EntitySet Name="CustomerProfiles" EntityType="BHDbaseModel.CustomerProfile" />
     <EntitySet Name="Groups" EntityType="BHDbaseModel.Group" />
     <EntitySet Name="GroupMembers" EntityType="BHDbaseModel.GroupMember" />
     <EntitySet Name="IntervalTypes" EntityType="BHDbaseModel.IntervalType" />
@@ -68,10 +67,6 @@
     <AssociationSet Name="FK_CustomerDetails_Payee" Association="BHDbaseModel.FK_CustomerDetails_Payee">
       <End Role="Payee" EntitySet="Payees" />
       <End Role="Customer" EntitySet="Customers" />
-    </AssociationSet>
-    <AssociationSet Name="FK_CustomerProfile_UserProfile" Association="BHDbaseModel.FK_CustomerProfile_UserProfile">
-      <End Role="UserProfile" EntitySet="UserProfiles" />
-      <End Role="CustomerProfile" EntitySet="CustomerProfiles" />
     </AssociationSet>
     <AssociationSet Name="FK_GRP_USER_ID_USER_PROF" Association="BHDbaseModel.FK_GRP_USER_ID_USER_PROF">
       <End Role="UserProfile" EntitySet="UserProfiles" />
@@ -166,6 +161,11 @@
     <EntitySet Name="ChargeDetails" EntityType="BHDbaseModel.ChargeDetail" />
     <EntitySet Name="UserACHBankAccounts" EntityType="BHDbaseModel.UserACHBankAccount" />
     <EntitySet Name="ACHDepositDetails" EntityType="BHDbaseModel.ACHDepositDetail" />
+    <EntitySet Name="CustomerProfiles" EntityType="BHDbaseModel.CustomerProfile" />
+    <AssociationSet Name="FK_CustomerProfile_UserProfile" Association="BHDbaseModel.FK_CustomerProfile_UserProfile">
+      <End Role="UserProfile" EntitySet="UserProfiles" />
+      <End Role="CustomerProfile" EntitySet="CustomerProfiles" />
+    </AssociationSet>
   </EntityContainer>
   <ComplexType Name="CustomerDetail">
     <Property Type="Int32" Name="CustomerId" Nullable="false" />
@@ -258,7 +258,7 @@
     <Key>
       <PropertyRef Name="CheckId" />
     </Key>
-    <Property Name="CheckId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CheckId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
     <Property Name="UserId" Type="Int32" Nullable="false" />
     <Property Name="Payee" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="NameOnCheck" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
@@ -286,7 +286,7 @@
     <Key>
       <PropertyRef Name="CustomerId" />
     </Key>
-    <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
     <Property Name="PayeeId" Type="Int32" Nullable="false" />
     <Property Name="CustomerFirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="CustomerLastName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
@@ -314,35 +314,11 @@
     <Property Name="CCEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="BCCEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
-  <EntityType Name="CustomerProfile">
-    <Key>
-      <PropertyRef Name="CustomerProfileId" />
-    </Key>
-    <Property Name="CustomerProfileId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="UserId" Type="Int32" Nullable="false" />
-    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="LastName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="Address" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="Address2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="City" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="State" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="ZipCode" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="Country" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="Company" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="JOML" Type="Boolean" Nullable="false" />
-    <Property Name="PaymentMode" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="UserProfile" Relationship="BHDbaseModel.FK_CustomerProfile_UserProfile" FromRole="CustomerProfile" ToRole="UserProfile" />
-    <Property Name="StripeCustomerId" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-    <Property Name="StripeCustomerDefaultSourceId" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-  </EntityType>
   <EntityType Name="Group">
     <Key>
       <PropertyRef Name="GroupId" />
     </Key>
-    <Property Name="GroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
     <Property Name="GroupName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="UserId" Type="Int32" Nullable="false" />
     <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
@@ -356,7 +332,7 @@
     <Key>
       <PropertyRef Name="GroupMemberId" />
     </Key>
-    <Property Name="GroupMemberId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GroupMemberId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
     <Property Name="GroupId" Type="Int32" Nullable="false" />
     <Property Name="CustomerId" Type="Int32" Nullable="false" />
     <Property Name="AddedOn" Type="DateTime" Nullable="false" Precision="3" />
@@ -371,7 +347,7 @@
     <Key>
       <PropertyRef Name="IntervalTypeId" />
     </Key>
-    <Property Name="IntervalTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IntervalTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
     <Property Name="IntervalTypeDescription" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Customers" Relationship="BHDbaseModel.FK_CustomerDetails_IntervalType" FromRole="IntervalType" ToRole="Customer" />
   </EntityType>
@@ -379,7 +355,7 @@
     <Key>
       <PropertyRef Name="InvoiceId" />
     </Key>
-    <Property Name="InvoiceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InvoiceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
     <Property Name="UserId" Type="Int32" Nullable="false" />
     <Property Name="CustomerId" Type="Int32" Nullable="false" />
     <Property Name="InvoiceNumber" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
@@ -397,7 +373,7 @@
     <Key>
       <PropertyRef Name="OnlineCheckId" />
     </Key>
-    <Property Name="OnlineCheckId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OnlineCheckId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
     <Property Name="CustomerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="PaymentId" Type="Int32" />
     <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -421,7 +397,7 @@
     <Key>
       <PropertyRef Name="OrderId" />
     </Key>
-    <Property Name="OrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
     <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="CustomerUserId" Type="Int32" Nullable="false" />
     <Property Name="IsPaid" Type="Boolean" Nullable="false" />
@@ -433,7 +409,7 @@
     <Key>
       <PropertyRef Name="ItemId" />
     </Key>
-    <Property Name="ItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
     <Property Name="OrderId" Type="Int32" Nullable="false" />
     <Property Name="ItemType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Quantity" Type="Int32" Nullable="false" />
@@ -444,7 +420,7 @@
     <Key>
       <PropertyRef Name="PayeeId" />
     </Key>
-    <Property Name="PayeeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PayeeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
     <Property Name="UserId" Type="Int32" Nullable="false" />
     <Property Name="Payee1" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="PayeeAddress" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
@@ -465,7 +441,7 @@
     <Key>
       <PropertyRef Name="PaymentId" />
     </Key>
-    <Property Name="PaymentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PaymentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
     <Property Name="PaymentModeId" Type="Int32" Nullable="false" />
     <Property Name="PayPalId" Type="Int32" />
     <Property Name="CheckId" Type="Int32" />
@@ -482,7 +458,7 @@
     <Key>
       <PropertyRef Name="PaymentModeId" />
     </Key>
-    <Property Name="PaymentModeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PaymentModeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
     <Property Name="PaymentMode1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="PaymentDetails" Relationship="BHDbaseModel.FK_PaymentDetail_PaymentModes" FromRole="PaymentMode" ToRole="PaymentDetail" />
   </EntityType>
@@ -490,7 +466,7 @@
     <Key>
       <PropertyRef Name="PayPalAccountId" />
     </Key>
-    <Property Name="PayPalAccountId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PayPalAccountId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
     <Property Name="PayeeId" Type="Int32" Nullable="false" />
     <Property Name="ClientID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="ClientSecret" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
@@ -503,7 +479,7 @@
     <Key>
       <PropertyRef Name="PayPalId" />
     </Key>
-    <Property Name="PayPalId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PayPalId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
     <Property Name="PaymentResourceId" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="TransactionID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="Amount" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
@@ -516,7 +492,7 @@
     <Key>
       <PropertyRef Name="PlanId" />
     </Key>
-    <Property Name="PlanId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PlanId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
     <Property Name="PlanName" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
     <Property Name="PlanDescription" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="PlanAmount" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
@@ -527,7 +503,7 @@
     <Key>
       <PropertyRef Name="RemainderEmailId" />
     </Key>
-    <Property Name="RemainderEmailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RemainderEmailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
     <Property Name="InvoiceId" Type="Int32" Nullable="false" />
     <Property Name="SentDate" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="Invoice" Relationship="BHDbaseModel.FK_RemainderEmail_Invoice" FromRole="RemainderEmail" ToRole="Invoice" />
@@ -536,7 +512,7 @@
     <Key>
       <PropertyRef Name="RoutingNumberId" />
     </Key>
-    <Property Name="RoutingNumberId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoutingNumberId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
     <Property Name="RoutingNumber1" Type="Int32" Nullable="false" />
     <Property Name="BankName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="BankAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
@@ -549,7 +525,7 @@
     <Key>
       <PropertyRef Name="SubscriptionId" />
     </Key>
-    <Property Name="SubscriptionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SubscriptionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
     <Property Name="UserId" Type="Int32" Nullable="false" />
     <Property Name="PlanId" Type="Int32" Nullable="false" />
     <Property Name="IsPaid" Type="Boolean" Nullable="false" />
@@ -582,11 +558,10 @@
     <Key>
       <PropertyRef Name="UserId" />
     </Key>
-    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
     <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="IsInActive" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="CheckDetails" Relationship="BHDbaseModel.FK__CheckDeta__UserI__571DF1D5" FromRole="UserProfile" ToRole="CheckDetail" />
-    <NavigationProperty Name="CustomerProfiles" Relationship="BHDbaseModel.FK_CustomerProfile_UserProfile" FromRole="UserProfile" ToRole="CustomerProfile" />
     <NavigationProperty Name="Groups" Relationship="BHDbaseModel.FK_GRP_USER_ID_USER_PROF" FromRole="UserProfile" ToRole="Group" />
     <NavigationProperty Name="Invoices" Relationship="BHDbaseModel.FK__Invoice__UserId__3A81B327" FromRole="UserProfile" ToRole="Invoice" />
     <NavigationProperty Name="Payees" Relationship="BHDbaseModel.FK_Payee_UserProfile" FromRole="UserProfile" ToRole="Payee" />
@@ -596,12 +571,13 @@
     <NavigationProperty Name="UserDetail" Relationship="BHDbaseModel.FK__UserDetai__UserI__36B12243" FromRole="UserProfile" ToRole="UserDetail" />
     <NavigationProperty Name="UserSecurities" Relationship="BHDbaseModel.FK__UserSecur__UserI__1B0907CE" FromRole="UserProfile" ToRole="UserSecurity" />
     <NavigationProperty Name="webpages_Roles" Relationship="BHDbaseModel.webpages_UsersInRoles" FromRole="UserProfile" ToRole="webpages_Roles" />
+    <NavigationProperty Name="CustomerProfiles" Relationship="BHDbaseModel.FK_CustomerProfile_UserProfile" FromRole="UserProfile" ToRole="CustomerProfile" />
   </EntityType>
   <EntityType Name="UserSecurity">
     <Key>
       <PropertyRef Name="SecurityId" />
     </Key>
-    <Property Name="SecurityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SecurityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
     <Property Name="UserId" Type="Int32" Nullable="false" />
     <Property Name="Password" Type="String" Nullable="false" MaxLength="200" FixedLength="true" Unicode="true" />
     <Property Name="Password2" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
@@ -638,7 +614,7 @@
     <Key>
       <PropertyRef Name="RoleId" />
     </Key>
-    <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
     <Property Name="RoleName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="UserProfiles" Relationship="BHDbaseModel.webpages_UsersInRoles" FromRole="webpages_Roles" ToRole="UserProfile" />
   </EntityType>
@@ -687,18 +663,6 @@
       </Principal>
       <Dependent Role="Customer">
         <PropertyRef Name="PayeeId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_CustomerProfile_UserProfile">
-    <End Type="BHDbaseModel.UserProfile" Role="UserProfile" Multiplicity="1" />
-    <End Type="BHDbaseModel.CustomerProfile" Role="CustomerProfile" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="UserProfile">
-        <PropertyRef Name="UserId" />
-      </Principal>
-      <Dependent Role="CustomerProfile">
-        <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -968,7 +932,7 @@
     <Key>
       <PropertyRef Name="ACHDepositAccountId" />
     </Key>
-    <Property Name="ACHDepositAccountId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ACHDepositAccountId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
     <Property Name="PayeeId" Type="Int32" Nullable="false" />
     <Property Name="StripeProductionKey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="StripeTestKey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -979,7 +943,7 @@
     <Key>
       <PropertyRef Name="ChargeId" />
     </Key>
-    <Property Name="ChargeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ChargeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
     <Property Name="ChargeResourceId" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
     <Property Name="TransactionId" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
     <Property Name="Amount" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
@@ -1016,4 +980,38 @@
     <Property Name="UserId" Type="Int32" Nullable="false" />
     <Property Name="InsertedOn" Type="DateTime" Precision="3" />
   </EntityType>
+  <EntityType Name="CustomerProfile">
+    <Key>
+      <PropertyRef Name="CustomerProfileId" />
+    </Key>
+    <Property Name="CustomerProfileId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Address2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="State" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ZipCode" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Country" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Company" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="JOML" Type="Boolean" Nullable="false" />
+    <Property Name="PaymentMode" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="UserProfile" Relationship="BHDbaseModel.FK_CustomerProfile_UserProfile" FromRole="CustomerProfile" ToRole="UserProfile" />
+  </EntityType>
+  <Association Name="FK_CustomerProfile_UserProfile">
+    <End Type="BHDbaseModel.UserProfile" Role="UserProfile" Multiplicity="1" />
+    <End Type="BHDbaseModel.CustomerProfile" Role="CustomerProfile" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="CustomerProfile">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

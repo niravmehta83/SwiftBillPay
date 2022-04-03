@@ -45,15 +45,15 @@ namespace BingHousingMVC_DAL
                 {
 
                     model.InsertedOn = DateTime.Now;
-                    model.ChargeResourceId = "test";
-                    model.TransactionId = "test";
+                    model.ChargeResourceId = model.ChargeId.ToString();
+                    model.TransactionId = model.TransactionId.ToString();
                     Dbase.ACHDetails.Add(model);
 
                     Dbase.SaveChanges();
 
                     PaymentDetail pmodel = new PaymentDetail();
 
-                    pmodel.PaymentModeId = 2;
+                    pmodel.PaymentModeId = 4;
 
                     pmodel.PayPalId = model.ChargeId;
 
@@ -163,14 +163,14 @@ namespace BingHousingMVC_DAL
             }
         }
 
-        internal static int InsertCheckPaymentDetail(CheckDetail model, List<int> invoiceIdlist,int PaymentModeId)
+        internal static int InsertCheckPaymentDetail(CheckDetail model, List<int> invoiceIdlist, int PaymentModeId)
         {
 
             int paymentId = 0;
             var scope = new TransactionScope(
-                // a new transaction will always be created
+            // a new transaction will always be created
             TransactionScopeOption.RequiresNew,
-                // we will allow volatile data to be read during transaction
+            // we will allow volatile data to be read during transaction
             new TransactionOptions()
             {
                 IsolationLevel = IsolationLevel.ReadUncommitted
@@ -228,9 +228,9 @@ namespace BingHousingMVC_DAL
 
             int paymentId = 0;
             var scope = new TransactionScope(
-                // a new transaction will always be created
+            // a new transaction will always be created
             TransactionScopeOption.RequiresNew,
-                // we will allow volatile data to be read during transaction
+            // we will allow volatile data to be read during transaction
             new TransactionOptions()
             {
                 IsolationLevel = IsolationLevel.ReadUncommitted

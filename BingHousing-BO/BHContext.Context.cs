@@ -11,11 +11,9 @@ namespace BingHousing_BO
 {
     using System;
     using System.Data.Entity;
+    using System.Data.Entity.Core.Objects;
     using System.Data.Entity.Infrastructure;
-    using System.Data.Objects;
-    using System.Data.Objects.DataClasses;
-    using System.Linq;
-    
+
     public partial class BHDbaseEntities : DbContext
     {
         public BHDbaseEntities()
@@ -55,6 +53,7 @@ namespace BingHousing_BO
         public DbSet<webpages_Roles> webpages_Roles { get; set; }
         public DbSet<ACHAccountDepositDetail> ACHAccountDepositDetails { get; set; }
         public DbSet<UserACHBankAccount> ACHBankAccounts { get; set; }
+        public DbSet<UserACHBankAccount> CustomerStripeProfile { get; set; }
 
         public DbSet<ChargeDetail> ACHDetails { get; set; }
         public DbSet<ChargeDetail> ChargeDetails { get; set; }

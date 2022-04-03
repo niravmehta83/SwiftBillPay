@@ -17,7 +17,6 @@ namespace BingHousing_BO
         public UserProfile()
         {
             this.CheckDetails = new HashSet<CheckDetail>();
-            this.CustomerProfiles = new HashSet<CustomerProfile>();
             this.Groups = new HashSet<Group>();
             this.Invoices = new HashSet<Invoice>();
             this.Payees = new HashSet<Payee>();
@@ -26,6 +25,7 @@ namespace BingHousing_BO
             this.Subscriptions = new HashSet<Subscription>();
             this.UserSecurities = new HashSet<UserSecurity>();
             this.webpages_Roles = new HashSet<webpages_Roles>();
+            this.CustomerProfiles = new HashSet<CustomerProfile>();
         }
     
         public int UserId { get; set; }
@@ -33,7 +33,6 @@ namespace BingHousing_BO
         public bool IsInActive { get; set; }
     
         public virtual ICollection<CheckDetail> CheckDetails { get; set; }
-        public virtual ICollection<CustomerProfile> CustomerProfiles { get; set; }
         public virtual ICollection<Group> Groups { get; set; }
         public virtual ICollection<Invoice> Invoices { get; set; }
         public virtual ICollection<Payee> Payees { get; set; }
@@ -43,5 +42,6 @@ namespace BingHousing_BO
         public virtual UserDetail UserDetail { get; set; }
         public virtual ICollection<UserSecurity> UserSecurities { get; set; }
         public virtual ICollection<webpages_Roles> webpages_Roles { get; set; }
+        public virtual ICollection<CustomerProfile> CustomerProfiles { get; set; }
     }
 }

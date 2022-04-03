@@ -349,6 +349,8 @@ C:\PROJECTS\iSAAC\SWIFTBILLPAY\BingHousingMVC\bin\AutoMapper.dll
 C:\PROJECTS\iSAAC\SWIFTBILLPAY\BingHousingMVC\bin\AutoMapper.xml
 E:\Isaac\SWIFTBILLPAY\SWIFTBILLPAY\BingHousingMVC\obj\Debug\BingHousingMVC.csprojAssemblyReference.cache
 E:\Isaac\SWIFTBILLPAY\SWIFTBILLPAY\BingHousingMVC\obj\Debug\BingHousingMVC.csproj.CoreCompileInputs.cache
+D:\SwiftBillPay\BingHousingMVC\obj\Debug\BingHousingMVC.csproj.AssemblyReference.cache
+D:\SwiftBillPay\BingHousingMVC\obj\Debug\BingHousingMVC.csproj.CoreCompileInputs.cache
 D:\SwiftBillPay\BingHousingMVC\bin\AutoMapper.Net4.dll
 D:\SwiftBillPay\BingHousingMVC\bin\BingHousingMVC.dll.config
 D:\SwiftBillPay\BingHousingMVC\bin\BingHousingMVC.dll
@@ -462,6 +464,7 @@ D:\SwiftBillPay\BingHousingMVC\bin\DotNetOpenAuth.OAuth.dll
 D:\SwiftBillPay\BingHousingMVC\bin\DotNetOpenAuth.OpenId.dll
 D:\SwiftBillPay\BingHousingMVC\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
 D:\SwiftBillPay\BingHousingMVC\bin\EntityFramework.dll
+D:\SwiftBillPay\BingHousingMVC\bin\EntityFramework.SqlServer.dll
 D:\SwiftBillPay\BingHousingMVC\bin\Logging.dll
 D:\SwiftBillPay\BingHousingMVC\bin\Microsoft.Bcl.AsyncInterfaces.dll
 D:\SwiftBillPay\BingHousingMVC\bin\Microsoft.Web.Infrastructure.dll
@@ -490,6 +493,7 @@ D:\SwiftBillPay\BingHousingMVC\bin\Mono.Math.dll
 D:\SwiftBillPay\BingHousingMVC\bin\BingHousing-BO.pdb
 D:\SwiftBillPay\BingHousingMVC\bin\BingHousing-BO.dll.config
 D:\SwiftBillPay\BingHousingMVC\bin\BingHousing-DAL.pdb
+D:\SwiftBillPay\BingHousingMVC\bin\BingHousing-DAL.dll.config
 D:\SwiftBillPay\BingHousingMVC\bin\BingHousing-PAYPAL.pdb
 D:\SwiftBillPay\BingHousingMVC\bin\BingHousing-Stripe.pdb
 D:\SwiftBillPay\BingHousingMVC\bin\Logging.pdb
@@ -501,6 +505,7 @@ D:\SwiftBillPay\BingHousingMVC\bin\DotNetOpenAuth.OAuth.Consumer.xml
 D:\SwiftBillPay\BingHousingMVC\bin\DotNetOpenAuth.OpenId.xml
 D:\SwiftBillPay\BingHousingMVC\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
 D:\SwiftBillPay\BingHousingMVC\bin\EntityFramework.xml
+D:\SwiftBillPay\BingHousingMVC\bin\EntityFramework.SqlServer.xml
 D:\SwiftBillPay\BingHousingMVC\bin\Microsoft.Bcl.AsyncInterfaces.xml
 D:\SwiftBillPay\BingHousingMVC\bin\Microsoft.Web.WebPages.OAuth.xml
 D:\SwiftBillPay\BingHousingMVC\bin\Newtonsoft.Json.xml
@@ -520,8 +525,6 @@ D:\SwiftBillPay\BingHousingMVC\bin\WebMatrix.Data.xml
 D:\SwiftBillPay\BingHousingMVC\bin\WebMatrix.WebData.xml
 D:\SwiftBillPay\BingHousingMVC\bin\Org.Mentalis.Security.Cryptography.xml
 D:\SwiftBillPay\BingHousingMVC\bin\Mono.Math.xml
-D:\SwiftBillPay\BingHousingMVC\obj\Debug\BingHousingMVC.csproj.AssemblyReference.cache
-D:\SwiftBillPay\BingHousingMVC\obj\Debug\BingHousingMVC.csproj.CoreCompileInputs.cache
 D:\SwiftBillPay\BingHousingMVC\obj\Debug\BingHousingMVC.csproj.CopyComplete
 D:\SwiftBillPay\BingHousingMVC\obj\Debug\BingHousingMVC.dll
 D:\SwiftBillPay\BingHousingMVC\obj\Debug\BingHousingMVC.pdb

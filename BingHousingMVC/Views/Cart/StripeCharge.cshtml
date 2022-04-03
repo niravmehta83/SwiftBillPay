@@ -12,7 +12,6 @@
                 <h4><i class="fa fa-sign-in"></i> Stripe ACH Deposit</h4>
             </div>
             <div class="panel-body">
-                @Html.Partial("_ErrorPanel")
                 @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
                 {
                     @Html.AntiForgeryToken()

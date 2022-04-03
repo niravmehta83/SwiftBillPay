@@ -50,7 +50,7 @@ namespace BingHousingMVC.Controllers
             }
             else
             {
-                
+
                 CustomerDetail detail = dbase.GetCustomerDetails(Convert.ToInt32(Payee));
                 Session["Payee"] = detail.Payee;
             }
@@ -88,7 +88,7 @@ namespace BingHousingMVC.Controllers
             List<InvoiceDetail> list = null;
             if (projectNumber != "")
             {
-                
+
                 list = dbase.GetInvoiceDetails(projectNumber, InvoiceType.Notpaid);
                 list = LateChargesHelper.FindLateCharges(list);
                 Session["cartitems"] = list;
@@ -144,8 +144,8 @@ namespace BingHousingMVC.Controllers
         //get method for cart Login
         public ActionResult RemoveCartItems(int invoiceId)
         {
-           
-            
+
+
 
             try
             {
@@ -165,7 +165,7 @@ namespace BingHousingMVC.Controllers
         //get method for checkout register
         public ActionResult CheckOutRegister()
         {
-            
+
             PayPalAccountDetail pad = null;
             if (Session["cartitems"] != null)
             {
@@ -195,7 +195,7 @@ namespace BingHousingMVC.Controllers
         [HttpPost]
         public ActionResult CheckOutRegister(CheckOutRegisterModel model)
         {
-            
+
 
             if (ModelState.IsValid)
             {
@@ -286,7 +286,7 @@ namespace BingHousingMVC.Controllers
         [CustomerAuthorize]
         public ActionResult CheckOut()
         {
-            
+
             int UserId = dbase.GetUserId(User.Identity.Name);
             CheckOutModel model = dbase.GetCustomerProfile(UserId).ToCheckOutRegisterModel();
             PayPalAccountDetail pad = null;
@@ -321,6 +321,26 @@ namespace BingHousingMVC.Controllers
         public ActionResult CheckOut(CheckOutModel model)
         {
             Session["PaymentMode"] = model.PaymentMode;
+            int UserId = dbase.GetUserId(User.Identity.Name);
+            UserACHBankAccount customer = dbase.GetCustomerStripeProfile(UserId);
+            if (model.PaymentMode == "ACHDeposit")
+            {
+                if (customer == null)
+                {
+                    return RedirectToAction("UserPaymentRegistration", "Cart");
+                }
+                else
+                {
+                    if (StripeACHDeposit.GetBankAccountStatus(customer.CustomerId, customer.CustomerDefaultSourceId))
+                    {
+                        return RedirectToAction("StripeCharge", "Cart");
+                    }
+                    else
+                    {
+                        return View(model);
+                    }
+                }
+            }
             return RedirectToPaymentPage(model.PaymentMode);
 
         }
@@ -360,7 +380,7 @@ namespace BingHousingMVC.Controllers
 
             List<SelectListItem> payeelist = dbase.GetAllPayee(userId).Select(a => new SelectListItem { Text = a.Payee1, Value = a.PayeeId.ToString() }).ToList<SelectListItem>();
             ViewBag.payeelist = payeelist;
-           
+
 
             List<InvoiceDetail> item = null;
             StripeChargeModel stripeChargeModel = new StripeChargeModel();
@@ -383,86 +403,101 @@ namespace BingHousingMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult StripeCharge(StripeChargeModel model)
         {
-            ChargeDetail chargeDetail = new ChargeDetail();
-            IBHDbase bHDbase = new BHDbase();
-            int userId = bHDbase.GetUserId(base.User.Identity.Name);
-            CustomerProfile customerProfile = bHDbase.GetCustomerProfile(userId);
-
-            chargeDetail.UserId = userId;
-            chargeDetail.Amount = model.Amount;
-            model.UserId = userId;
-
-            List<InvoiceDetail> item = null;
-            if (base.Session["cartitems"] != null)
+            try
             {
-                item = (List<InvoiceDetail>)base.Session["cartitems"];
-                List<int> list = (
-                    from a in item
-                    select a.InvoiceId).ToList<int>();
-                model.InsertedOn = DateTime.Now;
-                model.InvoiceId = item[0].InvoiceId;
-                Charge charge1 = new Charge();
-                // StripeACHDeposit.ChargeCustomer(out charge1, customerProfile.StripeCustomerId, Convert.ToInt64(model.Amount)) // need to enable to charge but now in US we do not ge data
-                int num = this.dbase.InsertACHDepositPaymentDetail(chargeDetail, list);
-                object month = DateTime.Now.Month;
-                DateTime now = DateTime.Now;
-                Tuple<CheckOutModel, StripeChargeModel> tuple = new Tuple<CheckOutModel, StripeChargeModel>(this.dbase.GetCustomerProfile(model.UserId).ToCheckOutRegisterModel(), model);
+                ChargeDetail chargeDetail = new ChargeDetail();
+                IBHDbase bHDbase = new BHDbase();
+                int userId = bHDbase.GetUserId(base.User.Identity.Name);
+                UserACHBankAccount customerProfile = bHDbase.GetCustomerStripeProfile(userId);
+                chargeDetail.UserId = userId;
+                chargeDetail.Amount = model.Amount;
+                model.UserId = userId;
 
-
-                OnlineCheck onlineCheck = new OnlineCheck()
+                List<InvoiceDetail> item = null;
+                if (base.Session["cartitems"] != null)
                 {
-                    CustomerName = string.Concat(tuple.Item1.FirstName, " ", tuple.Item1.LastName),
-                    PaymentId = new int?(num),
-                    PhoneNumber = tuple.Item1.PhoneNumber,
-                    Email = tuple.Item1.Email,
-                    AmountOnCheck = new decimal?(Convert.ToDecimal(tuple.Item2.Amount)),
-                    Comment = tuple.Item2.Comment,
-                    PayeeName = tuple.Item2.Payee,
-                };
-                onlineCheck.Comment = tuple.Item2.Comment;
-                string StripeCustomerid = "";
-                PaymentMailModel paymentMailModel = new PaymentMailModel()
-                {
-                    BillDescription = item[0].BillDescription,
-                    BillingDate = item[0].EmailSentDate,
-                    ShippingCost = Convert.ToDecimal(0),
-                    Tax = Convert.ToDecimal(0),
-                    ShippingMethod = "Normal Post",
-                    PaymentType = "ACH Deposit",
-                    Address1 = tuple.Item1.Address,
-                    Address2 = string.Concat(new string[] { tuple.Item1.City, " ", tuple.Item1.State, " ", tuple.Item1.ZipCode }),
-                    Country = tuple.Item1.Country,
-                    Phone = tuple.Item1.PhoneNumber,
-                    PaymentDate = DateTime.Now.Date,
-                    OrderId = num,
-                    BillingId = string.Join(",", (
-                        from a in list
-                        select a.ToString()).ToArray<string>())
-                };
-                decimal num1 = item.Sum<InvoiceDetail>((InvoiceDetail a) => a.TotalAmountDue) + item.Sum<InvoiceDetail>((InvoiceDetail a) => a.LateCharges);
-                paymentMailModel.Amount = num1.ToString();
-                paymentMailModel.From = item[0].PayeeEmail;
-                paymentMailModel.To = tuple.Item1.Email;
-                paymentMailModel.Sub = string.Concat("Thanks for the Payment of Order Number ", num.ToString());
-                paymentMailModel.Name = string.Concat(tuple.Item1.FirstName, " ", tuple.Item1.LastName);
-                paymentMailModel.Type = MailType.EmailPamentCustomer;
-                paymentMailModel.ProjectNumber = item[0].InvoiceNumber;
-                paymentMailModel.Payee = item[0].Payee;
-                AccountMembershipService accountMembershipService = new AccountMembershipService();
-                ((IMembershipService)accountMembershipService).SendEmail(paymentMailModel);
-                paymentMailModel.From = tuple.Item1.Email;
-                paymentMailModel.To = item[0].PayeeEmail;
-                paymentMailModel.Sub = string.Concat("Check import text file for Order# ", num.ToString());
-                paymentMailModel.Type = MailType.EmailPaymentUser;
-                ((IMembershipService)accountMembershipService).SendEmail(paymentMailModel);
-                paymentMailModel.To = this.dbase.GetUserEmail(item[0].UserId);
-                ((IMembershipService)accountMembershipService).SendEmail(paymentMailModel);
-                paymentMailModel.Address2 = string.Concat(new string[] { tuple.Item1.City, "$", tuple.Item1.State, "$", tuple.Item1.ZipCode });
-                return base.RedirectToAction("PaymentSuccess", paymentMailModel);
+                    item = (List<InvoiceDetail>)base.Session["cartitems"];
+                    List<int> list = (
+                        from a in item
+                        select a.InvoiceId).ToList<int>();
+                    model.InsertedOn = DateTime.Now;
+                    model.InvoiceId = item[0].InvoiceId;
+                    Charge stripeCharge = new Charge();
+                    StripeACHDeposit.ChargeCustomer(out stripeCharge, customerProfile.CustomerId, Convert.ToInt64(model.Amount)); // need to enable to charge but now in US we do not ge data
 
-
+                    if (stripeCharge != null && stripeCharge.Status == "succeeded")
+                    {
+                        chargeDetail.ChargeResourceId = stripeCharge.Id;
+                        chargeDetail.TransactionId = model.InvoiceId.ToString();
+                        int num = this.dbase.InsertACHDepositPaymentDetail(chargeDetail, list);
+                        object month = DateTime.Now.Month;
+                        DateTime now = DateTime.Now;
+                        Tuple<CheckOutModel, StripeChargeModel> tuple = new Tuple<CheckOutModel, StripeChargeModel>(this.dbase.GetCustomerProfile(model.UserId).ToCheckOutRegisterModel(), model);
+                        OnlineCheck onlineCheck = new OnlineCheck()
+                        {
+                            CustomerName = string.Concat(tuple.Item1.FirstName, " ", tuple.Item1.LastName),
+                            PaymentId = new int?(num),
+                            PhoneNumber = tuple.Item1.PhoneNumber,
+                            Email = tuple.Item1.Email,
+                            AmountOnCheck = new decimal?(Convert.ToDecimal(tuple.Item2.Amount)),
+                            Comment = tuple.Item2.Comment,
+                            PayeeName = tuple.Item2.Payee,
+                        };
+                        onlineCheck.Comment = tuple.Item2.Comment;
+                        PaymentMailModel paymentMailModel = new PaymentMailModel()
+                        {
+                            BillDescription = item[0].BillDescription,
+                            BillingDate = item[0].EmailSentDate,
+                            ShippingCost = Convert.ToDecimal(0),
+                            Tax = Convert.ToDecimal(0),
+                            ShippingMethod = "Normal Post",
+                            PaymentType = "ACH Deposit",
+                            Address1 = tuple.Item1.Address,
+                            Address2 = string.Concat(new string[] { tuple.Item1.City, " ", tuple.Item1.State, " ", tuple.Item1.ZipCode }),
+                            Country = tuple.Item1.Country,
+                            Phone = tuple.Item1.PhoneNumber,
+                            PaymentDate = DateTime.Now.Date,
+                            OrderId = num,
+                            BillingId = string.Join(",", (
+                                from a in list
+                                select a.ToString()).ToArray<string>())
+                        };
+                        decimal num1 = item.Sum<InvoiceDetail>((InvoiceDetail a) => a.TotalAmountDue) + item.Sum<InvoiceDetail>((InvoiceDetail a) => a.LateCharges);
+                        paymentMailModel.Amount = num1.ToString();
+                        paymentMailModel.From = item[0].PayeeEmail;
+                        paymentMailModel.To = tuple.Item1.Email;
+                        paymentMailModel.Sub = string.Concat("Thanks for the Payment of Order Number ", num.ToString());
+                        paymentMailModel.Name = string.Concat(tuple.Item1.FirstName, " ", tuple.Item1.LastName);
+                        paymentMailModel.Type = MailType.EmailPamentCustomer;
+                        paymentMailModel.ProjectNumber = item[0].InvoiceNumber;
+                        paymentMailModel.Payee = item[0].Payee;
+                        AccountMembershipService accountMembershipService = new AccountMembershipService();
+                        ((IMembershipService)accountMembershipService).SendEmail(paymentMailModel);
+                        paymentMailModel.From = tuple.Item1.Email;
+                        paymentMailModel.To = item[0].PayeeEmail;
+                        paymentMailModel.Sub = string.Concat("Check import text file for Order# ", num.ToString());
+                        paymentMailModel.Type = MailType.EmailPaymentUser;
+                        ((IMembershipService)accountMembershipService).SendEmail(paymentMailModel);
+                        paymentMailModel.To = this.dbase.GetUserEmail(item[0].UserId);
+                        ((IMembershipService)accountMembershipService).SendEmail(paymentMailModel);
+                        paymentMailModel.Address2 = string.Concat(new string[] { tuple.Item1.City, "$", tuple.Item1.State, "$", tuple.Item1.ZipCode });
+                        return base.RedirectToAction("PaymentSuccess", paymentMailModel);
+                    }
+                    else if (stripeCharge.Status == "pending")
+                    {
+                        ViewBag.SuccessMsg = "Charge Pending";
+                    }
+                    else if (stripeCharge.Status == "failed")
+                    {
+                        ViewBag.SuccessMsg = "Charge Failed";
+                    }
+                }
             }
-            ViewBag.SuccessMsg = "Charge Success";
+            catch (Exception ex)
+            {
+                ViewBag.SuccessMsg = "Charge Failed";
+                ex.Message.ToString();
+            }
 
             return base.View(model);
         }
@@ -503,7 +538,7 @@ namespace BingHousingMVC.Controllers
             {
                 string name = System.Web.HttpContext.Current.Session["SelectedUserName"] as string ?? User.Identity.Name;
                 int UserId = WebSecurity.GetUserId(name);
-                CustomerProfile customerProfile = dbase.GetCustomerProfile(UserId);
+                UserACHBankAccount customerProfile = dbase.GetCustomerStripeProfile(UserId);
                 string BankToken = "";
                 string BankStatus = "";
                 if (StripeACHDeposit.CreateBankToken(out BankToken, out BankStatus, model.AccountHolderName, model.Accounttype, model.RoutingNumber, model.AccountNumber))
@@ -513,9 +548,9 @@ namespace BingHousingMVC.Controllers
                     if (StripeACHDeposit.GetCustomerDetails(out stripecustomerid, out stripecustomerdefaultsourceid, BankToken, "TimePay"))
                     {
                         string accountnumber = model.AccountNumber;
-                        customerProfile.StripeCustomerDefaultSourceId = stripecustomerdefaultsourceid;
-                        customerProfile.StripeCustomerId = stripecustomerid;
-                        dbase.UpdateCustomerProfile(customerProfile);
+                        //customerProfile.CustomerDefaultSourceId = stripecustomerdefaultsourceid;
+                        //customerProfile.StripeCustomerId = stripecustomerid;
+                        //dbase.UpdateCustomerProfile(customerProfile);
                         UserACHBankAccount userACHBankAccount = new UserACHBankAccount();
                         userACHBankAccount.UserId = UserId;
                         userACHBankAccount.CustomerId = stripecustomerid;
@@ -585,13 +620,13 @@ namespace BingHousingMVC.Controllers
 
             if (Session["cartitems"] != null)
             {
-                
+
                 int UserId = dbase.GetUserId(User.Identity.Name);
                 int cUserid = WebSecurity.CurrentUserId;
                 list = (List<InvoiceDetail>)Session["cartitems"];
 
-               CheckDetail cdetail = dbase.GetCheckDetail(UserId, true);
-               // CheckDetail cdetail = dbase.GetCheckDetail(1296, null);
+                CheckDetail cdetail = dbase.GetCheckDetail(UserId, true);
+                // CheckDetail cdetail = dbase.GetCheckDetail(1296, null);
                 model.AmountOnCheck = list.Sum(a => a.TotalAmountDue) + list.Sum(a => a.LateCharges);
                 model.Payee = list[0].Payee;
                 model.UserId = cUserid;
@@ -645,7 +680,7 @@ namespace BingHousingMVC.Controllers
                     List<int> invoicelist = list.Select(a => a.InvoiceId).ToList();
                     model.InsertedOn = DateTime.Now;
                     model.RoutingNumber = model.RoutingNumber.TrimStart('0');//to remove zeros in the front
-                    int PaymentId = dbase.InsertCheckPaymentDetail(model.ToCheckDetail(), invoicelist,2);
+                    int PaymentId = dbase.InsertCheckPaymentDetail(model.ToCheckDetail(), invoicelist, 2);
                     var monthYearFolder = DateTime.Now.Month + "." + DateTime.Now.Year;
                     string path = ConfigurationManager.AppSettings["CheckPath"] + "/" + monthYearFolder + "/" + PaymentId + ".csv";
                     //string path = ConfigurationManager.AppSettings["CheckPath"] + "/" + monthYearFolder+"/" + list[0].UserId + "/" + list[0].CustomerId + "/" + PaymentId + ".csv";
@@ -888,12 +923,12 @@ namespace BingHousingMVC.Controllers
         //    }
         //    return View(model);
         //}
-        public JsonResult UpdateCheckOnline (int PaymentId)
+        public JsonResult UpdateCheckOnline(int PaymentId)
         {
             string[] paymentIds = new string[] { PaymentId.ToString() };
             //var PaymentId = PaymentIds.Split(',');
             var pModel = dbase.GetCustomerOnlineCheckDetail(paymentIds).FirstOrDefault();
-            return Json(pModel,JsonRequestBehavior.AllowGet);
+            return Json(pModel, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult UpdateRoutngNumber(int PaymentId, string RoutingNumber, string AccountNumber)
@@ -907,7 +942,7 @@ namespace BingHousingMVC.Controllers
             model.UserId = cdetail.UserId;
             model.DateOnCheck = DateTime.Now.Date;
             //model.InvoiceNumber = checkDetail.;        
-            
+
             model.NameOnCheck = cdetail.NameOnCheck;
             model.AddressOnCheck = cdetail.AddressOnCheck;
             model.CityOnCheck = cdetail.CityOnCheck;
@@ -923,7 +958,7 @@ namespace BingHousingMVC.Controllers
             model.CheckNumber = cdetail.CheckNumber;
             var monthYearFolder = DateTime.Now.Month + "." + DateTime.Now.Year;
             string path = ConfigurationManager.AppSettings["CheckPath"] + "/" + monthYearFolder + "/" + PaymentId + ".csv";
-          
+
             if (!System.IO.File.Exists(Server.MapPath(path)))
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(Server.MapPath(path)));
@@ -932,7 +967,7 @@ namespace BingHousingMVC.Controllers
             Tuple<CheckOutModel, CheckModel> tmodel = new Tuple<CheckOutModel, CheckModel>(dbase.GetCustomerProfile(cdetail.UserId).ToCheckOutRegisterModel(), model);
             OnlineCheck check = new OnlineCheck();
             check.CustomerName = tmodel.Item1.FirstName + " " + tmodel.Item1.LastName;
-            check.PaymentId = PaymentId;            
+            check.PaymentId = PaymentId;
             check.RoutingNumber = RoutingNumber;
             check.AccountNumber = AccountNumber;
             var csvData = BingHousingMVC.GlobalOperations.Extensions.getCheckCsvFileData(tmodel);
@@ -940,7 +975,7 @@ namespace BingHousingMVC.Controllers
             var res = dbase.UpdateOnlineCheck(check);
 
             if (res && CSVOperations.CreateCSV(tmodel, Server.MapPath(path)))
-            { 
+            {
                 return Json("true", JsonRequestBehavior.AllowGet);
             }
             else
@@ -950,7 +985,7 @@ namespace BingHousingMVC.Controllers
         }
 
         [DenyAccessToUser(Roles = "Customer")]
-        public ActionResult PaperCheck(string InvoiceNumber="")
+        public ActionResult PaperCheck(string InvoiceNumber = "")
         {
             CheckModel model = new CheckModel();
             model.InvoiceNumber = InvoiceNumber;
@@ -962,20 +997,20 @@ namespace BingHousingMVC.Controllers
             if (!String.IsNullOrEmpty(InvoiceNumber))
             {
                 list = dbase.GetInvoiceDetails(InvoiceNumber, InvoiceType.Notpaid);
-                list =LateChargesHelper.FindLateCharges(list);
+                list = LateChargesHelper.FindLateCharges(list);
                 Session["cartitems"] = list;
                 string Title = Session["Payee"] != null ? Session["Payee"] as string : "Smart Rent Pay";
                 if (Title == "Smart Rent Pay" & list.Count > 0)
                 {
                     CustomerDetail detail = dbase.GetCustomerDetails(list[0].CustomerId);
                     Session["Payee"] = detail.Payee;
-                }  
+                }
 
                 CheckDetail cdetail = dbase.GetCheckDetail(UserId, true);
                 // CheckDetail cdetail = dbase.GetCheckDetail(1296, null);
                 model.AmountOnCheck = list.Sum(a => a.TotalAmountDue) + list.Sum(a => a.LateCharges);
-                model.Payee = list[0].Payee;               
-                
+                model.Payee = list[0].Payee;
+
                 if (cdetail == null)
                 {
                     CheckOutModel cmodel = dbase.GetCustomerDetails(list[0].CustomerId).ToCheckOutRegisterModel();
@@ -1000,7 +1035,7 @@ namespace BingHousingMVC.Controllers
                     model.BankZip = cdetail.BankZip;
                     model.AccountNumber = cdetail.AccountNumber;
                     model.RoutingNumber = cdetail.RountingNumber;
-                }                
+                }
             }
             return View(model);
         }
@@ -1034,7 +1069,7 @@ namespace BingHousingMVC.Controllers
                     List<int> invoicelist = list.Select(a => a.InvoiceId).ToList();
                     model.InsertedOn = DateTime.Now;
                     model.RoutingNumber = model.RoutingNumber.TrimStart('0');//to remove zeros in the front
-                    int PaymentId = dbase.InsertCheckPaymentDetail(model.ToCheckDetail(), invoicelist,3);                    
+                    int PaymentId = dbase.InsertCheckPaymentDetail(model.ToCheckDetail(), invoicelist, 3);
 
                     Tuple<CheckOutModel, CheckModel> tmodel = new Tuple<CheckOutModel, CheckModel>(dbase.GetCustomerDetails(list[0].CustomerId).ToCheckOutRegisterModel(), model);
                     OnlineCheck check = new OnlineCheck();
@@ -1063,7 +1098,7 @@ namespace BingHousingMVC.Controllers
 
                     if (res > 0)
                     {
-                       
+
                         PaymentMailModel pmodel = new PaymentMailModel();
                         pmodel.BillDescription = list[0].BillDescription;
                         pmodel.BillingDate = list[0].EmailSentDate;
@@ -1124,15 +1159,15 @@ namespace BingHousingMVC.Controllers
                 list = (List<InvoiceDetail>)Session["cartitems"];
                 ViewBag.Results = list;
                 ViewBag.Count = list.Count;
-                
+
 
                 Payment pymnt = null;
 
-                
+
                 int payeeId = dbase.GetPayeeId(list[0].CustomerId);
                 PayPalAccountDetail pad = dbase.GetPayPalAccountDetail(payeeId);
                 decimal totamount = Math.Round(list.Sum(a => a.TotalAmountDue) + list.Sum(a => a.LateCharges), 2);
-                decimal paypalsurcharge = Math.Round(totamount * pad.PayPalSurCharge / 100,2);
+                decimal paypalsurcharge = Math.Round(totamount * pad.PayPalSurCharge / 100, 2);
                 decimal totalamount = Math.Round((totamount + paypalsurcharge), 2);
                 ViewBag.checkoutAmount = totalamount;
                 // dbase.GetPayPalAccountDetail(list[0].UserId);
@@ -1243,7 +1278,7 @@ namespace BingHousingMVC.Controllers
                         item.currency = "USD";
                         item.price = Convert.ToString(i.AmountDue + i.LateCharges);
                         item.quantity = Convert.ToString(i.Quantity);
-                        item.sku = Convert.ToString(i.InvoiceId);                       
+                        item.sku = Convert.ToString(i.InvoiceId);
                         itms.Add(item);
                     }
 
@@ -1270,7 +1305,7 @@ namespace BingHousingMVC.Controllers
                     // Let's you specify details of a payment amount.
                     Details details = new Details();
                     details.tax = "0";
-                    details.shipping =  Convert.ToString(paypalsurcharge);
+                    details.shipping = Convert.ToString(paypalsurcharge);
                     details.subtotal = Convert.ToString(totamount);
 
                     // ###Amount
@@ -1346,7 +1381,7 @@ namespace BingHousingMVC.Controllers
             {
                 list = (List<InvoiceDetail>)Session["cartitems"];
 
-                
+
 
                 PayPalAccountDetail pad = dbase.GetPayPalAccountDetail(list[0].UserId);
                 // ### Api Context
@@ -1493,7 +1528,7 @@ namespace BingHousingMVC.Controllers
 
             if (model.UserName != null)
             {
-                
+
                 if (WebSecurity.UserExists(model.UserName)) //checking whether user name is available on the table or not
                 {
                     string[] roles = Roles.GetRolesForUser(model.UserName);
@@ -1573,7 +1608,7 @@ namespace BingHousingMVC.Controllers
         private bool ValidateCartlogin(CartLoginModel model)
         {
             bool result = false;
-            
+
             string Email = dbase.GetCustomerEmail(model.ProjectNumber.Trim());
             if (Email != "")
             {
@@ -1602,8 +1637,9 @@ namespace BingHousingMVC.Controllers
                     return RedirectToAction("CheckOnline", "Cart");
 
                 case "ACHDeposit":
-
-                    return RedirectToAction("ACHDeposit", "Cart");
+                    {
+                        return RedirectToAction("ACHDeposit", "Cart");
+                    }
 
             }
             return View();

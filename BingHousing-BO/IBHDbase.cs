@@ -130,6 +130,8 @@ namespace BingHousing_BO
 
         string GetCustomerEmail(string projectnumber);
 
+        UserACHBankAccount GetCustomerStripeProfile(int UserId);
+
         List<string> GetallUserName();
 
         List<ACHAccountDepositDetail> GetAllACHDepositAccountDetails();

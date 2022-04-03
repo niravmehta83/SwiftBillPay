@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="BHDbaseModelStoreContainer" CdmEntityContainer="BHDbaseEntities">
     <FunctionImportMapping FunctionImportName="GetCustomerDetails" FunctionName="BHDbaseModel.Store.sp_getAllCustomerDetails">
       <ResultMapping>
@@ -170,30 +170,6 @@
           <ScalarProperty Name="CustomerFirstName" ColumnName="CustomerFirstName" />
           <ScalarProperty Name="PayeeId" ColumnName="PayeeId" />
           <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="CustomerProfiles">
-      <EntityTypeMapping TypeName="BHDbaseModel.CustomerProfile">
-        <MappingFragment StoreEntitySet="CustomerProfile">
-          <ScalarProperty Name="StripeCustomerDefaultSourceId" ColumnName="StripeCustomerDefaultSourceId" />
-          <ScalarProperty Name="StripeCustomerId" ColumnName="StripeCustomerId" />
-          <ScalarProperty Name="Comments" ColumnName="Comments" />
-          <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
-          <ScalarProperty Name="JOML" ColumnName="JOML" />
-          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="Company" ColumnName="Company" />
-          <ScalarProperty Name="Country" ColumnName="Country" />
-          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
-          <ScalarProperty Name="State" ColumnName="State" />
-          <ScalarProperty Name="City" ColumnName="City" />
-          <ScalarProperty Name="Address2" ColumnName="Address2" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="LastName" ColumnName="LastName" />
-          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="CustomerProfileId" ColumnName="CustomerProfileId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -544,6 +520,28 @@
           <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
           <ScalarProperty Name="ACHDepositResourceId" ColumnName="ACHDepositResourceId" />
           <ScalarProperty Name="ACHDepositId" ColumnName="ACHDepositId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerProfiles">
+      <EntityTypeMapping TypeName="BHDbaseModel.CustomerProfile">
+        <MappingFragment StoreEntitySet="CustomerProfile">
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
+          <ScalarProperty Name="JOML" ColumnName="JOML" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Company" ColumnName="Company" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Address2" ColumnName="Address2" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="CustomerProfileId" ColumnName="CustomerProfileId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

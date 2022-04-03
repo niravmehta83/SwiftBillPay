@@ -10,6 +10,28 @@ namespace BingHousingMVC_DAL
     internal static class GetOperations
     {
 
+        internal static UserACHBankAccount GetCustomerStripeProfile(int UserId)
+        {
+
+
+            using (BHDbaseEntities Dbase = new BHDbaseEntities())
+            {
+
+
+
+                var obj = Dbase.CustomerStripeProfile
+                        .Select(a => a)
+                        .Where(a => a.UserId == UserId)
+                          .SingleOrDefault();
+
+                return (UserACHBankAccount)obj;
+
+
+
+
+            }
+        }
+
         internal static UserDetail GetUserDetail(string UserName)
         {
 

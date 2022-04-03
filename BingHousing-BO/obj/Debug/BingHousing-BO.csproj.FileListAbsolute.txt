@@ -47,3 +47,5 @@ D:\SwiftBillPay\BingHousing-BO\obj\Debug\BingHousing-BO.csproj.CopyComplete
 D:\SwiftBillPay\BingHousing-BO\obj\Debug\BingHousing-BO.dll
 D:\SwiftBillPay\BingHousing-BO\obj\Debug\BingHousing-BO.pdb
 D:\SwiftBillPay\BingHousing-BO\obj\Debug\BingHousing-BO.csproj.AssemblyReference.cache
+D:\SwiftBillPay\BingHousing-BO\bin\Debug\EntityFramework.SqlServer.dll
+D:\SwiftBillPay\BingHousing-BO\bin\Debug\EntityFramework.SqlServer.xml

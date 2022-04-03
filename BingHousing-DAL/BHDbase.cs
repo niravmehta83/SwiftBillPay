@@ -22,6 +22,11 @@ namespace BingHousingMVC_DAL
 
         }
 
+        public UserACHBankAccount GetCustomerStripeProfile(int UserId)
+        {
+            return GetOperations.GetCustomerStripeProfile(UserId);
+
+        }
         public int GetUserId(string UserName)
         {
 
