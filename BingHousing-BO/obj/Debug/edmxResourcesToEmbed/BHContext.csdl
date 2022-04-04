@@ -158,7 +158,6 @@
       <Parameter Name="To" Mode="In" Type="DateTime" />
     </FunctionImport>
     <EntitySet Name="ACHAccountDepositDetails" EntityType="BHDbaseModel.ACHAccountDepositDetail" />
-    <EntitySet Name="ChargeDetails" EntityType="BHDbaseModel.ChargeDetail" />
     <EntitySet Name="UserACHBankAccounts" EntityType="BHDbaseModel.UserACHBankAccount" />
     <EntitySet Name="ACHDepositDetails" EntityType="BHDbaseModel.ACHDepositDetail" />
     <EntitySet Name="CustomerProfiles" EntityType="BHDbaseModel.CustomerProfile" />
@@ -166,6 +165,7 @@
       <End Role="UserProfile" EntitySet="UserProfiles" />
       <End Role="CustomerProfile" EntitySet="CustomerProfiles" />
     </AssociationSet>
+    <EntitySet Name="ChargeDetails" EntityType="BHDbaseModel.ChargeDetail" />
   </EntityContainer>
   <ComplexType Name="CustomerDetail">
     <Property Type="Int32" Name="CustomerId" Nullable="false" />
@@ -934,21 +934,10 @@
     </Key>
     <Property Name="ACHDepositAccountId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
     <Property Name="PayeeId" Type="Int32" Nullable="false" />
-    <Property Name="StripeProductionKey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="StripeTestKey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="StripeProductionKey" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="StripeTestKey" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
     <Property Name="InsertedOn" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
-  </EntityType>
-  <EntityType Name="ChargeDetail">
-    <Key>
-      <PropertyRef Name="ChargeId" />
-    </Key>
-    <Property Name="ChargeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-    <Property Name="ChargeResourceId" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-    <Property Name="TransactionId" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-    <Property Name="Amount" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-    <Property Name="UserId" Type="Int32" Nullable="false" />
-    <Property Name="InsertedOn" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="UserACHBankAccount">
     <Key>
@@ -1014,4 +1003,17 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="ChargeDetail">
+    <Key>
+      <PropertyRef Name="ChargeId" />
+    </Key>
+    <Property Name="ChargeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StripeChargeId" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="InvoiceId" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="InsertedOn" Type="DateTime" Precision="3" />
+    <Property Name="ChargeStatus" Type="String" MaxLength="1500" FixedLength="false" Unicode="false" />
+    <Property Name="ChargeFailureMessage" Type="String" MaxLength="1500" FixedLength="false" Unicode="false" />
+  </EntityType>
 </Schema>

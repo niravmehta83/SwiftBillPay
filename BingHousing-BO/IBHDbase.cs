@@ -125,8 +125,11 @@ namespace BingHousing_BO
         string GetUserEmail(string UserName);
 
         string GetUserEmail(int UserId);
+        UserACHBankAccount GetUserACHBankAccount(string CustomerId);
+        bool updateACHRegistration(UserACHBankAccount model);
 
         string GetConfirmationToken(string UserName);
+        ChargeDetail GetAllChargeDetails(string ChargeResourceId);
 
         string GetCustomerEmail(string projectnumber);
 

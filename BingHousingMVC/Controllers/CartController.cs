@@ -427,8 +427,8 @@ namespace BingHousingMVC.Controllers
 
                     if (stripeCharge != null && stripeCharge.Status == "succeeded")
                     {
-                        chargeDetail.ChargeResourceId = stripeCharge.Id;
-                        chargeDetail.TransactionId = model.InvoiceId.ToString();
+                        chargeDetail.StripeChargeId = stripeCharge.Id;
+                        chargeDetail.InvoiceId = model.InvoiceId.ToString();
                         int num = this.dbase.InsertACHDepositPaymentDetail(chargeDetail, list);
                         object month = DateTime.Now.Month;
                         DateTime now = DateTime.Now;

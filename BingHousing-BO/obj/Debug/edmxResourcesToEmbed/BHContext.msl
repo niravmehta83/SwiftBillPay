@@ -483,18 +483,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ChargeDetails">
-      <EntityTypeMapping TypeName="BHDbaseModel.ChargeDetail">
-        <MappingFragment StoreEntitySet="ChargeDetail">
-          <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="Amount" ColumnName="Amount" />
-          <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
-          <ScalarProperty Name="ChargeResourceId" ColumnName="ChargeResourceId" />
-          <ScalarProperty Name="ChargeId" ColumnName="ChargeId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="UserACHBankAccounts">
       <EntityTypeMapping TypeName="BHDbaseModel.UserACHBankAccount">
         <MappingFragment StoreEntitySet="UserACHBankAccount">
@@ -542,6 +530,20 @@
           <ScalarProperty Name="FirstName" ColumnName="FirstName" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="CustomerProfileId" ColumnName="CustomerProfileId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ChargeDetails">
+      <EntityTypeMapping TypeName="BHDbaseModel.ChargeDetail">
+        <MappingFragment StoreEntitySet="ChargeDetail">
+          <ScalarProperty Name="ChargeFailureMessage" ColumnName="ChargeFailureMessage" />
+          <ScalarProperty Name="ChargeStatus" ColumnName="ChargeStatus" />
+          <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+          <ScalarProperty Name="StripeChargeId" ColumnName="StripeChargeId" />
+          <ScalarProperty Name="ChargeId" ColumnName="ChargeId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

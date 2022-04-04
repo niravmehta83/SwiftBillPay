@@ -6,8 +6,8 @@
     </Key>
     <Property Name="ACHDepositAccountId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="PayeeId" Type="int" Nullable="false" />
-    <Property Name="StripeProductionKey" Type="varchar" MaxLength="50" />
-    <Property Name="StripeTestKey" Type="varchar" MaxLength="50" />
+    <Property Name="StripeProductionKey" Type="varchar" MaxLength="500" />
+    <Property Name="StripeTestKey" Type="varchar" MaxLength="500" />
     <Property Name="InsertedOn" Type="datetime" Nullable="false" />
     <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
   </EntityType>
@@ -33,11 +33,13 @@ warning 6002: The table/view 'DB_9DAB6A_BHDbase.dbo.ACHDepositDetail' does not h
       <PropertyRef Name="ChargeId" />
     </Key>
     <Property Name="ChargeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ChargeResourceId" Type="varchar" MaxLength="500" Nullable="false" />
-    <Property Name="TransactionId" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="StripeChargeId" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="InvoiceId" Type="varchar" MaxLength="500" Nullable="false" />
     <Property Name="Amount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="InsertedOn" Type="datetime" />
+    <Property Name="ChargeStatus" Type="varchar" MaxLength="1500" />
+    <Property Name="ChargeFailureMessage" Type="varchar" MaxLength="1500" />
   </EntityType>
   <EntityType Name="CheckDetail">
     <Key>

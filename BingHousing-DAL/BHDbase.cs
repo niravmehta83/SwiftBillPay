@@ -85,7 +85,20 @@ namespace BingHousingMVC_DAL
                 return GetOperations.GetAllUserName();
            
         }
+        public bool updateACHRegistration(UserACHBankAccount model)
+        {
+            return UpdateOperations.updateACHRegistration(model);
+        }
 
+        public UserACHBankAccount GetUserACHBankAccount(string CustomerId)
+        {
+            return GetOperations.GetUserACHBankAccount(CustomerId);
+        }
+
+        public ChargeDetail GetAllChargeDetails(string ChargeResourceId)
+        {
+            return GetOperations.GetAllChargeDetails(ChargeResourceId);
+        }
         public string GetConfirmationToken(string UserName)
         {
                 return GetOperations.GetConfirmationToken(UserName);

@@ -15,10 +15,12 @@ namespace BingHousing_BO
     public partial class ChargeDetail
     {
         public int ChargeId { get; set; }
-        public string ChargeResourceId { get; set; }
-        public string TransactionId { get; set; }
+        public string StripeChargeId { get; set; }
+        public string InvoiceId { get; set; }
         public decimal Amount { get; set; }
         public int UserId { get; set; }
         public Nullable<System.DateTime> InsertedOn { get; set; }
+        public string ChargeStatus { get; set; }
+        public string ChargeFailureMessage { get; set; }
     }
 }

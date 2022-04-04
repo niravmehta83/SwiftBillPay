@@ -11,8 +11,8 @@
           </Key>
           <Property Name="ACHDepositAccountId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PayeeId" Type="int" Nullable="false" />
-          <Property Name="StripeProductionKey" Type="varchar" MaxLength="50" />
-          <Property Name="StripeTestKey" Type="varchar" MaxLength="50" />
+          <Property Name="StripeProductionKey" Type="varchar" MaxLength="500" />
+          <Property Name="StripeTestKey" Type="varchar" MaxLength="500" />
           <Property Name="InsertedOn" Type="datetime" Nullable="false" />
           <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
         </EntityType>
@@ -38,11 +38,13 @@ warning 6002: The table/view 'DB_9DAB6A_BHDbase.dbo.ACHDepositDetail' does not h
             <PropertyRef Name="ChargeId" />
           </Key>
           <Property Name="ChargeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ChargeResourceId" Type="varchar" MaxLength="500" Nullable="false" />
-          <Property Name="TransactionId" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="StripeChargeId" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="InvoiceId" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="Amount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="InsertedOn" Type="datetime" />
+          <Property Name="ChargeStatus" Type="varchar" MaxLength="1500" />
+          <Property Name="ChargeFailureMessage" Type="varchar" MaxLength="1500" />
         </EntityType>
         <EntityType Name="CheckDetail">
           <Key>
@@ -1046,7 +1048,6 @@ FROM [dbo].[ACHDepositDetail] AS [ACHDepositDetail]</DefiningQuery>
             <Parameter Name="To" Mode="In" Type="DateTime" />
           </FunctionImport>
           <EntitySet Name="ACHAccountDepositDetails" EntityType="BHDbaseModel.ACHAccountDepositDetail" />
-          <EntitySet Name="ChargeDetails" EntityType="BHDbaseModel.ChargeDetail" />
           <EntitySet Name="UserACHBankAccounts" EntityType="BHDbaseModel.UserACHBankAccount" />
           <EntitySet Name="ACHDepositDetails" EntityType="BHDbaseModel.ACHDepositDetail" />
           <EntitySet Name="CustomerProfiles" EntityType="BHDbaseModel.CustomerProfile" />
@@ -1054,6 +1055,7 @@ FROM [dbo].[ACHDepositDetail] AS [ACHDepositDetail]</DefiningQuery>
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="CustomerProfile" EntitySet="CustomerProfiles" />
           </AssociationSet>
+          <EntitySet Name="ChargeDetails" EntityType="BHDbaseModel.ChargeDetail" />
         </EntityContainer>
         <ComplexType Name="CustomerDetail">
           <Property Type="Int32" Name="CustomerId" Nullable="false" />
@@ -1822,21 +1824,10 @@ FROM [dbo].[ACHDepositDetail] AS [ACHDepositDetail]</DefiningQuery>
           </Key>
           <Property Name="ACHDepositAccountId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Name="PayeeId" Type="Int32" Nullable="false" />
-          <Property Name="StripeProductionKey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="StripeTestKey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StripeProductionKey" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="StripeTestKey" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="InsertedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <EntityType Name="ChargeDetail">
-          <Key>
-            <PropertyRef Name="ChargeId" />
-          </Key>
-          <Property Name="ChargeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-          <Property Name="ChargeResourceId" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="TransactionId" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="InsertedOn" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="UserACHBankAccount">
           <Key>
@@ -1902,6 +1893,19 @@ FROM [dbo].[ACHDepositDetail] AS [ACHDepositDetail]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ChargeDetail">
+          <Key>
+            <PropertyRef Name="ChargeId" />
+          </Key>
+          <Property Name="ChargeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StripeChargeId" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="InvoiceId" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="InsertedOn" Type="DateTime" Precision="3" />
+          <Property Name="ChargeStatus" Type="String" MaxLength="1500" FixedLength="false" Unicode="false" />
+          <Property Name="ChargeFailureMessage" Type="String" MaxLength="1500" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2390,18 +2394,6 @@ FROM [dbo].[ACHDepositDetail] AS [ACHDepositDetail]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ChargeDetails">
-            <EntityTypeMapping TypeName="BHDbaseModel.ChargeDetail">
-              <MappingFragment StoreEntitySet="ChargeDetail">
-                <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
-                <ScalarProperty Name="ChargeResourceId" ColumnName="ChargeResourceId" />
-                <ScalarProperty Name="ChargeId" ColumnName="ChargeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="UserACHBankAccounts">
             <EntityTypeMapping TypeName="BHDbaseModel.UserACHBankAccount">
               <MappingFragment StoreEntitySet="UserACHBankAccount">
@@ -2449,6 +2441,20 @@ FROM [dbo].[ACHDepositDetail] AS [ACHDepositDetail]</DefiningQuery>
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="CustomerProfileId" ColumnName="CustomerProfileId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChargeDetails">
+            <EntityTypeMapping TypeName="BHDbaseModel.ChargeDetail">
+              <MappingFragment StoreEntitySet="ChargeDetail">
+                <ScalarProperty Name="ChargeFailureMessage" ColumnName="ChargeFailureMessage" />
+                <ScalarProperty Name="ChargeStatus" ColumnName="ChargeStatus" />
+                <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+                <ScalarProperty Name="StripeChargeId" ColumnName="StripeChargeId" />
+                <ScalarProperty Name="ChargeId" ColumnName="ChargeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2523,11 +2529,11 @@ FROM [dbo].[ACHDepositDetail] AS [ACHDepositDetail]</DefiningQuery>
         <edmx:AssociationConnector Association="BHDbaseModel.FK__UserSecur__UserI__1B0907CE" />
         <edmx:AssociationConnector Association="BHDbaseModel.webpages_UsersInRoles" />
         <edmx:EntityTypeShape EntityType="BHDbaseModel.ACHAccountDepositDetail" Width="1.5" PointX="10.375" PointY="0.75" />
-        <edmx:EntityTypeShape EntityType="BHDbaseModel.ChargeDetail" Width="1.5" PointX="0.75" PointY="10.75" />
         <edmx:EntityTypeShape EntityType="BHDbaseModel.UserACHBankAccount" Width="1.5" PointX="2.75" PointY="10.75" />
         <edmx:EntityTypeShape EntityType="BHDbaseModel.ACHDepositDetail" Width="1.5" PointX="10.75" PointY="9.75" />
         <edmx:EntityTypeShape EntityType="BHDbaseModel.CustomerProfile" Width="1.5" PointX="5.25" PointY="39.375" />
         <edmx:AssociationConnector Association="BHDbaseModel.FK_CustomerProfile_UserProfile" />
+        <edmx:EntityTypeShape EntityType="BHDbaseModel.ChargeDetail" Width="1.5" PointX="12.375" PointY="0.75" />
       </edmx:Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -45,8 +45,8 @@ namespace BingHousingMVC_DAL
                 {
 
                     model.InsertedOn = DateTime.Now;
-                    model.ChargeResourceId = model.ChargeId.ToString();
-                    model.TransactionId = model.TransactionId.ToString();
+                    model.StripeChargeId = model.ChargeId.ToString();
+                    model.InvoiceId = model.InvoiceId.ToString();
                     Dbase.ACHDetails.Add(model);
 
                     Dbase.SaveChanges();

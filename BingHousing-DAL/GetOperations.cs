@@ -31,6 +31,26 @@ namespace BingHousingMVC_DAL
 
             }
         }
+        internal static UserACHBankAccount GetUserACHBankAccount(string CustomerId)
+        {
+            using (BHDbaseEntities Dbase = new BHDbaseEntities())
+            {
+                var obj = Dbase.UserACHBankAccounts
+                        .Select(a => a)
+                        .Where(a => a.CustomerId == CustomerId)
+                          .SingleOrDefault();
+                return (UserACHBankAccount)obj;
+            }
+        }
+
+        internal static ChargeDetail GetAllChargeDetails(string ChargeResourceId)
+        {
+            using (BHDbaseEntities Dbase = new BHDbaseEntities())
+            {
+                ChargeDetail model = Dbase.ChargeDetails.SingleOrDefault(a => a.StripeChargeId == ChargeResourceId);
+                return model;
+            }
+        }
 
         internal static UserDetail GetUserDetail(string UserName)
         {
