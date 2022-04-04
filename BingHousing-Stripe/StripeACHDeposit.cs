@@ -10,7 +10,7 @@ namespace BingHousing_ACHDeposit
     public static class StripeACHDeposit
     {
 
-        public static readonly string StripeKey = "sk_test_51Kdc4BSDoOtgQoti4bS3IyuThMVr8fhevSPKBRzPPo08DGEwe82aEJC3L3P9oFUarC6ivebwEhXLvC5MgQWAWQgY00ifxGqQxV";
+        public static string StripeKey = "sk_test_51Kdc4BSDoOtgQoti4bS3IyuThMVr8fhevSPKBRzPPo08DGEwe82aEJC3L3P9oFUarC6ivebwEhXLvC5MgQWAWQgY00ifxGqQxV";
 
         /// <summary>
         /// Create Bank Token

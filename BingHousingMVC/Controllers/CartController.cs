@@ -331,6 +331,10 @@ namespace BingHousingMVC.Controllers
                 }
                 else
                 {
+                    CustomerProfile customerProfile = dbase.GetCustomerProfile(UserId);
+                    int payeeId = dbase.GetPayeeId(customerProfile.CustomerProfileId);
+                    ACHAccountDepositDetail achAccountDepositDetail = dbase.GetACHAccountDepositDetail(payeeId);
+                    StripeACHDeposit.StripeKey = achAccountDepositDetail.StripeProductionKey;
                     if (StripeACHDeposit.GetBankAccountStatus(customer.CustomerId, customer.CustomerDefaultSourceId))
                     {
                         return RedirectToAction("StripeCharge", "Cart");
@@ -408,7 +412,11 @@ namespace BingHousingMVC.Controllers
                 ChargeDetail chargeDetail = new ChargeDetail();
                 IBHDbase bHDbase = new BHDbase();
                 int userId = bHDbase.GetUserId(base.User.Identity.Name);
-                UserACHBankAccount customerProfile = bHDbase.GetCustomerStripeProfile(userId);
+                UserACHBankAccount stripeCustomerProfile = bHDbase.GetCustomerStripeProfile(userId);
+                CustomerProfile customerProfile = dbase.GetCustomerProfile(userId);
+                int payeeId = dbase.GetPayeeId(customerProfile.CustomerProfileId);
+                ACHAccountDepositDetail achAccountDepositDetail = dbase.GetACHAccountDepositDetail(payeeId);
+                StripeACHDeposit.StripeKey = achAccountDepositDetail.StripeProductionKey;
                 chargeDetail.UserId = userId;
                 chargeDetail.Amount = model.Amount;
                 model.UserId = userId;
@@ -423,7 +431,7 @@ namespace BingHousingMVC.Controllers
                     model.InsertedOn = DateTime.Now;
                     model.InvoiceId = item[0].InvoiceId;
                     Charge stripeCharge = new Charge();
-                    StripeACHDeposit.ChargeCustomer(out stripeCharge, customerProfile.CustomerId, Convert.ToInt64(model.Amount)); // need to enable to charge but now in US we do not ge data
+                    StripeACHDeposit.ChargeCustomer(out stripeCharge, stripeCustomerProfile.CustomerId, Convert.ToInt64(model.Amount)); // need to enable to charge but now in US we do not ge data
 
                     if (stripeCharge != null && stripeCharge.Status == "succeeded")
                     {
@@ -538,7 +546,11 @@ namespace BingHousingMVC.Controllers
             {
                 string name = System.Web.HttpContext.Current.Session["SelectedUserName"] as string ?? User.Identity.Name;
                 int UserId = WebSecurity.GetUserId(name);
-                UserACHBankAccount customerProfile = dbase.GetCustomerStripeProfile(UserId);
+                UserACHBankAccount stripecustomerProfile = dbase.GetCustomerStripeProfile(UserId);
+                CustomerProfile customerProfile = dbase.GetCustomerProfile(UserId);
+                int payeeId = dbase.GetPayeeId(customerProfile.CustomerProfileId);
+                ACHAccountDepositDetail achAccountDepositDetail = dbase.GetACHAccountDepositDetail(payeeId);
+                StripeACHDeposit.StripeKey = achAccountDepositDetail.StripeProductionKey;
                 string BankToken = "";
                 string BankStatus = "";
                 if (StripeACHDeposit.CreateBankToken(out BankToken, out BankStatus, model.AccountHolderName, model.Accounttype, model.RoutingNumber, model.AccountNumber))
@@ -547,10 +559,7 @@ namespace BingHousingMVC.Controllers
                     string stripecustomerdefaultsourceid = "";
                     if (StripeACHDeposit.GetCustomerDetails(out stripecustomerid, out stripecustomerdefaultsourceid, BankToken, "TimePay"))
                     {
-                        string accountnumber = model.AccountNumber;
-                        //customerProfile.CustomerDefaultSourceId = stripecustomerdefaultsourceid;
-                        //customerProfile.StripeCustomerId = stripecustomerid;
-                        //dbase.UpdateCustomerProfile(customerProfile);
+                        string accountnumber = model.AccountNumber;              
                         UserACHBankAccount userACHBankAccount = new UserACHBankAccount();
                         userACHBankAccount.UserId = UserId;
                         userACHBankAccount.CustomerId = stripecustomerid;
