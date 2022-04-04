@@ -209,7 +209,17 @@
                     </td>
                     <td class="EditTable1">
                         <div class="editor-field">
-                            @Html.DropDownListFor(m => m.PaymentMode,(List<SelectListItem>) ViewBag.DD)<br />
+                            <div class="form-group">
+                                @Html.RadioButtonFor(model => model.PaymentMode, "PayPal")
+                                PayPal
+
+                                @Html.RadioButtonFor(model => model.PaymentMode, "CheckOnline")
+                                Check Online
+
+                                @Html.RadioButtonFor(model => model.PaymentMode, "ACHDeposit")
+                                ACH Deposit
+                            </div>
+                            @*@Html.DropDownListFor(m => m.PaymentMode,(List<SelectListItem>) ViewBag.DD)<br />*@
                             <span style="color:Red">*Note:If you select Payment mode as PayPal , Paypal surcharges are added as Postage and packaging charge.</span>
                         </div>
                     </td>
